@@ -6,7 +6,7 @@ Weeping Angel Momentum based running game, block weeping angel with light
 Create a new branch and name it
 Open the project in File Explorer
 Make changes to any files
-Commit through GitHub Desktop
+Commit through GitHub Desktops
 Push the commits
 Create a Pull Request
 
