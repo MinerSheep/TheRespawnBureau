@@ -20,6 +20,14 @@
 /PrimaPrototype/[Ll]ogs/
 /PrimaPrototype/[Uu]ser[Ss]ettings/
 
+/Project0918/[Ll]ibrary/
+/Project0918/[Tt]emp/
+/Project0918/[Oo]bj/
+/Project0918/[Bb]uild/
+/Project0918/[Bb]uilds/
+/Project0918/[Ll]ogs/
+/Project0918/[Uu]ser[Ss]ettings/
+
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
 *.blend1
 *.blend1.meta
