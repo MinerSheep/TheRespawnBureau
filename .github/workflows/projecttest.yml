@@ -1,4 +1,4 @@
-name: Build PrimaPrototype
+name: Build Unity Project
 
 on: [push, pull_request]
 
