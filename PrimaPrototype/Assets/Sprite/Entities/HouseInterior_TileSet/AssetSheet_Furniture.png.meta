@@ -1,0 +1,930 @@
+fileFormatVersion: 2
+guid: 5acadb09167b18b44a9de57617bcb380
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 8
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 72
+        width: 8
+        height: 16
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f94274b9df785a945a8a4273e56f987a
+      internalID: 860207177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 72
+        width: 8
+        height: 16
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cf1ad31ea7533c4194924dd18d08e83
+      internalID: 860679634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_5
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 80
+        width: 24
+        height: 8
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0eb19a24c13a73141943e484085d639e
+      internalID: -1028749767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_11
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 72
+        width: 8
+        height: 16
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c770c1cf94ac4594a80e965eb9552cc8
+      internalID: -42943020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_15
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 72
+        width: 8
+        height: 8
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34f1a3c8cf9228d4ba619326aff15cbd
+      internalID: -1543098850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 8
+        height: 8
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c765b860acd64714ea6e8111f17a17f9
+      internalID: -1603013633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_21
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 64
+        width: 8
+        height: 8
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fad5b3b5fd6f750498897ef44dddbf02
+      internalID: -1918535403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_22
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 56
+        width: 24
+        height: 16
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54414c145a6833f44b8b08679f390fea
+      internalID: -2002822759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_25
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 64
+        width: 8
+        height: 8
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50b00429f47486149a5b9e39d323c0bb
+      internalID: -256679762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_27
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9658e4411ebb10d46a360bd976293288
+      internalID: 1523425405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_29
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72c48311b78055140a54360de0d16b2f
+      internalID: -623242194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_36
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 56
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa6eb47caa0bb994cb5e2636237cf9fe
+      internalID: -1438676537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_39
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 56
+        width: 24
+        height: 8
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a5e3b85c6d37b04e8b6064865d381f4
+      internalID: -1368830204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_42
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 8
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06cf98e43fbd0d743ac28971f145ab71
+      internalID: 652471515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_44
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 8
+        height: 8
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c335e3b5b19dbd848a4e87fe00ed3e30
+      internalID: 2085753511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_46
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 8
+        height: 8
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92444b032ae09b140b88a13a5d533638
+      internalID: -1744959766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_47
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 48
+        width: 8
+        height: 8
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a6532542603c1d47aa89b7a23dfd50d
+      internalID: 853045682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_48
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 8
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06a42810aad7be64e96c1c6ff87d58f1
+      internalID: -1991041501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_51
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 40
+        width: 16
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93fc36c83b2ee5e479b1e0278f954349
+      internalID: 2080864717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_54
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 40
+        width: 24
+        height: 8
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd4f1ec2b5052394cb326378d66cdd7e
+      internalID: 1386832581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_55
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 42
+        width: 8
+        height: 16
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be6431533415e7a44af3a33c13e31041
+      internalID: -1453131383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_57
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 24
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad587d28b1220de46b2c79746edd3026
+      internalID: -34287103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_59
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 40
+        width: 8
+        height: 8
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a7ea629e622fe4408b9372e21376d27
+      internalID: -1136536415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_65
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 16
+        width: 8
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b0d2a9a22b4ea44183982466e171b1f
+      internalID: 1159966437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_69
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 24
+        width: 8
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be6c6a99793b0124587c7237ec8b3b43
+      internalID: 1228459575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_70
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 16
+        width: 16
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fd0bb57d82378d4c9087096ca7217c7
+      internalID: 1100396407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_82
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 16
+        width: 22
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96745a0d517ec814495e58a664c4fe3b
+      internalID: 1467941890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_89
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 16
+        width: 8
+        height: 8
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 458fe243e73421c4ea2097ac61e92862
+      internalID: 1339794618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_94
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 24
+        height: 16
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddeb38eec6c04734c851d633d9321097
+      internalID: -164734428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_96
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 0
+        width: 24
+        height: 16
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e4078b4d7406be48a89947c64d73205
+      internalID: -883990767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_100
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f825d6b05371b504487df5f92003c55c
+      internalID: -1911331408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_109
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dce1081385bda3f448e4c80f3e7a73d3
+      internalID: -1003417146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AssetSheet_Furniture_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 72
+        width: 16
+        height: 16
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d01f26a69c464b488e6a820c4819825
+      internalID: -1824079769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      AssetSheet_Furniture_0: 860207177
+      AssetSheet_Furniture_1: -1824079769
+      AssetSheet_Furniture_10: -1562261257
+      AssetSheet_Furniture_100: -1911331408
+      AssetSheet_Furniture_101: 2138921095
+      AssetSheet_Furniture_102: 219005044
+      AssetSheet_Furniture_103: -154091785
+      AssetSheet_Furniture_104: 1036670456
+      AssetSheet_Furniture_105: 1452847891
+      AssetSheet_Furniture_106: -273708861
+      AssetSheet_Furniture_107: -1833608347
+      AssetSheet_Furniture_108: -586444758
+      AssetSheet_Furniture_109: -1003417146
+      AssetSheet_Furniture_11: -42943020
+      AssetSheet_Furniture_12: 1763640521
+      AssetSheet_Furniture_13: 1499447887
+      AssetSheet_Furniture_14: 1991449524
+      AssetSheet_Furniture_15: -1543098850
+      AssetSheet_Furniture_16: -1462902284
+      AssetSheet_Furniture_17: 723023028
+      AssetSheet_Furniture_18: 1504569328
+      AssetSheet_Furniture_19: -857811853
+      AssetSheet_Furniture_2: 860679634
+      AssetSheet_Furniture_20: -1603013633
+      AssetSheet_Furniture_21: -1918535403
+      AssetSheet_Furniture_22: -2002822759
+      AssetSheet_Furniture_23: 1285423477
+      AssetSheet_Furniture_24: 614700305
+      AssetSheet_Furniture_25: -256679762
+      AssetSheet_Furniture_26: -638044616
+      AssetSheet_Furniture_27: 1523425405
+      AssetSheet_Furniture_28: -1395783132
+      AssetSheet_Furniture_29: -623242194
+      AssetSheet_Furniture_3: 1794152060
+      AssetSheet_Furniture_30: 2090980986
+      AssetSheet_Furniture_31: 932595132
+      AssetSheet_Furniture_32: 1736586809
+      AssetSheet_Furniture_33: -1367791794
+      AssetSheet_Furniture_34: 283965219
+      AssetSheet_Furniture_35: -523941208
+      AssetSheet_Furniture_36: -1438676537
+      AssetSheet_Furniture_37: -536892566
+      AssetSheet_Furniture_38: -46400232
+      AssetSheet_Furniture_39: -1368830204
+      AssetSheet_Furniture_4: -200179763
+      AssetSheet_Furniture_40: -1308599517
+      AssetSheet_Furniture_41: 1530234695
+      AssetSheet_Furniture_42: 652471515
+      AssetSheet_Furniture_43: 1055205132
+      AssetSheet_Furniture_44: 2085753511
+      AssetSheet_Furniture_45: 1139997475
+      AssetSheet_Furniture_46: -1744959766
+      AssetSheet_Furniture_47: 853045682
+      AssetSheet_Furniture_48: -1991041501
+      AssetSheet_Furniture_49: -195464186
+      AssetSheet_Furniture_5: -1028749767
+      AssetSheet_Furniture_50: 908673267
+      AssetSheet_Furniture_51: 2080864717
+      AssetSheet_Furniture_52: 1332426982
+      AssetSheet_Furniture_53: -938449124
+      AssetSheet_Furniture_54: 1386832581
+      AssetSheet_Furniture_55: -1453131383
+      AssetSheet_Furniture_56: -1435169599
+      AssetSheet_Furniture_57: -34287103
+      AssetSheet_Furniture_58: 226191493
+      AssetSheet_Furniture_59: -1136536415
+      AssetSheet_Furniture_6: 821002924
+      AssetSheet_Furniture_60: -451575889
+      AssetSheet_Furniture_61: 1628484155
+      AssetSheet_Furniture_62: 882895769
+      AssetSheet_Furniture_63: -1709066141
+      AssetSheet_Furniture_64: 2057349944
+      AssetSheet_Furniture_65: 1159966437
+      AssetSheet_Furniture_66: 2044250967
+      AssetSheet_Furniture_67: 1558699831
+      AssetSheet_Furniture_68: 636838235
+      AssetSheet_Furniture_69: 1228459575
+      AssetSheet_Furniture_7: -2109632643
+      AssetSheet_Furniture_70: 1100396407
+      AssetSheet_Furniture_71: 170694379
+      AssetSheet_Furniture_72: -513347949
+      AssetSheet_Furniture_73: 1613707880
+      AssetSheet_Furniture_74: -1668905674
+      AssetSheet_Furniture_75: -227798043
+      AssetSheet_Furniture_76: 100539535
+      AssetSheet_Furniture_77: 400196037
+      AssetSheet_Furniture_78: -1537429070
+      AssetSheet_Furniture_79: 2027910297
+      AssetSheet_Furniture_8: 1807789589
+      AssetSheet_Furniture_80: -1834996630
+      AssetSheet_Furniture_81: -1188860571
+      AssetSheet_Furniture_82: 1467941890
+      AssetSheet_Furniture_83: -469779819
+      AssetSheet_Furniture_84: 64207203
+      AssetSheet_Furniture_85: -254762792
+      AssetSheet_Furniture_86: -295710141
+      AssetSheet_Furniture_87: -451988978
+      AssetSheet_Furniture_88: -359793238
+      AssetSheet_Furniture_89: 1339794618
+      AssetSheet_Furniture_9: -348199905
+      AssetSheet_Furniture_90: 1470814022
+      AssetSheet_Furniture_91: 307154918
+      AssetSheet_Furniture_92: -1351973842
+      AssetSheet_Furniture_93: -968679036
+      AssetSheet_Furniture_94: -164734428
+      AssetSheet_Furniture_95: -1258876211
+      AssetSheet_Furniture_96: -883990767
+      AssetSheet_Furniture_97: -1292471853
+      AssetSheet_Furniture_98: -1487140497
+      AssetSheet_Furniture_99: 1874729255
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
