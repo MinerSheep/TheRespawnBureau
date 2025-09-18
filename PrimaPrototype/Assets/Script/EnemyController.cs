@@ -41,18 +41,18 @@ public class EnemyController : MonoBehaviour
             {
                 Vector2 direction = new Vector2(player.position.x - transform.position.x, 0);
                 direction.Normalize();
-                rb.velocity = direction * moveSpeed;
+                rb.linearVelocity = direction * moveSpeed;
             }
             else
             {
-                rb.velocity = Vector2.zero;
+                rb.linearVelocity = Vector2.zero;
             }
         }
 
 
         if (!Moving)
         {
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
         }
 
 

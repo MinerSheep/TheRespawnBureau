@@ -99,11 +99,11 @@ public class PlayerController : MonoBehaviour
             {
                 horizontalInput = 0;
             }
-            Vector2 movement = new Vector2(horizontalInput * currentSpeed, rb.velocity.y);
-            rb.velocity = movement;
+            Vector2 movement = new Vector2(horizontalInput * currentSpeed, rb.linearVelocity.y);
+            rb.linearVelocity = movement;
 
             animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
-            animator.SetFloat("YSpeed", rb.velocity.y);
+            animator.SetFloat("YSpeed", rb.linearVelocity.y);
             animator.SetBool("isCrouch", isCrouch);
 
 
@@ -181,7 +181,7 @@ public class PlayerController : MonoBehaviour
     void Jump()
     {
         soundManager.PlayBGM(_sfxJump, transform.position, GlobalDataStatic.volume);
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         isJumping = true;
         --currentJumpAmount;
     }
