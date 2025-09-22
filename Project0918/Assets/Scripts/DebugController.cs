@@ -123,22 +123,28 @@ public class DebugController : MonoBehaviour
         }
 
         //Input box
+        GUI.SetNextControlName("ConsoleInput");
         GUI.Box(new Rect(0, y, UnityEngine.Screen.width, 30), "");
         GUI.backgroundColor = Color.gray;
         input = GUI.TextField(new Rect(10f, y + 5f, UnityEngine.Screen.width - 20f, 20f), input);
 
         // Detect Enter key if pressed
-        if (Event.current.isKey && Event.current.type == EventType.KeyDown)
+        if (Event.current != null && Event.current.type == EventType.KeyDown)
         {
-            if ((Event.current.keyCode == KeyCode.Return || Event.current.keyCode == KeyCode.KeypadEnter) 
-                && GUI.GetNameOfFocusedControl() == "ConsoleInput")
+            // Some platforms give character '\n' for Enter, others '\r'. Check both.
+            if (Event.current.character == '\n' || Event.current.character == '\r'
+                || Event.current.keyCode == KeyCode.Return || Event.current.keyCode == KeyCode.KeypadEnter)
             {
-                // Send input and unfocus text field
-                OnReturn();
-                GUI.FocusControl(null);
-                
-                // prevents newline being inserted
-                Event.current.Use();
+                if (GUI.GetNameOfFocusedControl() == "ConsoleInput" ||
+                    GUIUtility.keyboardControl != 0) // second check as fallback
+                {
+                    // Send input and unfocus text field
+                    OnReturn();
+                    GUI.FocusControl(null);
+
+                    // prevents newline being inserted
+                    Event.current.Use();         // consume event so it doesn't insert text
+                }
             }
         }
     }
