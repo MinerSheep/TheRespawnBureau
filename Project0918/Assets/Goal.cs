@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
-    GameObject confetti; 
+    [SerializeField] GameObject confetti;
+
+    bool finished = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,10 +20,12 @@ public class Goal : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !finished)
         {
             // Win condition
-            Instantiate(confetti, transform.position, Quaternion.identity).Play();
+            finished = true;
+            for (int i = 0; i < 100; i++)
+                Instantiate(confetti, transform.position, Quaternion.identity);
         }
     }
 }
