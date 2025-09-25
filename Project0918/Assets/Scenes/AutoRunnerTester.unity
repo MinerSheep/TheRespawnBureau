@@ -1290,6 +1290,18 @@ PrefabInstance:
       value: FlashLight
       objectReference: {fileID: 0}
     - target: {fileID: 7726759744817438401, guid: e16c4939f7a910a4f9d3165ef74839f8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.3630557
+      objectReference: {fileID: 0}
+    - target: {fileID: 7726759744817438401, guid: e16c4939f7a910a4f9d3165ef74839f8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.3630557
+      objectReference: {fileID: 0}
+    - target: {fileID: 7726759744817438401, guid: e16c4939f7a910a4f9d3165ef74839f8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.3630557
+      objectReference: {fileID: 0}
+    - target: {fileID: 7726759744817438401, guid: e16c4939f7a910a4f9d3165ef74839f8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1635,7 +1647,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 913051525}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9585b3b68217b3543a7f7fdc0550ac6b, type: 3}
   m_Name: 

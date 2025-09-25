@@ -20,6 +20,8 @@ public class PlayerController2 : MonoBehaviour
     private float crouchingTimer;
 
     private AudioSource jump;
+    private AudioSource crouch;
+
 
     public void Move()
     {
@@ -59,7 +61,7 @@ public class PlayerController2 : MonoBehaviour
                 PM.ChangePlayerModelStats();
                 Crouching = true;
 
-                jump.Play();
+                crouch.Play();
             }
         }
         else if (Input.GetKeyDown(KeyCode.S) && Jumping == true)
@@ -82,7 +84,7 @@ public class PlayerController2 : MonoBehaviour
     void Start()
     {
         RB = GetComponent<Rigidbody2D>();
-        
+
         jump = gameObject.AddComponent<AudioSource>();
 
         AudioClip clip = Resources.Load<AudioClip>("Audio/jump-retro-game-jam-fx-1-00-03");
@@ -91,8 +93,17 @@ public class PlayerController2 : MonoBehaviour
             Debug.LogError("Could not load mp3 from Resources/Audio/jump-retro-game-jam-fx-1-00-03.mp3");
             return;
         }
-
         jump.clip = clip;
+
+        crouch = gameObject.AddComponent<AudioSource>();
+        
+        clip = Resources.Load<AudioClip>("Audio/horror-body-drop-152091");
+        if (clip == null)
+        {
+            Debug.LogError("Could not load mp3 from Resources/Audio/horror-body-drop-152091.mp3");
+            return;
+        }
+        crouch.clip = clip;
     }
     void Update()
     {
