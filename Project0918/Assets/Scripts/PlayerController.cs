@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     float moveDirection;
     float jumpTimer;
     bool isJumping;
+    public int pointValue;
     Vector2 moveVelocity = new Vector2(0,0);
     [SerializeField] bool isGrounded;
 
