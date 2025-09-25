@@ -15,5 +15,9 @@ public class DeathTrigger : MonoBehaviour
             Debug.Log("sfwf");
             GameEnd();
         }
+        else
+        {
+            Debug.Log("whatever");
+        }
     }
 }

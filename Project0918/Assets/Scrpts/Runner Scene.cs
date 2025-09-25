@@ -1,6 +1,7 @@
 using System.Threading;
 using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RunnerScene : MonoBehaviour
 {
@@ -15,6 +16,11 @@ public class RunnerScene : MonoBehaviour
     void Start()
     {
         MovingSpeed = StartMovingSpeed;
+
+        foreach (Transform child in transform)
+        {
+            child.GetComponent<SpriteRenderer>().maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+        }
     }
 
     // Update is called once per frame
@@ -22,6 +28,9 @@ public class RunnerScene : MonoBehaviour
     {
         AutoRunnerTimer += Time.deltaTime;
         MovingSpeed = Mathf.Lerp(StartMovingSpeed, EndMovingSpeed, AutoRunnerTimer / ChangeTime);
-        transform.position+= new Vector3(-MovingSpeed * Time.deltaTime, 0,0);
+        transform.position += new Vector3(-MovingSpeed * Time.deltaTime, 0, 0);
+
+        if (Input.GetKeyDown(KeyCode.R))
+            SceneManager.LoadScene("AutoRunnerTester");
     }
 }
