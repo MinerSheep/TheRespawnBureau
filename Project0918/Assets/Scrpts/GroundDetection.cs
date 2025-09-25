@@ -4,7 +4,7 @@ public class GroundDetection : MonoBehaviour
 {
     public bool Grounded;
     private int GroundCount = 0;
-    public PlayerController PC;
+    public PlayerController2 PC;
     public PlayerModel PM;
 
     private void OnTriggerEnter2D(Collider2D collision)
