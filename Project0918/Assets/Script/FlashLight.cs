@@ -8,6 +8,7 @@ public class FlashLight : MonoBehaviour
 
     public GameObject flashLight;
     public bool flashLightOn = true;
+    public KeyCode flashLightflip = KeyCode.F;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,6 +35,12 @@ public class FlashLight : MonoBehaviour
         {
             FlashLightOff();
         }
+
+        //flipping flashlight by flip the sprite mask
+        if (Input.GetKeyDown(flashLightflip))
+        {
+            flip();
+        }
     }
 
     void FlashLightOff() 
@@ -51,6 +58,6 @@ public class FlashLight : MonoBehaviour
 
     void flip()
     {
-
+        flashLight.transform.Rotate(0f, 180f, 0f, Space.Self);
     }
 }
