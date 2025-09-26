@@ -524,7 +524,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -7
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0.058490515, b: 0.058490515, a: 1}
+  m_Color: {r: 0.3406977, g: 0.36726308, b: 0.4113207, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1171,37 +1171,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 308873093}
     m_Modifications:
-    - target: {fileID: 1999593119462691156, guid: e16c4939f7a910a4f9d3165ef74839f8, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 1302723820812287101, guid: d75ca58887c0d5843ad34ee65fd98e08, type: 3}
-    - target: {fileID: 1999593119462691156, guid: e16c4939f7a910a4f9d3165ef74839f8, type: 3}
-      propertyPath: m_MaskAlphaCutoff
-      value: 0.297
-      objectReference: {fileID: 0}
     - target: {fileID: 2892382006043920596, guid: e16c4939f7a910a4f9d3165ef74839f8, type: 3}
       propertyPath: m_Name
       value: FlashLight
       objectReference: {fileID: 0}
-    - target: {fileID: 6311746673468665328, guid: e16c4939f7a910a4f9d3165ef74839f8, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3.91
-      objectReference: {fileID: 0}
-    - target: {fileID: 7726759744817438401, guid: e16c4939f7a910a4f9d3165ef74839f8, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.83029
-      objectReference: {fileID: 0}
-    - target: {fileID: 7726759744817438401, guid: e16c4939f7a910a4f9d3165ef74839f8, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.83029
-      objectReference: {fileID: 0}
-    - target: {fileID: 7726759744817438401, guid: e16c4939f7a910a4f9d3165ef74839f8, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.83029
-      objectReference: {fileID: 0}
     - target: {fileID: 7726759744817438401, guid: e16c4939f7a910a4f9d3165ef74839f8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.17
+      value: -0.91
       objectReference: {fileID: 0}
     - target: {fileID: 7726759744817438401, guid: e16c4939f7a910a4f9d3165ef74839f8, type: 3}
       propertyPath: m_LocalPosition.y
