@@ -1,0 +1,23 @@
+name: Unlock Files after Merge
+
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  unlock-after-merge:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/development'
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+
+      - name: Unlock merged files
+        run: |
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          for f in $CHANGED_FILES; do
+            git lfs unlock "$f" || true
+          done
