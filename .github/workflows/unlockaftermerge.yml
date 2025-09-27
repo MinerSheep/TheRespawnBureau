@@ -17,7 +17,10 @@ jobs:
 
       - name: Authenticate with Personal Access Token
         run: |
-          git remote set-url origin https://x-access-token:${{ secrets.LFS_PAT }}@github.com/${{ github.repository }}.git
+          git config --global user.email "ci-bot@example.com"
+          git config --global user.name "CI Bot"
+          git config --global credential.helper store
+          echo "https://${{ secrets.LFS_PAT }}:@github.com/${{ github.repository }}" > ~/.git-credentials
 
       - name: Unlock merged files
         run: |
