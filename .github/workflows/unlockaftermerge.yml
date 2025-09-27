@@ -3,7 +3,7 @@ name: Unlock Files after Merge
 on:
   push:
     branches:
-      - development
+      - development-donotdelete
 
 jobs:
   unlock-after-merge:
