@@ -36,5 +36,5 @@ jobs:
         run: |
           CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
           for f in $CHANGED_FILES; do
-            git lfs unlock "$f" || true
+            git lfs unlock --force "$f" || true
           done
