@@ -22,8 +22,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.LFS_PAT }}
         run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
+          git config --global user.name "MinerSheep"
+          git config --global user.email "ryderpbnj@gmail.com"
           git remote set-url origin https://${{ secrets.LFS_PAT }}@github.com/${{ github.repository }}
 
       - name: Debug Git Authentication with the PAT
