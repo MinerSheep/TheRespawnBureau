@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -56,3 +58,5 @@ class AutoLock : UnityEditor.AssetModificationProcessor
             UnityEngine.Debug.Log($"[AutoLock] Locked {assetPath} -> {result} {error}");
     }
 }
+
+#endif
