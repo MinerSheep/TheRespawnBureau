@@ -16,11 +16,13 @@ jobs:
           fetch-depth: 0
 
       - name: Authenticate with Personal Access Token
+        env:
+          GHToken: ${{ secrets.LFS_PAT }}
         run: |
           git config --global user.email "ci-bot@example.com"
           git config --global user.name "CI Bot"
           git config --global credential.helper store
-          echo "https://${{ secrets.LFS_PAT }}:@github.com/${{ github.repository }}" > ~/.git-credentials
+          echo "https://$env.GHToken:@github.com/${{ github.repository }}" > ~/.git-credentials
 
       - name: Debug Git Authentication with the PAT
         run: |
