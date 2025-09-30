@@ -32,53 +32,16 @@ jobs:
           curl -I -H "Authorization: token ${{ secrets.LFS_PAT }}" \
             https://api.github.com/repos/${{ github.repository }}
 
-      - name: Force unlock merged files
+      - name: Unlock merged files
         run: |
-          OWNER="MinerSheep"
-          REPO="TheRespawnBureau"
-
-          CHANGED_FILES=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}")
-
-          echo "=== Current LFS locks (local) ==="
-          git lfs locks || true
-
-          echo "$CHANGED_FILES" | while IFS= read -r f; do
-            [ -z "$f" ] && continue
-            echo "Checking for lock on: $f"
-
-            # Extract lock ID from local output (after "ID:")
-            LOCAL_LOCK_ID=$(git lfs locks | awk -v file="$f" '
-              $1 == file {
-                for(i=1;i<=NF;i++) if($i ~ /^ID:/) {sub("ID:","",$i); print $i}
-              }')
-
-            if [ -z "$LOCAL_LOCK_ID" ]; then
-              echo "  -> No local lock entry for $f"
-              continue
-            fi
-
-            echo "  -> Found local lock id: $LOCAL_LOCK_ID"
-
-            # Query GitHub API for all locks once
-            LOCKS=$(curl -s \
-              -H "Authorization: token ${{ secrets.LFS_PAT }}" \
-              -H "Accept: application/vnd.github+json" \
-              "https://api.github.com/repos/${OWNER}/${REPO}/git/lfs/locks")
-
-            # Match by path
-            LOCK_ID=$(echo "$LOCKS" | jq -r --arg path "$f" '.locks[]? | select(.path == $path) | .id')
-
-            if [ -n "$LOCK_ID" ] && [ "$LOCK_ID" != "null" ]; then
-              echo "  -> Force unlocking $f (API id $LOCK_ID)"
-              curl -s -X DELETE \
-                -H "Authorization: token ${{ secrets.LFS_PAT }}" \
-                -H "Accept: application/vnd.github+json" \
-                "https://api.github.com/repos/${OWNER}/${REPO}/git/lfs/locks/$LOCK_ID?force=true"
-            else
-              echo "  -> Lock not found in API for $f (local id was $LOCAL_LOCK_ID)"
-              echo "  -> Available locks from API:"
-              echo "$LOCKS" | jq '.locks[] | {path, id, locked_at, locked_by}'
-            fi
+          git lfs install
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          for f in $CHANGED_FILES; do
+            git lfs unlock --force "$f" || true
           done
         env:
+          GIT_ASKPASS: echo
+          GITHUB_USER: x-access-token
+          GITHUB_PASS: ${{ secrets.LFS_PAT }}
           GIT_LFS_SKIP_SMUDGE: 1
+          GITHUB_TOKEN: ${{ secrets.LFS_PAT }}
