@@ -34,10 +34,34 @@ jobs:
 
       - name: Unlock merged files
         run: |
-          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
-          for f in $CHANGED_FILES; do
-            git lfs unlock --force "$f" || true
+          OWNER="MinerSheep"
+          REPO="TheRespawnBureau"
+          
+          CHANGED_FILES=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}")
+
+          echo "$CHANGED_FILES" | while IFS= read -r f; do
+            [ -z "$f" ] && continue
+
+            echo "Checking lock for: '$f'"
+
+            # Query lock for this single path (avoids fetching all locks / pagination)
+            LOCK_JSON=$(curl -s -H "Authorization: token ${{ secrets.LFS_PAT }}" \
+                              -H "Accept: application/vnd.github+json" \
+                              "https://api.github.com/repos/${OWNER}/${REPO}/git/lfs/locks?path=$(python3 -c "import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1]))" "$f")")
+
+            # extract lock id safely
+            LOCK_ID=$(echo "$LOCK_JSON" | jq -r --arg path "$f" '.locks[]? | select(.path == $path) | .id')
+
+            if [ -n "$LOCK_ID" ] && [ "$LOCK_ID" != "null" ]; then
+              echo "Force unlocking $f (lock id $LOCK_ID)"
+              # Delete the lock by id
+              curl -s -X DELETE \
+                -H "Authorization: token ${{ secrets.LFS_PAT }}" \
+                -H "Accept: application/vnd.github+json" \
+                "https://api.github.com/repos/${OWNER}/${REPO}/git/lfs/locks/$LOCK_ID"
+            else
+              echo "No lock found for $f"
+            fi
           done
         env:
           GIT_LFS_SKIP_SMUDGE: 1
-          GITHUB_TOKEN: ${{ secrets.LFS_PAT }}
