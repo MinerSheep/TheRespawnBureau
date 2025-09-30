@@ -38,3 +38,6 @@ jobs:
           for f in $CHANGED_FILES; do
             git lfs unlock --force "$f" || true
           done
+        env:
+          GIT_LFS_SKIP_SMUDGE: 1
+          GITHUB_TOKEN: ${{ secrets.LFS_PAT }}
