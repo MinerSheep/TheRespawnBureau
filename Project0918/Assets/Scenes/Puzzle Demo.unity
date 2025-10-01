@@ -2037,7 +2037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e335dbcfac3c0bb41a55490432ce5d92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canDoPuzzle: 1
+  canDoPuzzle: 0
 --- !u!1 &1831507496
 GameObject:
   m_ObjectHideFlags: 0
