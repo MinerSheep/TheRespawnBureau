@@ -23,6 +23,27 @@ class AutoLock : UnityEditor.AssetModificationProcessor
         return paths;
     }
 
+    public static string GetLockOwner(string repoPath, string relativePath)
+    {
+        using (Process proc = new Process())
+        {
+            proc.StartInfo.FileName = "git";
+            proc.StartInfo.Arguments = $"lfs locks \"{relativePath}\"";
+            proc.StartInfo.WorkingDirectory = repoPath;
+            proc.StartInfo.RedirectStandardOutput = true;
+            proc.StartInfo.RedirectStandardError = true;
+            proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.CreateNoWindow = true;
+
+            proc.Start();
+
+            string output = proc.StandardOutput.ReadToEnd();
+            proc.WaitForExit();
+
+            return output.Trim();
+        }
+    }
+
     static void LockFile(string assetPath)
     {
         string fullPath = Path.GetFullPath(assetPath);
@@ -59,20 +80,23 @@ class AutoLock : UnityEditor.AssetModificationProcessor
         string error = process.StandardError.ReadToEnd();
         process.WaitForExit();
 
+        int exit = process.ExitCode;
+
         if (error != "")
         {
             if (error.Contains("Lock exists"))
-                UnityEngine.Debug.Log($"[AutoLock] {assetPath} is already locked by you -> {result} {error}");
+            {
+                UnityEngine.Debug.Log($"[AutoLock] {assetPath} is already locked by you -> {result} {error} Code: {exit}");
+
+                //UnityEngine.Debug.LogError($"{assetPath} is already locked by someone else! You may overwrite their work! -> {result} {error} Code: {exit}");
+            }
             else
             {
-                UnityEngine.Debug.LogError($"[AutoLock] Failed to lock {assetPath} -> {result} {error}");
-
-                if (error.Contains("already locked"))
-                    UnityEngine.Debug.LogWarning($"{assetPath} is already locked by someone else! You may overwrite their work.");
+                UnityEngine.Debug.LogError($"[AutoLock] Failed to lock {assetPath} (It is probably locked by someone else!) -> {result} {error} Code: {exit}");
             }
         }
         else
-            UnityEngine.Debug.Log($"[AutoLock] Locked {assetPath} -> {result} {error}");
+            UnityEngine.Debug.Log($"[AutoLock] Locked {assetPath} -> {result} {error} {exit}");
     }
 }
 
