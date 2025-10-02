@@ -118,7 +118,7 @@ class AutoLock : UnityEditor.AssetModificationProcessor
                  owner.Contains(myName, System.StringComparison.OrdinalIgnoreCase)))
                 UnityEngine.Debug.Log($"[AutoLock] {assetPath} is already locked by you -> {response} Code: {exitcode}");
             else
-                UnityEngine.Debug.LogError($"{assetPath} is already locked by someone else! You may overwrite their work! -> {response} Code: {exitcode}");
+                UnityEngine.Debug.LogError($"{assetPath} is already locked by someone else! You may overwrite their work! -> {response}, Owner: {owner}, Code: {exitcode}");
         }
         else
             UnityEngine.Debug.Log($"[AutoLock] Locked {assetPath} -> {response} Code: {exitcode}");
