@@ -30,6 +30,23 @@ class AutoLock : UnityEditor.AssetModificationProcessor
         // git lfs lock command
         var process = new Process();
         process.StartInfo.FileName = "git";
+        process.StartInfo.Arguments = $"ls-files --error-unmatch \"{fullPath}\"";
+
+        process.StartInfo.UseShellExecute = false;
+        process.StartInfo.RedirectStandardOutput = true;
+        process.StartInfo.RedirectStandardError = true;
+        process.StartInfo.CreateNoWindow = true;
+        process.Start();
+        process.WaitForExit();
+
+        if (process.ExitCode != 0)
+        {
+            UnityEngine.Debug.Log("This is a newly created file, no need to lock it");
+            return;
+        }
+
+        process = new Process();
+        process.StartInfo.FileName = "git";
         process.StartInfo.Arguments = $"lfs lock \"{fullPath}\"";
 
         process.StartInfo.UseShellExecute = false;
