@@ -95,7 +95,7 @@ public class PlayerController2 : MonoBehaviour
             return;
         }
 
-        AudioClip crouchAudio = Resources.Load<AudioClip>("Audio/horror-body-drop-152091");
+        crouchAudio = Resources.Load<AudioClip>("Audio/horror-body-drop-152091");
         if (crouchAudio == null)
         {
             Debug.LogError("Could not load mp3 from Resources/Audio/horror-body-drop-152091.mp3");
