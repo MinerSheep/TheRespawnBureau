@@ -9,8 +9,11 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu_PC.unity
     guid: a042844d395e83a49be654ef0b97bdca
   - enabled: 1
-    path: Assets/Scenes/PlayerMovementDemo.unity
-    guid: be832a6f5daa5eb448ecf289f79a09c8
+    path: Assets/Scenes/AutoRunnerTester.unity
+    guid: 10aefb138c8a0114886afcc22ebac55e
+  - enabled: 1
+    path: Assets/Scenes/Platformer.unity
+    guid: 607b557d19b3ad84cbea0a3707812748
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
