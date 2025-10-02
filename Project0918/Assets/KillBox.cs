@@ -19,6 +19,7 @@ public class KillBox : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            CollectionManager.instance.SaveScore();
             SceneManager.LoadScene("PlayerMovementDemo");
         }
     }

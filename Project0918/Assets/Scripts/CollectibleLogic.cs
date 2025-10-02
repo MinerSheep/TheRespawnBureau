@@ -18,7 +18,9 @@ public class CollectibleLogic : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") == true)
         {
-            playerScript.pointValue += scoreValue;
+            CollectionManager.instance.score += scoreValue;
+            Debug.Log("SCORE: " + CollectionManager.instance.score);
+            //playerScript.pointValue += scoreValue;
             Destroy(this.gameObject);
         }
     }
