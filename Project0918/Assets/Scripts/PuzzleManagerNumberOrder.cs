@@ -9,7 +9,10 @@ public class PuzzleManager : MonoBehaviour
     public GameObject PuzzlePanel;
     public GameObject PuzzleTrigger;
 
+    public GameObject door;
+
     public PuzzleTrigger PT;
+    
 
     
 
@@ -73,6 +76,7 @@ public class PuzzleManager : MonoBehaviour
     {
         PuzzlePanel.SetActive(false);
         ResetPuzzle();
+        door.SetActive(false);
     }
 
     private void PuzzleFailed()
