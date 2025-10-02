@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -23,13 +24,37 @@ class AutoLock : UnityEditor.AssetModificationProcessor
         return paths;
     }
 
-    public static string GetLockOwner(string repoPath, string relativePath)
+    private static string RunGit(string arguments, out int exit)
+    {
+        using var proc = new Process();
+        proc.StartInfo.FileName = "git";
+        proc.StartInfo.Arguments = arguments;
+
+        proc.StartInfo.RedirectStandardOutput = true;
+        proc.StartInfo.RedirectStandardError = true;
+        proc.StartInfo.UseShellExecute = false;
+        proc.StartInfo.CreateNoWindow = true;
+        proc.Start();
+        proc.WaitForExit();
+
+        string stdout = proc.StandardOutput.ReadToEnd();
+        string stderr = proc.StandardError.ReadToEnd();
+        proc.WaitForExit();
+
+        exit = proc.ExitCode;
+
+        if (exit != 0 && !string.IsNullOrEmpty(stderr))
+            return stderr.Trim();
+        return stdout.Trim();
+    }
+
+    public static string GetLockOwner(string assetPath)
     {
         using (Process proc = new Process())
         {
             proc.StartInfo.FileName = "git";
-            proc.StartInfo.Arguments = $"lfs locks \"{relativePath}\"";
-            proc.StartInfo.WorkingDirectory = repoPath;
+            proc.StartInfo.Arguments = $"lfs locks \"{assetPath}\"";
+
             proc.StartInfo.RedirectStandardOutput = true;
             proc.StartInfo.RedirectStandardError = true;
             proc.StartInfo.UseShellExecute = false;
@@ -40,7 +65,27 @@ class AutoLock : UnityEditor.AssetModificationProcessor
             string output = proc.StandardOutput.ReadToEnd();
             proc.WaitForExit();
 
-            return output.Trim();
+           // Split input into lines
+            string[] lines = output.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string line in lines)
+            {
+                if (line.Contains(assetPath, StringComparison.OrdinalIgnoreCase))
+                {
+                    // Split the line by tab and take the second entry (owner)
+                    string[] parts = line.Split('\t', StringSplitOptions.RemoveEmptyEntries);
+                    if (parts.Length >= 2)
+                    {
+                        string owner = parts[1].Trim();
+                        Console.WriteLine(owner);  // Output: MinerSheep
+                        return owner;
+                    }
+                    break; // found it, exit loop
+                }
+            }
+
+            // If not found, return null
+            return null;
         }
     }
 
@@ -48,55 +93,35 @@ class AutoLock : UnityEditor.AssetModificationProcessor
     {
         string fullPath = Path.GetFullPath(assetPath);
 
+        int exit = 0;
+
         // git lfs lock command
-        var process = new Process();
-        process.StartInfo.FileName = "git";
-        process.StartInfo.Arguments = $"ls-files --error-unmatch \"{fullPath}\"";
+        RunGit($"ls-files --error-unmatch \"{fullPath}\"", out exit);
 
-        process.StartInfo.UseShellExecute = false;
-        process.StartInfo.RedirectStandardOutput = true;
-        process.StartInfo.RedirectStandardError = true;
-        process.StartInfo.CreateNoWindow = true;
-        process.Start();
-        process.WaitForExit();
-
-        if (process.ExitCode != 0)
+        if (exit != 0)
         {
             UnityEngine.Debug.Log("This is a newly created file, no need to lock it");
             return;
         }
 
-        process = new Process();
-        process.StartInfo.FileName = "git";
-        process.StartInfo.Arguments = $"lfs lock \"{fullPath}\"";
+        string response = RunGit($"lfs lock \"{fullPath}\"", out exit);
+        int exitcode = exit;
 
-        process.StartInfo.UseShellExecute = false;
-        process.StartInfo.RedirectStandardOutput = true;
-        process.StartInfo.RedirectStandardError = true;
-        process.StartInfo.CreateNoWindow = true;
-        process.Start();
-
-        string result = process.StandardOutput.ReadToEnd();
-        string error = process.StandardError.ReadToEnd();
-        process.WaitForExit();
-
-        int exit = process.ExitCode;
-
-        if (error != "")
+        if (exit != 0)
         {
-            if (error.Contains("Lock exists"))
-            {
-                UnityEngine.Debug.Log($"[AutoLock] {assetPath} is already locked by you -> {result} {error} Code: {exit}");
+            string myEmail = RunGit("config user.email", out exit);
+            string myName = RunGit("config user.name", out exit);
+            string owner = GetLockOwner(assetPath);
 
-                //UnityEngine.Debug.LogError($"{assetPath} is already locked by someone else! You may overwrite their work! -> {result} {error} Code: {exit}");
-            }
+            if (!string.IsNullOrEmpty(owner) &&
+                (owner.Contains(myEmail, System.StringComparison.OrdinalIgnoreCase) ||
+                 owner.Contains(myName, System.StringComparison.OrdinalIgnoreCase)))
+                UnityEngine.Debug.Log($"[AutoLock] {assetPath} is already locked by you -> {response} Code: {exitcode}");
             else
-            {
-                UnityEngine.Debug.LogError($"[AutoLock] Failed to lock {assetPath} (It is probably locked by someone else!) -> {result} {error} Code: {exit}");
-            }
+                UnityEngine.Debug.LogError($"{assetPath} is already locked by someone else! You may overwrite their work! -> {response} Code: {exitcode}");
         }
         else
-            UnityEngine.Debug.Log($"[AutoLock] Locked {assetPath} -> {result} {error} {exit}");
+            UnityEngine.Debug.Log($"[AutoLock] Locked {assetPath} -> {response} Code: {exitcode}");
     }
 }
 
