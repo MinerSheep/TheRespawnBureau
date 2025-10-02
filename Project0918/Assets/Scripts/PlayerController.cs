@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     float jumpTimer;
     bool isJumping;
     public int pointValue;
+    CollectibleContainer boxScript;
     Vector2 moveVelocity = new Vector2(0,0);
     [SerializeField] bool isGrounded;
 
@@ -73,6 +74,11 @@ public class PlayerController : MonoBehaviour
 
 
         rb.linearVelocity = new Vector2(moveVelocity.x, rb.linearVelocity.y) ;
+
+        if (Input.GetKey(KeyCode.E) && boxScript != null)
+        {
+            boxScript.OpenBox();
+        }
     }
 
     //Ground detection
@@ -82,6 +88,22 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = true;
             jumpTimer = 0;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.CompareTag("Container") == true)
+        {
+            boxScript = collision.gameObject.GetComponent<CollectibleContainer>();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(collision.gameObject.CompareTag("Container") == true)
+        {
+            boxScript = null;
         }
     }
 }
