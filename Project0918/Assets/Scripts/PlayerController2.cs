@@ -4,12 +4,12 @@ using UnityEngine.InputSystem.Processors;
 
 public class PlayerController2 : MonoBehaviour
 {
-    public bool AutoRunner=false;
+    public bool AutoRunner = false;
     public float MoveSpeed = 5f;
-    public float MoveForce=1f;
+    public float MoveForce = 1f;
     public float JumpForce = 5f;
     public bool Jumping = false;
-    public bool Crouching=false;
+    public bool Crouching = false;
     public float CrouchingTime = 2f;
     public float FallingForce = 3f;
 
@@ -19,8 +19,9 @@ public class PlayerController2 : MonoBehaviour
 
     private float crouchingTimer;
 
-    private AudioSource jump;
-    private AudioSource crouch;
+    private AudioSource audioSource;
+    public AudioClip jumpAudio;
+    public AudioClip crouchAudio;
 
 
     public void Move()
@@ -46,8 +47,8 @@ public class PlayerController2 : MonoBehaviour
             PM.ChangePlayerModelStats();
             Crouching = false;
             Jumping = true;
-            
-            jump.Play();
+
+            PlayJumpAudio();
         }
     }
 
@@ -61,7 +62,7 @@ public class PlayerController2 : MonoBehaviour
                 PM.ChangePlayerModelStats();
                 Crouching = true;
 
-                crouch.Play();
+                PlayCrouchAudio();
             }
         }
         else if (Input.GetKeyDown(KeyCode.S) && Jumping == true)
@@ -85,25 +86,21 @@ public class PlayerController2 : MonoBehaviour
     {
         RB = GetComponent<Rigidbody2D>();
 
-        jump = gameObject.AddComponent<AudioSource>();
+        audioSource = gameObject.AddComponent<AudioSource>();
 
-        AudioClip clip = Resources.Load<AudioClip>("Audio/jump-retro-game-jam-fx-1-00-03");
-        if (clip == null)
+        jumpAudio = Resources.Load<AudioClip>("Audio/jump-retro-game-jam-fx-1-00-03");
+        if (jumpAudio == null)
         {
             Debug.LogError("Could not load mp3 from Resources/Audio/jump-retro-game-jam-fx-1-00-03.mp3");
             return;
         }
-        jump.clip = clip;
 
-        crouch = gameObject.AddComponent<AudioSource>();
-        
-        clip = Resources.Load<AudioClip>("Audio/horror-body-drop-152091");
-        if (clip == null)
+        crouchAudio = Resources.Load<AudioClip>("Audio/horror-body-drop-152091");
+        if (crouchAudio == null)
         {
             Debug.LogError("Could not load mp3 from Resources/Audio/horror-body-drop-152091.mp3");
             return;
         }
-        crouch.clip = clip;
     }
     void Update()
     {
@@ -113,5 +110,19 @@ public class PlayerController2 : MonoBehaviour
         }
         Jump();
         Crouch();
+    }
+
+
+    //Audio handlers, load and play clips into audioSource
+    public void PlayJumpAudio()
+    {
+        audioSource.clip = jumpAudio;
+        audioSource.Play();
+    }
+
+    public void PlayCrouchAudio()
+    {
+        audioSource.clip = crouchAudio;
+        audioSource.Play();
     }
 }
