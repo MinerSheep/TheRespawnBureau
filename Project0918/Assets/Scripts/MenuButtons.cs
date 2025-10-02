@@ -4,29 +4,77 @@ using UnityEngine.SceneManagement;
 
 public class MenuButtons : MonoBehaviour
 {
+    public GameObject PlayPanel;
     public GameObject OnlinePanel;
-    private bool OnlinePanelActive = false;
 
-    public void StartGame()
+    private bool PlayPanelActive = false;
+    private bool OnlinePanelActive = false;
+    
+
+    public void TogglePlayMenu()
     {
-        SceneManager.LoadScene(1);
+        if(PlayPanel != null)
+        {
+            if(!PlayPanelActive)
+            {
+                ShowPlayPanel();
+                HideOnlinePanel();
+            }
+            else
+            {
+                HidePlayPanel();
+            }
+        }
     }
 
-    public void ShowOnline()
+    public void ToggleOnlineMenu()
     {
         if (OnlinePanel != null)
         {
             if(!OnlinePanelActive)
             {
-                OnlinePanel.SetActive(true);
-                OnlinePanelActive = true;
+                ShowOnlinePanel();
+                HidePlayPanel();
             }
             else
             {
-                OnlinePanel.SetActive(false);
-                OnlinePanelActive = false;
+                HideOnlinePanel();
             }
         }
+    }
+
+    public void ShowPlayPanel()
+    {
+        PlayPanel.SetActive(true);
+        PlayPanelActive = true;
+    }
+
+    public void HidePlayPanel()
+    {
+        PlayPanel.SetActive(false);
+        PlayPanelActive = false;
+    }
+
+    public void ShowOnlinePanel()
+    {
+        OnlinePanel.SetActive(true);
+        OnlinePanelActive = true;
+    }
+
+    public void HideOnlinePanel()
+    {
+        OnlinePanel.SetActive(false);
+        OnlinePanelActive = false;
+    }
+
+    public void AutorunnerPlay(string AutoRunnerTester)
+    {
+        SceneManager.LoadScene(AutoRunnerTester);
+    }
+
+    public void PlatformerPlay(string Platformer)
+    {
+        SceneManager.LoadScene(Platformer);
     }
 
     public void QuitGame()

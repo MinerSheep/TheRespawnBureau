@@ -3,21 +3,46 @@ name: Unlock Files after Merge
 on:
   push:
     branches:
-      - development
+      - development-donotdelete
 
 jobs:
   unlock-after-merge:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/development'
+    permissions:
+      contents: write
+      issues: write
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
           lfs: true
+          fetch-depth: 0
+
+      - name: Authenticate with Personal Access Token
+        env:
+          GH_TOKEN: ${{ secrets.LFS_PAT }}
+        run: |
+          git config --global user.name "MinerSheep"
+          git config --global user.email "ryderpbnj@gmail.com"
+          git remote set-url origin https://${{ secrets.LFS_PAT }}@github.com/${{ github.repository }}
+
+      - name: Debug Git Authentication with the PAT
+        run: |
+          git config --get remote.origin.url
+          curl -I -H "Authorization: token ${{ secrets.LFS_PAT }}" \
+            https://api.github.com/repos/${{ github.repository }}
 
       - name: Unlock merged files
         run: |
+          git lfs install
           CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
           for f in $CHANGED_FILES; do
-            git lfs unlock "$f" || true
+            echo "git lfs unlock --force $f"
+            git lfs unlock --force "$f" >/dev/null 2>&1 || true
           done
+        env:
+          GIT_ASKPASS: echo
+          GITHUB_USER: x-access-token
+          GITHUB_PASS: ${{ secrets.LFS_PAT }}
+          GIT_LFS_SKIP_SMUDGE: 1
+          GITHUB_TOKEN: ${{ secrets.LFS_PAT }}
