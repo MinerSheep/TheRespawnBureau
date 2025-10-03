@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1024022546701",
+    "project_id": "lightswitch-1fe66",
+    "storage_bucket": "lightswitch-1fe66.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1024022546701:android:77d52ebe06d0931f37c844",
+        "android_client_info": {
+          "package_name": "com.RespawnBureau.LightSwitch"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ-4_xuQH38nrumEVNanDva1cSWBdu4Yg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
