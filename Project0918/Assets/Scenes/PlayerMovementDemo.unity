@@ -2671,9 +2671,12 @@ MonoBehaviour:
   Jumping: 0
   Crouching: 0
   CrouchingTime: 2
-  RB: {fileID: 0}
+  FallingForce: 3
+  RB: {fileID: 2120804441}
   GD: {fileID: 0}
   PM: {fileID: 0}
+  jumpAudio: {fileID: 0}
+  crouchAudio: {fileID: 0}
 --- !u!1001 &7897557160925983663
 PrefabInstance:
   m_ObjectHideFlags: 0
