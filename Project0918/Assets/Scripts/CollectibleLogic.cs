@@ -16,10 +16,10 @@ public class CollectibleLogic : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") == true)
         {
-
             // Currently this adds points to the Player object by finding the tag "Player"
             // then adds the value of this collectible to the player's score
-            playerScript.pointValue += scoreValue;
+            CollectionManager.instance.score += scoreValue;
+            //playerScript.pointValue += scoreValue;
 
             // Currently calls a game object called "Audio Manager" and sends a play signal
             audioSource.Play();
