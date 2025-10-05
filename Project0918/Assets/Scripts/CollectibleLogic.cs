@@ -10,7 +10,7 @@ public class CollectibleLogic : MonoBehaviour
     void Start()
     { 
         playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-        audioSource = GameObject.Find("Audio Manager").GetComponent<AudioSource>();
+        //audioSource = GameObject.Find("Audio Manager").GetComponent<AudioSource>();
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -22,7 +22,7 @@ public class CollectibleLogic : MonoBehaviour
             //playerScript.pointValue += scoreValue;
 
             // Currently calls a game object called "Audio Manager" and sends a play signal
-            audioSource.Play();
+            //audioSource.Play();
 
             // Destroys this object
             Destroy(this.gameObject);
