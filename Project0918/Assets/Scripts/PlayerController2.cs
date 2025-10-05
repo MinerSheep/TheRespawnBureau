@@ -23,7 +23,7 @@ public class PlayerController2 : MonoBehaviour
     public AudioClip jumpAudio;
     public AudioClip crouchAudio;
 
-
+    
     public void Move()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
