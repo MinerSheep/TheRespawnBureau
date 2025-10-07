@@ -8,6 +8,7 @@ public class FlashLight : MonoBehaviour
 
     public GameObject flashLight;
     public bool flashLightOn = true;
+    public bool followMouse = false;
     public KeyCode flashLightflip = KeyCode.F;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -34,6 +35,15 @@ public class FlashLight : MonoBehaviour
         if (!flashLightOn)
         {
             FlashLightOff();
+        }
+
+        if (followMouse)
+        {
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 direction = mousePos - (Vector2)transform.position;
+
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0f, 0f, angle);
         }
 
         //flipping flashlight by flip the sprite mask
