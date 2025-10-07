@@ -32,6 +32,7 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
         instance = this;
         DontDestroyOnLoad(gameObject);
 
@@ -42,6 +43,16 @@ public class AudioManager : MonoBehaviour
             if (!soundDict.ContainsKey(s.name))
                 soundDict.Add(s.name, s);
         }
+
+        mainSource = gameObject.AddComponent<AudioSource>();
+    }
+
+    void Update()
+    {
+        GameObject go = GameObject.FindWithTag("Player");
+
+        if (go != null)
+            transform.position = go.transform.position;
     }
 
     public void Play(string name)
@@ -54,7 +65,7 @@ public class AudioManager : MonoBehaviour
 
         mainSource.pitch = s.pitch;
         mainSource.PlayOneShot(s.clip, s.volume);
-        
+
         mainSource.clip = s.clip;
         mainSource.Play();
 

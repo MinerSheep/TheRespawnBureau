@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.Processors;
+using UnityEngine.SceneManagement;
 
 public class PlayerController2 : MonoBehaviour
 {
@@ -110,6 +111,11 @@ public class PlayerController2 : MonoBehaviour
         }
         Jump();
         Crouch();
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            SceneManager.LoadScene("MainMenu_PC");
+        }
     }
 
 
