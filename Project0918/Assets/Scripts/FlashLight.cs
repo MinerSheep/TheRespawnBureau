@@ -10,6 +10,7 @@ public class FlashLight : MonoBehaviour
     public bool flashLightOn = true;
     public bool followMouse = false;
     public KeyCode flashLightflip = KeyCode.F;
+    public FlipCamera flipCamera = null;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -69,5 +70,8 @@ public class FlashLight : MonoBehaviour
     void flip()
     {
         flashLight.transform.Rotate(0f, 180f, 0f, Space.Self);
+
+        if (flipCamera != null)
+            flipCamera.Flip();
     }
 }
