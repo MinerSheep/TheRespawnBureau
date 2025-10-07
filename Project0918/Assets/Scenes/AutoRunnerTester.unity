@@ -203,6 +203,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kill Box
       objectReference: {fileID: 0}
+    - target: {fileID: 3873817364779114690, guid: 4ba155631a834a24aa9055b9539d2104, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6118009835838840134, guid: 4ba155631a834a24aa9055b9539d2104, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.300096
