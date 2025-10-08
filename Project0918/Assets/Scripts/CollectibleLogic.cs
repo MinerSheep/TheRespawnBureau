@@ -4,11 +4,11 @@ using UnityEngine;
 public class CollectibleLogic : MonoBehaviour
 {
     public int scoreValue;
-    PlayerController playerScript;
+    MovementDemoController playerScript;
 
     void Start()
     {
-        playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        playerScript = GameObject.FindWithTag("Player").GetComponent<MovementDemoController>();
         
         //audioSource = GameObject.Find("Audio Manager").GetComponent<AudioSource>();
     }
