@@ -13,6 +13,14 @@ public class CollectibleContainer : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.E))
+        {
+            OpenBox();
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player") && boxOpened == false)

@@ -2121,19 +2121,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2120804440}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0061e2227c5a78740ad2d299a1e6df88, type: 3}
+  m_Script: {fileID: 11500000, guid: 96c1b16db4fe0d644b9a1d0bafff6436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AutoRunner: 0
-  MoveSpeed: 5
-  MoveForce: 1
-  JumpForce: 5
-  Jumping: 0
-  Crouching: 0
-  CrouchingTime: 2
-  RB: {fileID: 0}
-  GD: {fileID: 0}
-  PM: {fileID: 0}
+  moveSpeed: 5
+  jumpForce: 15
+  jumpMaxTime: 5
+  pointValue: 0
+  isGrounded: 0
 --- !u!1001 &2195322625749376256
 PrefabInstance:
   m_ObjectHideFlags: 0
