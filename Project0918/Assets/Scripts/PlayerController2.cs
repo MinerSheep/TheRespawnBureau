@@ -13,6 +13,8 @@ public class PlayerController2 : MonoBehaviour
     public float CrouchingTime = 2f;
     public float FallingForce = 3f;
 
+    public int playerHealth = 3;
+
     public Rigidbody2D RB;
     public GroundDetection GD;
     public PlayerModel PM;
