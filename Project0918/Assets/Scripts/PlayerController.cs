@@ -1,109 +1,134 @@
-using System.Collections;
-using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.Processors;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    //Modifiable player physics
-    [SerializeField] float moveSpeed;
-    [SerializeField] float jumpForce;
-    [SerializeField] float jumpMaxTime;
+    public bool AutoRunner = false;
+    public float MoveSpeed = 5f;
+    public float MoveForce = 1f;
+    public float JumpForce = 5f;
+    public bool Jumping = false;
+    public bool Crouching = false;
+    public float CrouchingTime = 2f;
+    public float FallingForce = 3f;
 
-    //Player variables
-    float moveDirection;
-    float jumpTimer;
-    bool isJumping;
-    public int pointValue;
-    CollectibleContainer boxScript;
-    Vector2 moveVelocity = new Vector2(0,0);
-    [SerializeField] bool isGrounded;
+    public Rigidbody2D RB;
+    public GroundDetection GD;
+    public PlayerModel PM;
 
-    //Component Call
-    Rigidbody2D rb;
+    private float crouchingTimer;
 
+    private AudioSource audioSource;
+    public AudioClip jumpAudio;
+    public AudioClip crouchAudio;
 
-    private void Start()
+    
+    public void Move()
     {
-        //Component Call
-        rb = GetComponent<Rigidbody2D>();
-    }
-
-    //
-    void Update()
-    {
-
-
-        //Horizontal inputs
-        if (Input.GetKey(KeyCode.A))
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        if (horizontal > -0.05 && horizontal <= 0.05)
         {
-            moveDirection = -1;
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            moveDirection = 1;
-            transform.localScale = new Vector3(1, 1, 1);
+            RB.linearVelocityX = Mathf.Lerp(RB.linearVelocityX, 0, 0.9f);
         }
         else
         {
-            moveDirection = 0;
-        }
-
-        //Vertical Input
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
-            jumpTimer += .05f;
-            isGrounded = false;
-            isJumping = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.Space) || jumpTimer >= jumpMaxTime)
-        {
-            jumpTimer = jumpMaxTime;
-            isJumping = false;
-        }
-
-        if (isJumping && Input.GetKey(KeyCode.Space))
-        {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-            jumpTimer += .2f;
-        }
-            
-        //define moveVelocity
-        moveVelocity.x = moveDirection * moveSpeed;
-
-
-        rb.linearVelocity = new Vector2(moveVelocity.x, rb.linearVelocity.y) ;
-
-        if (Input.GetKey(KeyCode.E) && boxScript != null)
-        {
-            boxScript.OpenBox();
+            RB.AddForce(Vector2.right * horizontal * MoveForce);
+            RB.linearVelocity = new Vector2(Mathf.Clamp(RB.linearVelocity.x, -MoveSpeed, MoveSpeed), RB.linearVelocity.y);
         }
     }
 
-    //Ground detection
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void Jump()
     {
-        if(collision.gameObject.CompareTag("Ground") == true)
+        if (Input.GetKeyDown(KeyCode.Space) && GD.Grounded)
         {
-            isGrounded = true;
-            jumpTimer = 0;
+            RB.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
+            PM.PlayerModelStats = 2;
+            PM.ChangePlayerModelStats();
+            Crouching = false;
+            Jumping = true;
+
+            PlayJumpAudio();
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void Crouch()
     {
-        if(collision.gameObject.CompareTag("Container") == true)
+        if (Input.GetKeyDown(KeyCode.S) && Jumping == false)
         {
-            boxScript = collision.gameObject.GetComponent<CollectibleContainer>();
+            if (!Crouching)
+            {
+                PM.PlayerModelStats = 1;
+                PM.ChangePlayerModelStats();
+                Crouching = true;
+
+                PlayCrouchAudio();
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.S) && Jumping == true)
+        {
+            RB.AddForce(Vector2.down * FallingForce);
+            Debug.Log("SFA");
+        }
+        if (Crouching)
+        {
+            crouchingTimer += Time.deltaTime;
+            if (crouchingTimer > CrouchingTime)
+            {
+                crouchingTimer = 0;
+                Crouching = false;
+                PM.PlayerModelStats = 0;
+                PM.ChangePlayerModelStats();
+            }
+        }
+    }
+    void Start()
+    {
+        RB = GetComponent<Rigidbody2D>();
+
+        audioSource = gameObject.AddComponent<AudioSource>();
+
+        jumpAudio = Resources.Load<AudioClip>("Audio/jump-retro-game-jam-fx-1-00-03");
+        if (jumpAudio == null)
+        {
+            Debug.LogError("Could not load mp3 from Resources/Audio/jump-retro-game-jam-fx-1-00-03.mp3");
+            return;
+        }
+
+        crouchAudio = Resources.Load<AudioClip>("Audio/horror-body-drop-152091");
+        if (crouchAudio == null)
+        {
+            Debug.LogError("Could not load mp3 from Resources/Audio/horror-body-drop-152091.mp3");
+            return;
+        }
+    }
+    void Update()
+    {
+        if (!AutoRunner)
+        {
+            Move();
+        }
+        Jump();
+        Crouch();
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            SceneManager.LoadScene("MainMenu_PC");
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+
+    //Audio handlers, load and play clips into audioSource
+    public void PlayJumpAudio()
     {
-        if(collision.gameObject.CompareTag("Container") == true)
-        {
-            boxScript = null;
-        }
+        audioSource.clip = jumpAudio;
+        audioSource.Play();
+    }
+
+    public void PlayCrouchAudio()
+    {
+        audioSource.clip = crouchAudio;
+        audioSource.Play();
     }
 }

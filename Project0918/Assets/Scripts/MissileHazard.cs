@@ -1,5 +1,3 @@
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 
 public class MissileHazard : MonoBehaviour
@@ -39,7 +37,7 @@ public class MissileHazard : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            PlayerController2 playercontroller = collision.gameObject.GetComponent<PlayerController2>();
+            PlayerController playercontroller = collision.gameObject.GetComponent<PlayerController2>();
             playercontroller.playerHealth -= 1;
         }
     }

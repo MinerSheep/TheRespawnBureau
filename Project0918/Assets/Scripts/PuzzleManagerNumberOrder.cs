@@ -12,13 +12,16 @@ public class PuzzleManager : MonoBehaviour
     public GameObject door;
 
     public PuzzleTrigger PT;
-    
 
-    
+
+
 
     private void Start()
     {
         PuzzlePanel.SetActive(false);
+
+        if (PT == null)
+            PT = PuzzleTrigger.GetComponent<PuzzleTrigger>();
     }
 
     private void Update()
