@@ -23,7 +23,7 @@ public class CollectionManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("Current Score: " + score);
+        //Debug.Log("Current Score: " + score);
 
         // HUD updates if the player reaches a new high score
         if (score > highScore)
