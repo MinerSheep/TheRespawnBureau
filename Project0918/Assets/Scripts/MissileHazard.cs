@@ -37,8 +37,8 @@ public class MissileHazard : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            PlayerController playercontroller = collision.gameObject.GetComponent<PlayerController2>();
-            playercontroller.playerHealth -= 1;
+            PlayerController playercontroller = collision.gameObject.GetComponent<PlayerController>();
+            //playercontroller.playerHealth -= 1;
         }
     }
 }
