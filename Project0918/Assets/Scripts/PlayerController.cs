@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
 
     public Rigidbody2D RB;
     public GroundDetection GD;
-    public PlayerModel PM;
+    //public PlayerModel PM;
 
     private float crouchingTimer;
 
@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             RB.AddForce(Vector2.right * horizontal * MoveForce);
-            RB.linearVelocity = new Vector2(Mathf.Clamp(RB.linearVelocity.x, -MoveSpeed, MoveSpeed), RB.linearVelocity.y);
+            RB.linearVelocity = new Vector2(Mathf.Clamp(RB.linearVelocityX, -MoveSpeed, MoveSpeed), RB.linearVelocity.y);
         }
     }
 
@@ -44,8 +44,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && GD.Grounded)
         {
             RB.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
-            PM.PlayerModelStats = 2;
-            PM.ChangePlayerModelStats();
+            //PM.PlayerModelStats = 2;
+            //PM.ChangePlayerModelStats();
             Crouching = false;
             Jumping = true;
 
@@ -59,8 +59,8 @@ public class PlayerController : MonoBehaviour
         {
             if (!Crouching)
             {
-                PM.PlayerModelStats = 1;
-                PM.ChangePlayerModelStats();
+                //PM.PlayerModelStats = 1;
+                //PM.ChangePlayerModelStats();
                 Crouching = true;
 
                 PlayCrouchAudio();
@@ -78,8 +78,8 @@ public class PlayerController : MonoBehaviour
             {
                 crouchingTimer = 0;
                 Crouching = false;
-                PM.PlayerModelStats = 0;
-                PM.ChangePlayerModelStats();
+                //PM.PlayerModelStats = 0;
+                //PM.ChangePlayerModelStats();
             }
         }
     }

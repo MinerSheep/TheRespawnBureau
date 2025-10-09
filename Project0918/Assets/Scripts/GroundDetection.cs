@@ -5,7 +5,7 @@ public class GroundDetection : MonoBehaviour
     public bool Grounded;
     private int GroundCount = 0;
     public PlayerController PC;
-    public PlayerModel PM;
+    //public PlayerModel PM;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -18,8 +18,8 @@ public class GroundDetection : MonoBehaviour
                 if (PC.Jumping)
                 {
                     PC.Jumping = false;
-                    PM.PlayerModelStats = 0;
-                    PM.ChangePlayerModelStats();
+                    //PM.PlayerModelStats = 0;
+                    //PM.ChangePlayerModelStats();
                 }
             }
         }
