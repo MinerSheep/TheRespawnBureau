@@ -4,14 +4,20 @@ using UnityEngine;
 public class CollectibleLogic : MonoBehaviour
 {
     public int scoreValue;
-    PlayerController playerScript;
+    PlayerController2 playerScript;
 
     void Start()
-    { 
-        playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+    {
+        playerScript = GameObject.Find("Player_Controller").GetComponent<PlayerController2>();
         if (!playerScript)
         {
             Debug.Log("Script null!");
+        }
+
+        GameObject playerObject = GameObject.FindWithTag("Player");
+        if (!playerObject)
+        {
+            Debug.Log("Player not found!");
         }
     }
     public void OnTriggerEnter2D(Collider2D collision)

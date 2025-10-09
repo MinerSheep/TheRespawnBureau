@@ -14,6 +14,7 @@ public class PlayerController2 : MonoBehaviour
     public float FallingForce = 3f;
 
     public int playerHealth = 3;
+    public int pointValue;
 
     public Rigidbody2D RB;
     public GroundDetection GD;
