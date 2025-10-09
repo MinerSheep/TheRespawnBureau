@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,6 +25,13 @@ public class PuzzleManagerArrowsOrder : MonoBehaviour
         KeyCode.UpArrow,
         KeyCode.DownArrow
     };
+
+    public List<GameObject> images = new List<GameObject>
+    {
+        
+    };
+
+    
 
     private int currentStep = 0;
     private bool puzzleActive = false;
@@ -73,6 +81,8 @@ public class PuzzleManagerArrowsOrder : MonoBehaviour
         if(key == correctOrder[currentStep])
         {
             currentStep++;
+
+            images[currentStep - 1].SetActive(false);
 
             if (currentStep >= correctOrder.Count)
             {
