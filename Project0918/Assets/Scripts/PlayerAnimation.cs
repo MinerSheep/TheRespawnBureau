@@ -6,18 +6,20 @@ public class PlayerAnimation : MonoBehaviour
     private PlayerController pC;
     private Rigidbody2D rB;
     public Animator AT;
+    public float Playerscale = 1.5f;
     public int direction = 1; //1 means facing right while 0 means facing left
+    public GameObject PlayerModel;
 
     private void Turn()
     {
         if (rB.linearVelocityX < -0.5f)
         {
-            gameObject.transform.localScale = new Vector3(-1, 1, 1);
+            PlayerModel.transform.localScale = new Vector3(Playerscale, Playerscale, 1);
             direction = 0;
         }
         else if (rB.linearVelocityX > 0.5f)
         {
-            gameObject.transform.localScale = new Vector3(1, 1, 1);
+            PlayerModel.transform.localScale = new Vector3(-Playerscale, Playerscale, 1);
             direction = 1;
         }
     }
@@ -27,7 +29,6 @@ public class PlayerAnimation : MonoBehaviour
     {
         pC=GetComponent<PlayerController>();
         rB = GetComponent<Rigidbody2D>();
-
     }
 
     public void UpdateStatus()
@@ -53,6 +54,7 @@ public class PlayerAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Turn();
         UpdateStatus();
     }
 }
