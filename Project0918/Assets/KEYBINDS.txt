@@ -1,0 +1,3 @@
+ESCAPE: Pause
+TAB: Return to Main Menu
+B: Reset High Score

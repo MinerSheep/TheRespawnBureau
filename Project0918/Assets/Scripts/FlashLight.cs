@@ -16,6 +16,9 @@ public class FlashLight : MonoBehaviour
     void Start()
     {
         batteryCurrent = batteryMax;
+
+        if (spriteMask == null)
+            spriteMask = transform.Find("Sprite Mask")?.gameObject;
     }
 
     // Update is called once per frame
