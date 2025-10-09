@@ -18,7 +18,7 @@ public class CollectionManager : MonoBehaviour
 
         // Load high score from file and display in HUD
         highScore = PlayerPrefs.GetInt("score");
-        _scoreText.text = "High Score: " + highScore;
+        //_scoreText.text = "High Score: " + highScore;
     }
 
     private void Update()
@@ -27,7 +27,7 @@ public class CollectionManager : MonoBehaviour
         if(score > highScore)
         {
             highScore = score;
-            _scoreText.text = "High Score: " + highScore;
+            //_scoreText.text = "High Score: " + highScore;
         }
     }
 
