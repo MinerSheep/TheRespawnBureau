@@ -3,11 +3,20 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
+public enum PatrolBehavior
+{
+    Loop,
+    BackAndForth,
+    Random
+}
+
 public class MonsterBehavior_Patrol : MonoBehaviour
 {
-    [SerializeField] Transform[] patrolPoints;          // List of points that the monster moves between
-    [SerializeField] float speed = 1.5f;                // Movement speed
-    private int destPoint = 0;                          // Index for next patrol point
+    [SerializeField] Transform[] patrolPoints;              // List of points that the monster moves between
+    [SerializeField] private PatrolBehavior patrolBehavior; // Determines the "style" of movement between patrol points
+    [SerializeField] float speed = 1.5f;                    // Movement speed
+    private int destPoint = 0;                              // Index for next patrol point
+    private bool patrolDir = true;                          // Determines whether the monster is going forward/backward through patrol points
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,8 +32,39 @@ public class MonsterBehavior_Patrol : MonoBehaviour
             return;
         }
 
-        // Choose the next point in the array as the destination, wrap around if necessary
-        destPoint = (destPoint + 1) % patrolPoints.Length;
+        // BackAndForth makes the monster reverse direction when hitting the last/first patrol point
+        if(patrolBehavior == PatrolBehavior.BackAndForth)
+        {
+            // If the monster has reached the last point (on either end), reverse direction
+            if (destPoint + 1 >= patrolPoints.Length && patrolDir)
+            {
+                patrolDir = false;
+            }
+            else if (destPoint - 1 <= 0 && !patrolDir)
+            {
+                patrolDir = true;
+            }
+            // Increment/Decrement patrol point index accordingly
+            if (patrolDir)
+            {
+                ++destPoint;
+            }
+            else if (!patrolDir)
+            {
+                --destPoint;
+            }
+        }
+        // Loop treats all patrol points as a continuous route (last connects to first)
+        else if(patrolBehavior == PatrolBehavior.Loop)
+        {
+            // Choose the next point in the array as the destination, wrap around if necessary
+            destPoint = (destPoint + 1) % patrolPoints.Length;
+        }
+        // Random is... random, monster picks random points from the list to move to
+        else if(patrolBehavior == PatrolBehavior.Random)
+        {
+            destPoint = Random.Range(0, patrolPoints.Length);
+        }
     }
 
     // Update is called once per frame
