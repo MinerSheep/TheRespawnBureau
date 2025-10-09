@@ -1,4 +1,6 @@
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MonsterBehavior : MonoBehaviour
 {
@@ -22,18 +24,31 @@ public class MonsterBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Target != null)
+        // Different scenes have different monster behavior
+        string sceneName = SceneManager.GetActiveScene().name;
+        // Platformer scene: Monster chases player through walls, moves constantly on both x and y axis (flies)
+        if (sceneName == "Platformer")
         {
-            transform.position = new Vector3(transform.position.x, Target.transform.position.y);
-
-            if(Vector3.Distance(Target.transform.position, transform.position) < distance)
+            if(Target != null)
             {
-                Vector3 targetPos = Target.transform.position - (Target.transform.position - transform.position).normalized * distance;
-                transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, Target.transform.position, speed * Time.deltaTime);
             }
-
         }
+        // Auto Runner scene: Monster moves right constantly, matches player's Y position exactly
+        else if(sceneName == "AutoRunnerTester")
+        {
+            if (Target != null)
+            {
+                transform.position = new Vector3(transform.position.x, Target.transform.position.y);
 
+                if (Vector3.Distance(Target.transform.position, transform.position) < distance)
+                {
+                    Vector3 targetPos = Target.transform.position - (Target.transform.position - transform.position).normalized * distance;
+                    transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
+                }
+
+            }
+        }
     }
 
 
@@ -42,7 +57,13 @@ public class MonsterBehavior : MonoBehaviour
 
     void OnTriggerEnter2D(UnityEngine.Collider2D collision)
     {
-        Debug.Log("Triggered with: " + collision.gameObject.name);
+        string objName = collision.gameObject.name;
+        Debug.Log("Triggered with: " + objName);
+        // If the monster collides with the player, kill the player (reload level)
+        if(objName == "Player_Stand" || objName == "Player_Jump" || objName == "Player_Crouch")
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 
 
