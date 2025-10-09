@@ -6,7 +6,7 @@ public class FlashLight : MonoBehaviour
     public float batteryUseRate = 1.0f;
     public float batteryCurrent;
 
-    public GameObject flashLight;
+    public GameObject spriteMask;
     public bool flashLightOn = true;
     public bool followMouse = false;
     public KeyCode flashLightflip = KeyCode.F;
@@ -56,11 +56,11 @@ public class FlashLight : MonoBehaviour
 
     void FlashLightOff() 
     {
-        flashLight.SetActive(false);
+        spriteMask.SetActive(false);
     }
     void FlashLightOn()
     {
-        flashLight.SetActive(true);
+        spriteMask.SetActive(true);
     }
     public void BatteryChange(float batteryChange = 0f)
     {
@@ -69,7 +69,7 @@ public class FlashLight : MonoBehaviour
 
     void flip()
     {
-        flashLight.transform.Rotate(0f, 180f, 0f, Space.Self);
+        spriteMask.transform.Rotate(0f, 180f, 0f, Space.Self);
 
         //if (flipCamera != null)
         //    flipCamera.Flip();
