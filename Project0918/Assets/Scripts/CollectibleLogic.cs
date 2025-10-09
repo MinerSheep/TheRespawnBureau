@@ -25,7 +25,11 @@ public class CollectibleLogic : MonoBehaviour
         {
             // Currently this adds points to the Player object by finding the tag "Player"
             // then adds the value of this collectible to the player's score
-            CollectionManager.instance.score += scoreValue;
+
+            if (CollectionManager.instance != null)
+            {
+                CollectionManager.instance.score += scoreValue;
+            }
 
             if (playerController != null)
             {
@@ -34,7 +38,10 @@ public class CollectibleLogic : MonoBehaviour
             }
 
             // Currently calls a game object called "Audio Manager" and sends a play signal
-            AudioManager.instance.Play("coin_collect");
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.Play("coin_collect");
+            }
 
             // Destroys this object
             Destroy(this.gameObject);
