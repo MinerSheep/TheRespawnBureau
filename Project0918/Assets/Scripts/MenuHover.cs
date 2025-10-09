@@ -6,13 +6,8 @@ using UnityEngine.EventSystems;
 public class MenuHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 
-    public GameObject PlayButton;
-    public GameObject OnlineButton;
-    public GameObject OptionsButton;
-    public GameObject QuitButton;
-
     public Vector3 initialScale;
-    public Vector3 hoverScale;
+    public float hoverScaleMultiplier = 1.1f;
 
     public void Start()
     {
@@ -21,12 +16,12 @@ public class MenuHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        //make hovered menu button bigger
+        transform.localScale = initialScale * hoverScaleMultiplier;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-
+        transform.localScale = initialScale;
     }
 
 
