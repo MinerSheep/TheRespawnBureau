@@ -60,7 +60,7 @@ public class MonsterBehavior : MonoBehaviour
         string objName = collision.gameObject.name;
         Debug.Log("Triggered with: " + objName);
         // If the monster collides with the player, kill the player (reload level)
-        if(objName == "Player_Stand")
+        if(objName == "Player_Stand" || objName == "Player_Jump" || objName == "Player_Crouch")
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
