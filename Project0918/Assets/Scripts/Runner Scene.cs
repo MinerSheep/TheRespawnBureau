@@ -31,5 +31,8 @@ public class RunnerScene : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
             SceneManager.LoadScene("AutoRunnerTester");
+
+        if (Input.GetKeyDown(KeyCode.L))
+            SceneManager.LoadScene("AR02");
     }
 }

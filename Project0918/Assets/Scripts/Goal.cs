@@ -24,6 +24,12 @@ public class Goal : MonoBehaviour
         {
             // Win condition
             finished = true;
+
+            if (CollectionManager.instance != null)
+            {
+                CollectionManager.instance.SaveScore();
+            }
+
             for (int i = 0; i < 100; i++)
                 Instantiate(confetti, transform.position, Quaternion.identity);
         }
