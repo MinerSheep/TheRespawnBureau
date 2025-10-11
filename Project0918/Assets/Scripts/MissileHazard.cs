@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class MissileHazard : MonoBehaviour
 {
-    public float missileVelocity;
-    public float lifespanTimer;
-    private bool passedPlayer;
+    [SerializeField] private float missileVelocity;
+    [SerializeField] private float lifespanTimer;
+    [SerializeField] private bool passedPlayer;
     private Rigidbody2D rb;
     private Transform tf;
 
@@ -30,6 +30,17 @@ public class MissileHazard : MonoBehaviour
         if (passedPlayer)
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            PlayerController playercontroller = collision.gameObject.GetComponent<PlayerController>();
+            playercontroller.LoseHealth();
+
+            Debug.Log("Missle hit landed");
         }
     }
 }

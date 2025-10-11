@@ -30,6 +30,9 @@ public class RunnerScene : MonoBehaviour
         transform.position += new Vector3(-MovingSpeed * Time.deltaTime, 0, 0);
 
         if (Input.GetKeyDown(KeyCode.R))
-            SceneManager.LoadScene("AutoRunnerTester");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+        if (Input.GetKeyDown(KeyCode.L))
+            SceneManager.LoadScene("AR02");
     }
 }

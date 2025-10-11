@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+// This class is responsible for hp and flashlight management
 public class HealthFill : MonoBehaviour
 {
     [Header("Battery")]
@@ -13,7 +14,7 @@ public class HealthFill : MonoBehaviour
     public FlashLight FL;
 
     [Header("Health")]
-    public int health = 4;
+    public int hp = 4;
     public TextMeshProUGUI healthText;
 
     private void Start()
@@ -34,7 +35,7 @@ public class HealthFill : MonoBehaviour
 
     public void LoseHealth()
     {
-        health--;
+        hp--;
         UpdateHealthAmount();
     }
 
@@ -43,12 +44,12 @@ public class HealthFill : MonoBehaviour
     public void UpdateFillAmount()
     {
         battery.fillAmount = Mathf.Clamp01(BatteryCurrentAmount / BatteryMaxAmount);
-        
+
     }
 
     public void UpdateHealthAmount()
     {
-        healthText.text = health.ToString();
+        healthText.text = hp.ToString();
     }
 
 
