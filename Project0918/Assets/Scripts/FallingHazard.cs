@@ -10,7 +10,7 @@ public class FallingHazard : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        playerScript = GameObject.Find("Player_Controller").GetComponent<PlayerController>();
+        playerScript = GameObject.FindAnyObjectByType<PlayerController>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -30,7 +30,9 @@ public class FallingHazard : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            playerScript.health -= 1;
+            playerScript.LoseHealth();
+
+            Debug.Log("Falling hit landed");
         }
     }
 }
