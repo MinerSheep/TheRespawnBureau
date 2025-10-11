@@ -22,10 +22,6 @@ public class PlayerController : MonoBehaviour
 
     public int pointValue;
 
-
-    public int pointValue;
-    public int health = 3;
-
     private float crouchingTimer;
 
     private AudioSource audioSource;
