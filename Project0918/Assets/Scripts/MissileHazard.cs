@@ -38,7 +38,9 @@ public class MissileHazard : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             PlayerController playercontroller = collision.gameObject.GetComponent<PlayerController>();
-            //playercontroller.health -= 1;
+            playercontroller.LoseHealth();
+
+            Debug.Log("Missle hit landed");
         }
     }
 }

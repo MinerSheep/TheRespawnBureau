@@ -11,7 +11,7 @@ public class CollectibleLogic : MonoBehaviour
     {
         playerScript = GameObject.FindWithTag("Player").GetComponent<MovementDemoController>();
 
-        playerController = GameObject.Find("Player_Controller").GetComponent<PlayerController>();
+        playerController = GameObject.FindAnyObjectByType<PlayerController>();
         if (!playerController)
         {
             Debug.Log("Player Controller null!");
