@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour
     public GroundDetection GD;
     public PlayerModel PM;
 
+    public int pointValue;
+    public int health = 3;
+
     private float crouchingTimer;
 
     private AudioSource audioSource;

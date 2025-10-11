@@ -5,10 +5,17 @@ public class CollectibleLogic : MonoBehaviour
 {
     public int scoreValue;
     MovementDemoController playerScript;
+    PlayerController playerController;
 
     void Start()
     {
         playerScript = GameObject.FindWithTag("Player").GetComponent<MovementDemoController>();
+
+        playerController = GameObject.Find("Player_Controller").GetComponent<PlayerController>();
+        if (!playerController)
+        {
+            Debug.Log("Player Controller null!");
+        }
         
         //audioSource = GameObject.Find("Audio Manager").GetComponent<AudioSource>();
     }
@@ -18,11 +25,23 @@ public class CollectibleLogic : MonoBehaviour
         {
             // Currently this adds points to the Player object by finding the tag "Player"
             // then adds the value of this collectible to the player's score
-            CollectionManager.instance.score += scoreValue;
-            //playerScript.pointValue += scoreValue;
+
+            if (CollectionManager.instance != null)
+            {
+                CollectionManager.instance.score += scoreValue;
+            }
+
+            if (playerController != null)
+            {
+                playerController.pointValue += scoreValue;
+                //playerScript.pointValue += scoreValue;
+            }
 
             // Currently calls a game object called "Audio Manager" and sends a play signal
-            AudioManager.instance.Play("coin_collect");
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.Play("coin_collect");
+            }
 
             // Destroys this object
             Destroy(this.gameObject);
