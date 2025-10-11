@@ -44,7 +44,9 @@ public class CollectibleContainer : MonoBehaviour
         if (playerCollision == true && boxOpened == false)
         {
             Vector3 boxtransform = transform.position;
-            Instantiate(collectible, boxtransform, Quaternion.identity);
+            float randomVariance = Random.Range(-0.5f, 0.5f);
+            Vector3 newTransform = new Vector3(boxtransform.x + randomVariance, boxtransform.y + randomVariance, 1f);
+            Instantiate(collectible, newTransform, Quaternion.identity);
             spriteRenderer.color = Color.white;
             boxOpened = true;
         }
