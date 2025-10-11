@@ -13,13 +13,15 @@ public class PlayerController : MonoBehaviour
     public bool Crouching = false;
     public float CrouchingTime = 2f;
     public float FallingForce = 3f;
+    public float iFrameMax = 0.2f;
 
     public Rigidbody2D RB;
     public GroundDetection GD;
     public PlayerModel PM;
+    public HealthFill health;
 
     public int pointValue;
-    public int health = 3;
+
 
     private float crouchingTimer;
 
@@ -27,6 +29,15 @@ public class PlayerController : MonoBehaviour
     public AudioClip jumpAudio;
     public AudioClip crouchAudio;
 
+    private float iFrames;
+    public void LoseHealth()
+    {
+        if (iFrames > 0)
+            return;
+
+        health.LoseHealth();
+        iFrames = iFrameMax;
+    }
     
     public void Move()
     {
@@ -115,6 +126,13 @@ public class PlayerController : MonoBehaviour
         Jump();
         Crouch();
 
+        // iFrame counter
+        if (iFrames > 0)
+        {
+            iFrames -= Time.deltaTime;
+        }
+
+        // Return to main menu
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             SceneManager.LoadScene("MainMenu_PC");
