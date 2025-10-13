@@ -19,9 +19,9 @@ public class PlayerController : MonoBehaviour
     public GroundDetection GD;
     public PlayerModel PM;
     public HealthFill health;
+    public FlashLight flashlight;
 
     public int pointValue;
-
 
     private float crouchingTimer;
 
@@ -116,6 +116,9 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("Could not load mp3 from Resources/Audio/horror-body-drop-152091.mp3");
             return;
         }
+
+        if (flashlight == null)
+            flashlight = transform.Find("FlashLight").GetComponent<FlashLight>();
     }
     void Update()
     {

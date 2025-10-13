@@ -4,6 +4,7 @@ using UnityEngine;
 public class CollectibleLogic : MonoBehaviour
 {
     public int scoreValue;
+    public int batteryValue;
     MovementDemoController playerScript;
     PlayerController playerController;
 
@@ -23,6 +24,8 @@ public class CollectibleLogic : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") == true)
         {
+            if (scoreValue > 0)
+            {
             // Currently this adds points to the Player object by finding the tag "Player"
             // then adds the value of this collectible to the player's score
 
@@ -42,6 +45,12 @@ public class CollectibleLogic : MonoBehaviour
             {
                 AudioManager.instance.Play("coin_collect");
             }
+                
+            }
+
+            // Give battery if battery value
+            if (batteryValue > 0)
+                playerController.flashlight.BatteryChange(batteryValue);
 
             // Destroys this object
             Destroy(this.gameObject);
