@@ -6,11 +6,15 @@ public class SwayingLight : MonoBehaviour
     public float swayAngle = 30f;   // Maximum angle to sway
     public float swaySpeed = 2f;    // Speed of swaying
 
+    public bool removeSprite = true;
     private Quaternion initialRotation;
 
     void Start()
     {
         initialRotation = transform.rotation;
+
+        if (removeSprite)
+            GetComponent<SpriteRenderer>().sprite = null;
     }
 
     void Update()
