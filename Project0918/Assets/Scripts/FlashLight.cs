@@ -12,6 +12,8 @@ public class FlashLight : MonoBehaviour
     public KeyCode flashLightflip = KeyCode.F;
     //public FlipCamera flipCamera = null;
 
+    int direction = 1;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -61,13 +63,13 @@ public class FlashLight : MonoBehaviour
         }
 
         //flipping flashlight by flip the sprite mask
-        if (Input.GetKeyDown(flashLightflip))
+        if (Input.GetKeyDown(flashLightflip) && lightMethod == LightMethod.Static)
         {
             flip();
         }
     }
 
-    void FlashLightOff() 
+    void FlashLightOff()
     {
         spriteMask.SetActive(false);
     }
@@ -83,9 +85,9 @@ public class FlashLight : MonoBehaviour
     void flip()
     {
         spriteMask.transform.Rotate(0f, 180f, 0f, Space.Self);
+        direction = direction == 0 ? 1 : 0;
 
-        //if (flipCamera != null)
-        //    flipCamera.Flip();
+        PlayerEvents.OnFlipFlashlight.Invoke(direction);
     }
 
     public enum LightMethod

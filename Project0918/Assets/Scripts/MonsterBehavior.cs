@@ -1,17 +1,23 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 public class MonsterBehavior : MonoBehaviour
 {
     [SerializeField] GameObject Target;
     [SerializeField] float speed = 0.1f;
-
+    public float currentSpeed;
+    public float speedUpRate = 0.1f;
+    public float flashedSpeed = 0f;
+    public bool isflashed = false;
     public MonsterState state;
 
     float distance = 10f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
+        currentSpeed = speed;
         if (!Target)
         {
             Target = GameObject.FindWithTag("Player");
@@ -22,9 +28,22 @@ public class MonsterBehavior : MonoBehaviour
         }
     }
 
+    float buildUpSpeed = 0.5f;
     // Update is called once per frame
     void Update()
     {
+        
+        if (isflashed)
+        {
+            currentSpeed = flashedSpeed;
+            buildUpSpeed = 0;
+        }
+        else
+        {
+            buildUpSpeed = Mathf.Clamp01(buildUpSpeed + Time.deltaTime * speedUpRate);
+            currentSpeed = Mathf.Lerp(flashedSpeed, speed, buildUpSpeed);
+        }
+        
         // Different scenes have different monster behavior
 
         switch (state)
@@ -33,7 +52,7 @@ public class MonsterBehavior : MonoBehaviour
             case MonsterState.Platformer:
                 if(Target != null)
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, Target.transform.position, speed * Time.deltaTime);
+                    transform.position = Vector3.MoveTowards(transform.position, Target.transform.position, currentSpeed * Time.deltaTime);
                 }
                 break;
             // Auto Runner scene: Monster moves right constantly, matches player's Y position exactly
@@ -61,10 +80,28 @@ public class MonsterBehavior : MonoBehaviour
     {
         string objName = collision.gameObject.name;
         Debug.Log("Triggered with: " + objName);
+
         // If the monster collides with the player, kill the player (reload level)
-        if (objName == "Player_Stand" || objName == "Player_Jump" || objName == "Player_Crouch")
+        if (collision.tag == "Player" || objName == "Player_Stand" || objName == "Player_Jump" || objName == "Player_Crouch")
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        if (objName == "LightBlock")
+        {
+            isflashed = true;
+            Debug.Log("Flashed");
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        string objName = collision.gameObject.name;
+
+        if (objName == "LightBlock")
+        {
+            isflashed = false;
+            Debug.Log("Not flashed");
         }
     }
 

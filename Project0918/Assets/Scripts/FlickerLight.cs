@@ -3,25 +3,30 @@ using System;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-[RequireComponent(typeof(FlashLight))]
 public class FlickerLight : MonoBehaviour
 {
-    [HideInInspector] public FlashLight flashlight; // URP 2D light
+    [SerializeField] public GameObject spriteMask;
     [SerializeField] public GameObject spriteMask2;
     public float flickerSpeed = 5f;
     public float flickerAmount = 0.1f;
     public float baseIntensity = 0.6f;
+
+    public bool removeSprite = true;
+
     public float rotateSpeed = 5;
 
     void Start()
     {
-        flashlight = GetComponent<FlashLight>();
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+
+        if (sr != null && removeSprite)
+            sr.sprite = null;
     }
 
     void Update()
     {
         float noise = Mathf.PerlinNoise(Time.time * flickerSpeed, 0f);
-        flashlight.spriteMask.GetComponent<SpriteMask>().alphaCutoff = Mathf.Clamp01(baseIntensity + (noise - 0.5f) * flickerAmount);
+        spriteMask.GetComponent<SpriteMask>().alphaCutoff = Mathf.Clamp01(baseIntensity + (noise - 0.5f) * flickerAmount);
 
         if (spriteMask2 != null)
         {
