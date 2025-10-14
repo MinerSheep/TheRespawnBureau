@@ -15847,8 +15847,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9585b3b68217b3543a7f7fdc0550ac6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartMovingSpeed: 0
-  EndMovingSpeed: 0
+  StartMovingSpeed: 3
+  EndMovingSpeed: 10
   ChangeTime: 9000
   AutoRunnerTimer: 0
   MovingSpeed: 0
@@ -17239,7 +17239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6990138546603561403, guid: ac9446fae40aebf469b0ca5261a86f8b, type: 3}
       propertyPath: speed
-      value: 12
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6990138546603561403, guid: ac9446fae40aebf469b0ca5261a86f8b, type: 3}
       propertyPath: state
@@ -21592,7 +21592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efb3a609f2c067649ae6af7bada65188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scoreText: {fileID: 0}
+  _scoreText: {fileID: 852342510}
   score: 0
   highScore: 0
 --- !u!4 &1881303099
