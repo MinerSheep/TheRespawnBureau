@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Goal : MonoBehaviour
 {
@@ -12,10 +13,19 @@ public class Goal : MonoBehaviour
 
     }
 
+    float transitionTimer = 3.0f;
     // Update is called once per frame
     void Update()
     {
+        if (finished)
+        {
+            transitionTimer -= Time.deltaTime;
 
+            if (transitionTimer < 0)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+        }
     }
     
     private void OnTriggerEnter2D(Collider2D other)
@@ -24,6 +34,12 @@ public class Goal : MonoBehaviour
         {
             // Win condition
             finished = true;
+
+            if (CollectionManager.instance != null)
+            {
+                CollectionManager.instance.SaveScore();
+            }
+
             for (int i = 0; i < 100; i++)
                 Instantiate(confetti, transform.position, Quaternion.identity);
         }
