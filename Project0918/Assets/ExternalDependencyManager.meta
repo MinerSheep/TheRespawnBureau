@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Project0918/Assets/Prefabs/FallingHazard.prefab.meta
+guid: 3642d962aea283748ab2a6d7eaa12268
+PrefabImporter:
+========
 guid: 70967e30989444e4cbae6e481d3c7280
 folderAsset: yes
 DefaultImporter:
+>>>>>>>> development-donotdelete:Project0918/Assets/ExternalDependencyManager.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
