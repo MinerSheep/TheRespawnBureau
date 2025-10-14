@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
 
     public Rigidbody2D RB;
     public GroundDetection GD;
-    public PlayerModel PM;
+    //public PlayerModel PM;
     public HealthFill health;
     public FlashLight flashlight;
 
@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     private float crouchingTimer;
 
     private AudioSource audioSource;
+    private CapsuleCollider2D cC;
     public AudioClip jumpAudio;
     public AudioClip crouchAudio;
 
@@ -49,7 +50,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             RB.AddForce(Vector2.right * horizontal * MoveForce);
-            RB.linearVelocity = new Vector2(Mathf.Clamp(RB.linearVelocity.x, -MoveSpeed, MoveSpeed), RB.linearVelocity.y);
+            RB.linearVelocity = new Vector2(Mathf.Clamp(RB.linearVelocityX, -MoveSpeed, MoveSpeed), RB.linearVelocity.y);
         }
     }
 
@@ -58,10 +59,11 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && GD.Grounded)
         {
             RB.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
-            PM.PlayerModelStats = 2;
-            PM.ChangePlayerModelStats();
+            //PM.PlayerModelStats = 2;
+            //PM.ChangePlayerModelStats();
             Crouching = false;
             Jumping = true;
+            cC.size = new Vector2(1, 2);
 
             PlayJumpAudio();
         }
@@ -73,10 +75,10 @@ public class PlayerController : MonoBehaviour
         {
             if (!Crouching)
             {
-                PM.PlayerModelStats = 1;
-                PM.ChangePlayerModelStats();
+                //PM.PlayerModelStats = 1;
+                //PM.ChangePlayerModelStats();
                 Crouching = true;
-
+                cC.size=new Vector2(1,1);
                 PlayCrouchAudio();
             }
         }
@@ -92,14 +94,16 @@ public class PlayerController : MonoBehaviour
             {
                 crouchingTimer = 0;
                 Crouching = false;
-                PM.PlayerModelStats = 0;
-                PM.ChangePlayerModelStats();
+                cC.size = new Vector2(1, 2);
+                //PM.PlayerModelStats = 0;
+                //PM.ChangePlayerModelStats();
             }
         }
     }
     void Start()
     {
         RB = GetComponent<Rigidbody2D>();
+        cC=GetComponent<CapsuleCollider2D>();
 
         audioSource = gameObject.AddComponent<AudioSource>();
 
