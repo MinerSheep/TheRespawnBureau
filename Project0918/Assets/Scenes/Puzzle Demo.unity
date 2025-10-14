@@ -786,6 +786,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 7635563162873571100, guid: 2bd4203d37b29db4ea8109d68e9a9ac6, type: 3}
+    - target: {fileID: 2102791908888117399, guid: c3ae583b744dc6f42bb090a970ee7d99, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2237989054355993960, guid: c3ae583b744dc6f42bb090a970ee7d99, type: 3}
       propertyPath: PT
       value: 
@@ -795,12 +799,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 394616325}
     - target: {fileID: 2237989054355993960, guid: c3ae583b744dc6f42bb090a970ee7d99, type: 3}
+      propertyPath: TimerText
+      value: 
+      objectReference: {fileID: 838969719}
+    - target: {fileID: 2237989054355993960, guid: c3ae583b744dc6f42bb090a970ee7d99, type: 3}
       propertyPath: PuzzleTrigger
       value: 
       objectReference: {fileID: 886115205999548968}
     - target: {fileID: 2657922925863690055, guid: c3ae583b744dc6f42bb090a970ee7d99, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1814918954}
+    - target: {fileID: 2657922925863690055, guid: c3ae583b744dc6f42bb090a970ee7d99, type: 3}
       propertyPath: m_SortingOrder
-      value: -100
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2657922925863690055, guid: c3ae583b744dc6f42bb090a970ee7d99, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 2828708949063325192, guid: c3ae583b744dc6f42bb090a970ee7d99, type: 3}
       propertyPath: m_Sprite
@@ -944,7 +960,7 @@ PrefabInstance:
       objectReference: {fileID: 7635563162873571100, guid: 2bd4203d37b29db4ea8109d68e9a9ac6, type: 3}
     - target: {fileID: 6699760896033363893, guid: c3ae583b744dc6f42bb090a970ee7d99, type: 3}
       propertyPath: m_Name
-      value: PuzzleCanvasArrowsOrder (1)
+      value: PuzzleCanvasArrowsOrder
       objectReference: {fileID: 0}
     - target: {fileID: 6871271972086580388, guid: c3ae583b744dc6f42bb090a970ee7d99, type: 3}
       propertyPath: m_Sprite
@@ -967,6 +983,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3ae583b744dc6f42bb090a970ee7d99, type: 3}
+--- !u!114 &838969719 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7342981583346659510, guid: c3ae583b744dc6f42bb090a970ee7d99, type: 3}
+  m_PrefabInstance: {fileID: 838969718}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &956252439
 GameObject:
   m_ObjectHideFlags: 0
