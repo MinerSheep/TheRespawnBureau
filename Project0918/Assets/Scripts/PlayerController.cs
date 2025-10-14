@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private float crouchingTimer;
 
     private AudioSource audioSource;
+    private CapsuleCollider2D cC;
     public AudioClip jumpAudio;
     public AudioClip crouchAudio;
 
@@ -48,6 +49,7 @@ public class PlayerController : MonoBehaviour
             //PM.ChangePlayerModelStats();
             Crouching = false;
             Jumping = true;
+            cC.size = new Vector2(1, 2);
 
             PlayJumpAudio();
         }
@@ -62,7 +64,7 @@ public class PlayerController : MonoBehaviour
                 //PM.PlayerModelStats = 1;
                 //PM.ChangePlayerModelStats();
                 Crouching = true;
-
+                cC.size=new Vector2(1,1);
                 PlayCrouchAudio();
             }
         }
@@ -78,6 +80,7 @@ public class PlayerController : MonoBehaviour
             {
                 crouchingTimer = 0;
                 Crouching = false;
+                cC.size = new Vector2(1, 2);
                 //PM.PlayerModelStats = 0;
                 //PM.ChangePlayerModelStats();
             }
@@ -86,6 +89,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         RB = GetComponent<Rigidbody2D>();
+        cC=GetComponent<CapsuleCollider2D>();
 
         audioSource = gameObject.AddComponent<AudioSource>();
 
