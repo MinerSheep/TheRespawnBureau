@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6822375904079789890}
   - component: {fileID: 1252855439092449202}
   - component: {fileID: 8902592117448460864}
+  - component: {fileID: 1400036562287934332}
   m_Layer: 0
   m_Name: AnimChandelier
   m_TagString: Untagged
@@ -127,6 +128,25 @@ MonoBehaviour:
   swayAngle: 10
   swaySpeed: 2
   removeSprite: 1
+--- !u!114 &1400036562287934332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3567544869711570860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d0f1700ef1dd1c468563332d84b8506, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteMask: {fileID: 7860021242605960530}
+  spriteMask2: {fileID: 0}
+  flickerSpeed: 1
+  flickerAmount: 0.03
+  baseIntensity: 0.07
+  removeSprite: 1
+  rotateSpeed: 5
 --- !u!1 &7860021242605960530
 GameObject:
   m_ObjectHideFlags: 0

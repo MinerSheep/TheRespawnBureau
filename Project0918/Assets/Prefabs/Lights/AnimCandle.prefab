@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2895738553966195821}
   - component: {fileID: 1716564477425873670}
   - component: {fileID: 8226190289193984975}
+  - component: {fileID: 4744313061905783425}
   m_Layer: 0
   m_Name: AnimCandle
   m_TagString: Untagged
@@ -111,6 +112,25 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4744313061905783425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4593378382097539280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d0f1700ef1dd1c468563332d84b8506, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteMask: {fileID: 6829865860360690636}
+  spriteMask2: {fileID: 0}
+  flickerSpeed: 1
+  flickerAmount: 0.1
+  baseIntensity: 0.18
+  removeSprite: 1
+  rotateSpeed: 5
 --- !u!1 &6829865860360690636
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,7 +208,7 @@ SpriteMask:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e630b4c2ac30d5b4ab1ace2cdefa12e7, type: 3}
-  m_MaskAlphaCutoff: 0.14
+  m_MaskAlphaCutoff: 0.18
   m_FrontSortingLayerID: 0
   m_BackSortingLayerID: 0
   m_FrontSortingLayer: 0

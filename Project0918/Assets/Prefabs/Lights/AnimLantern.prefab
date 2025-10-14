@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 8659913861726601931}
   - component: {fileID: 8725064229995501945}
   - component: {fileID: 2229539468080908058}
+  - component: {fileID: 6068933978673778963}
   m_Layer: 0
   m_Name: AnimLantern
   m_TagString: Untagged
@@ -214,3 +215,22 @@ MonoBehaviour:
   swayAngle: 5
   swaySpeed: 2
   removeSprite: 1
+--- !u!114 &6068933978673778963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5008543548094577081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d0f1700ef1dd1c468563332d84b8506, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteMask: {fileID: 3733770481356898794}
+  spriteMask2: {fileID: 0}
+  flickerSpeed: 1
+  flickerAmount: 0.03
+  baseIntensity: 0.06
+  removeSprite: 1
+  rotateSpeed: 5

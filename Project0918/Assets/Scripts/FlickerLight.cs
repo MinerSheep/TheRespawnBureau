@@ -10,11 +10,17 @@ public class FlickerLight : MonoBehaviour
     public float flickerSpeed = 5f;
     public float flickerAmount = 0.1f;
     public float baseIntensity = 0.6f;
+
+    public bool removeSprite = true;
+
     public float rotateSpeed = 5;
 
     void Start()
     {
-        
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+
+        if (sr != null && removeSprite)
+            sr.sprite = null;
     }
 
     void Update()
