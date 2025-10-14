@@ -1,6 +1,7 @@
 using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 public class RunnerScene : MonoBehaviour
 {
@@ -16,9 +17,22 @@ public class RunnerScene : MonoBehaviour
     {
         MovingSpeed = StartMovingSpeed;
 
-        foreach (Transform child in transform)
+        SetMaskOnTransform(transform);
+    }
+
+    void SetMaskOnTransform(Transform transformer)
+    {
+        SpriteRenderer sr = transformer.GetComponent<SpriteRenderer>();
+        if (sr != null)
+            sr.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+
+        TilemapRenderer tr = transformer.GetComponent<TilemapRenderer>();
+        if (tr != null)
+            tr.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+
+        foreach (Transform child in transformer)
         {
-            child.GetComponent<SpriteRenderer>().maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+            SetMaskOnTransform(child);
         }
     }
 
