@@ -2979,7 +2979,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: AutoRunnerTester
+          m_StringArgument: AutoRunnerHUDImplementation
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1823150322
@@ -3112,7 +3112,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Platformer
+          m_StringArgument: PlatformerNewController
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1841430410
