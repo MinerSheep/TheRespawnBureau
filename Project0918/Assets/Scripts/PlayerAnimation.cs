@@ -26,8 +26,22 @@ public class PlayerAnimation : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        pC=GetComponent<PlayerController>();
+        pC = GetComponent<PlayerController>();
         rB = GetComponent<Rigidbody2D>();
+
+        if (pC.AutoRunner)
+        {
+            AT.SetBool("AutoRunning", true);
+
+            PlayerEvents.OnFlipFlashlight += FlipDirection;
+        }
+    }
+    
+    void FlipDirection(int direction2)
+    {
+                direction = direction2;
+                PlayerModel.transform.localScale = new Vector3(direction == 0 ? Playerscale : -Playerscale, Playerscale, 1);
+        
     }
 
     public void UpdateStatus()
@@ -53,7 +67,16 @@ public class PlayerAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Turn();
+        if (!pC.AutoRunner)
+            Turn();
         UpdateStatus();
+    }
+
+    void OnDestroy()
+    {
+        if (pC.AutoRunner)
+        {
+            PlayerEvents.OnFlipFlashlight -= FlipDirection;
+        }
     }
 }

@@ -7,6 +7,7 @@ public class MonsterBehavior : MonoBehaviour
     [SerializeField] GameObject Target;
     [SerializeField] float speed = 0.1f;
     public float currentSpeed;
+    public float speedUpRate = 0.1f;
     public float flashedSpeed = 0f;
     public bool isflashed = false;
     public MonsterState state;
@@ -27,6 +28,7 @@ public class MonsterBehavior : MonoBehaviour
         }
     }
 
+    float buildUpSpeed = 0.5f;
     // Update is called once per frame
     void Update()
     {
@@ -34,10 +36,12 @@ public class MonsterBehavior : MonoBehaviour
         if (isflashed)
         {
             currentSpeed = flashedSpeed;
+            buildUpSpeed = 0;
         }
         else
         {
-            currentSpeed = speed;
+            buildUpSpeed = Mathf.Clamp01(buildUpSpeed + Time.deltaTime * speedUpRate);
+            currentSpeed = Mathf.Lerp(flashedSpeed, speed, buildUpSpeed);
         }
         
         // Different scenes have different monster behavior
@@ -60,7 +64,7 @@ public class MonsterBehavior : MonoBehaviour
                     if (Vector3.Distance(Target.transform.position, transform.position) < distance)
                     {
                         Vector3 targetPos = Target.transform.position - (Target.transform.position - transform.position).normalized * distance;
-                        transform.position = Vector3.MoveTowards(transform.position, targetPos, currentSpeed * Time.deltaTime);
+                        transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
                     }
 
                 }
@@ -76,8 +80,9 @@ public class MonsterBehavior : MonoBehaviour
     {
         string objName = collision.gameObject.name;
         Debug.Log("Triggered with: " + objName);
+
         // If the monster collides with the player, kill the player (reload level)
-        if (objName == "Player_Stand" || objName == "Player_Jump" || objName == "Player_Crouch")
+        if (collision.tag == "Player" || objName == "Player_Stand" || objName == "Player_Jump" || objName == "Player_Crouch")
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }

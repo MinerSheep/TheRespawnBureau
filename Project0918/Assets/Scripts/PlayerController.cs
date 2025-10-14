@@ -3,6 +3,17 @@ using UnityEngine;
 using UnityEngine.InputSystem.Processors;
 using UnityEngine.SceneManagement;
 
+public static class PlayerEvents
+{
+    public delegate void PlayerIntEvent(int direction);
+    public static PlayerIntEvent OnFlipFlashlight;
+
+    // Currently unused
+    public delegate void PlayerDefaultEvent();
+    public static PlayerDefaultEvent OnPlayerDeath;
+    public static PlayerDefaultEvent OnPlayerLightOut;
+}
+
 public class PlayerController : MonoBehaviour
 {
     public bool AutoRunner = false;
@@ -39,7 +50,7 @@ public class PlayerController : MonoBehaviour
         health.LoseHealth();
         iFrames = iFrameMax;
     }
-    
+
     public void Move()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -78,7 +89,7 @@ public class PlayerController : MonoBehaviour
                 //PM.PlayerModelStats = 1;
                 //PM.ChangePlayerModelStats();
                 Crouching = true;
-                cC.size=new Vector2(1,1);
+                cC.size = new Vector2(1, 1);
                 PlayCrouchAudio();
             }
         }
@@ -93,8 +104,12 @@ public class PlayerController : MonoBehaviour
             if (crouchingTimer > CrouchingTime)
             {
                 crouchingTimer = 0;
-                Crouching = false;
-                cC.size = new Vector2(1, 2);
+                if (!Input.GetKeyDown(KeyCode.S))
+                {
+                    Crouching = false;
+                    cC.size = new Vector2(1, 2);
+                }
+                
                 //PM.PlayerModelStats = 0;
                 //PM.ChangePlayerModelStats();
             }
@@ -103,7 +118,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         RB = GetComponent<Rigidbody2D>();
-        cC=GetComponent<CapsuleCollider2D>();
+        cC = GetComponent<CapsuleCollider2D>();
 
         audioSource = gameObject.AddComponent<AudioSource>();
 
