@@ -51,8 +51,8 @@ MonoBehaviour:
   batteryUseRate: 0
   batteryCurrent: 0
   spriteMask: {fileID: 8013242113213650480}
+  lightMethod: 0
   flashLightOn: 1
-  followMouse: 0
   flashLightflip: 102
 --- !u!114 &624006783746060546
 MonoBehaviour:
@@ -66,11 +66,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0f1700ef1dd1c468563332d84b8506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flashlight: {fileID: 0}
+  spriteMask: {fileID: 8013242113213650480}
   spriteMask2: {fileID: 6096323429611770417}
   flickerSpeed: 3
   flickerAmount: 0.4
   baseIntensity: 0.5
+  rotateSpeed: 5
 --- !u!1 &6096323429611770417
 GameObject:
   m_ObjectHideFlags: 0
