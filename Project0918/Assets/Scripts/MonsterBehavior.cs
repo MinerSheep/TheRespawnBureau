@@ -1,17 +1,22 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 public class MonsterBehavior : MonoBehaviour
 {
     [SerializeField] GameObject Target;
     [SerializeField] float speed = 0.1f;
-
+    public float currentSpeed;
+    public float flashedSpeed = 0f;
+    public bool isflashed = false;
     public MonsterState state;
 
     float distance = 10f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
+        currentSpeed = speed;
         if (!Target)
         {
             Target = GameObject.FindWithTag("Player");
@@ -25,6 +30,16 @@ public class MonsterBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        if (isflashed)
+        {
+            currentSpeed = flashedSpeed;
+        }
+        else
+        {
+            currentSpeed = speed;
+        }
+        
         // Different scenes have different monster behavior
 
         switch (state)
@@ -33,7 +48,7 @@ public class MonsterBehavior : MonoBehaviour
             case MonsterState.Platformer:
                 if(Target != null)
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, Target.transform.position, speed * Time.deltaTime);
+                    transform.position = Vector3.MoveTowards(transform.position, Target.transform.position, currentSpeed * Time.deltaTime);
                 }
                 break;
             // Auto Runner scene: Monster moves right constantly, matches player's Y position exactly
@@ -45,7 +60,7 @@ public class MonsterBehavior : MonoBehaviour
                     if (Vector3.Distance(Target.transform.position, transform.position) < distance)
                     {
                         Vector3 targetPos = Target.transform.position - (Target.transform.position - transform.position).normalized * distance;
-                        transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
+                        transform.position = Vector3.MoveTowards(transform.position, targetPos, currentSpeed * Time.deltaTime);
                     }
 
                 }
@@ -65,6 +80,23 @@ public class MonsterBehavior : MonoBehaviour
         if (objName == "Player_Stand" || objName == "Player_Jump" || objName == "Player_Crouch")
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        if (objName == "LightBlock")
+        {
+            isflashed = true;
+            Debug.Log("Flashed");
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        string objName = collision.gameObject.name;
+
+        if (objName == "LightBlock")
+        {
+            isflashed = false;
+            Debug.Log("Not flashed");
         }
     }
 
