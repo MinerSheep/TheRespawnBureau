@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("References")]
     public GroundDetection GD;
-    public HealthFill health;
+    public HUD hud;
     public FlashLight flashlight;
 
     // Private Variables
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
         if (iFrames > 0)
             return;
 
-        health.LoseHealth();
+        hud.hp -= 1;
         iFrames = iFrameMax;
     }
 
@@ -119,6 +119,9 @@ public class PlayerController : MonoBehaviour
 
         if (flashlight == null)
             flashlight = transform.Find("FlashLight").GetComponent<FlashLight>();
+        hud.InitializeHUD(flashlight);
+
+        PlayerEvents.OnPlayerDeath += PlayerDeath;
     }
     void Update()
     {
@@ -140,5 +143,10 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene("MainMenu_PC");
         }
+    }
+
+    private void PlayerDeath()
+    {
+        
     }
 }

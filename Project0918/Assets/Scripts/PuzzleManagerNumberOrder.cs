@@ -6,6 +6,8 @@ public class PuzzleManager : MonoBehaviour
 {
 
     [Header("Puzzle Settings")]
+    public List<Button> Buttons;
+    [Tooltip("Correct order 0-3")] public List<int> correctOrder = new List<int>();
 
     [Header("References")]
     public GameObject PuzzlePanel;
@@ -14,11 +16,7 @@ public class PuzzleManager : MonoBehaviour
     public GameObject door;
 
 
-    [Header("Assign in inspector")]
-    public List<Button> Buttons;
-
     [Header("Correct order 0-3")]
-    public List<int> correctOrder = new List<int>();
 
     // Private variables
     [HideInInspector] private int currentStep = 0;

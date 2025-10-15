@@ -4,12 +4,14 @@ using UnityEngine.Tilemaps;
 
 public class RunnerScene : MonoBehaviour
 {
+    [Header("Settings")]
     public float StartMovingSpeed = 6f;
     public float EndMovingSpeed = 10f;
     public float ChangeTime = 9000f;
     public float AutoRunnerTimer = 0f;
 
-    public float MovingSpeed;
+    // Private variables
+    [HideInInspector] public float MovingSpeed;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
