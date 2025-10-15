@@ -1,30 +1,52 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.Processors;
 using UnityEngine.SceneManagement;
+
+public static class PlayerEvents
+{
+    public delegate void PlayerIntEvent(int direction);
+    public static PlayerIntEvent OnFlipFlashlight;
+
+    // Currently unused
+    public delegate void PlayerDefaultEvent();
+    public static PlayerDefaultEvent OnPlayerDeath;
+    public static PlayerDefaultEvent OnPlayerLightOut;
+}
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Settings")]
     public bool AutoRunner = false;
     public float MoveSpeed = 5f;
     public float MoveForce = 1f;
     public float JumpForce = 5f;
-    public bool Jumping = false;
-    public bool Crouching = false;
     public float CrouchingTime = 2f;
     public float FallingForce = 3f;
+    public float iFrameMax = 0.2f;
 
-    public Rigidbody2D RB;
+    [HideInInspector] public Rigidbody2D RB;
+    [HideInInspector] public CapsuleCollider2D cC;
+    [HideInInspector] public bool Jumping = false;
+    [HideInInspector] public bool Crouching = false;
+
+    [Header("References")]
     public GroundDetection GD;
-    public PlayerModel PM;
+    public HUD hud;
+    public FlashLight flashlight;
 
-    private float crouchingTimer;
+    // Private Variables
+    [HideInInspector] public int pointValue;
+    [HideInInspector] private float crouchingTimer;
+    [HideInInspector] private float iFrames;
 
-    private AudioSource audioSource;
-    public AudioClip jumpAudio;
-    public AudioClip crouchAudio;
+    public void LoseHealth()
+    {
+        if (iFrames > 0)
+            return;
 
-    
+        hud.hp -= 1;
+        iFrames = iFrameMax;
+    }
+
     public void Move()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -35,7 +57,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             RB.AddForce(Vector2.right * horizontal * MoveForce);
-            RB.linearVelocity = new Vector2(Mathf.Clamp(RB.linearVelocity.x, -MoveSpeed, MoveSpeed), RB.linearVelocity.y);
+            RB.linearVelocity = new Vector2(Mathf.Clamp(RB.linearVelocityX, -MoveSpeed, MoveSpeed), RB.linearVelocity.y);
         }
     }
 
@@ -44,12 +66,13 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && GD.Grounded)
         {
             RB.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
-            PM.PlayerModelStats = 2;
-            PM.ChangePlayerModelStats();
+            //PM.PlayerModelStats = 2;
+            //PM.ChangePlayerModelStats();
             Crouching = false;
             Jumping = true;
+            cC.size = new Vector2(1, 2);
 
-            PlayJumpAudio();
+            AudioManager.instance.Play("jump");
         }
     }
 
@@ -59,11 +82,11 @@ public class PlayerController : MonoBehaviour
         {
             if (!Crouching)
             {
-                PM.PlayerModelStats = 1;
-                PM.ChangePlayerModelStats();
+                //PM.PlayerModelStats = 1;
+                //PM.ChangePlayerModelStats();
                 Crouching = true;
-
-                PlayCrouchAudio();
+                cC.size = new Vector2(1, 1);
+                AudioManager.instance.Play("crouch");
             }
         }
         else if (Input.GetKeyDown(KeyCode.S) && Jumping == true)
@@ -77,31 +100,28 @@ public class PlayerController : MonoBehaviour
             if (crouchingTimer > CrouchingTime)
             {
                 crouchingTimer = 0;
-                Crouching = false;
-                PM.PlayerModelStats = 0;
-                PM.ChangePlayerModelStats();
+                if (!Input.GetKeyDown(KeyCode.S))
+                {
+                    Crouching = false;
+                    cC.size = new Vector2(1, 2);
+                }
+
+                //PM.PlayerModelStats = 0;
+                //PM.ChangePlayerModelStats();
             }
         }
     }
+
     void Start()
     {
         RB = GetComponent<Rigidbody2D>();
+        cC = GetComponent<CapsuleCollider2D>();
 
-        audioSource = gameObject.AddComponent<AudioSource>();
+        if (flashlight == null)
+            flashlight = transform.Find("FlashLight").GetComponent<FlashLight>();
+        hud.InitializeHUD(flashlight);
 
-        jumpAudio = Resources.Load<AudioClip>("Audio/jump-retro-game-jam-fx-1-00-03");
-        if (jumpAudio == null)
-        {
-            Debug.LogError("Could not load mp3 from Resources/Audio/jump-retro-game-jam-fx-1-00-03.mp3");
-            return;
-        }
-
-        crouchAudio = Resources.Load<AudioClip>("Audio/horror-body-drop-152091");
-        if (crouchAudio == null)
-        {
-            Debug.LogError("Could not load mp3 from Resources/Audio/horror-body-drop-152091.mp3");
-            return;
-        }
+        PlayerEvents.OnPlayerDeath += PlayerDeath;
     }
     void Update()
     {
@@ -112,23 +132,21 @@ public class PlayerController : MonoBehaviour
         Jump();
         Crouch();
 
+        // iFrame counter
+        if (iFrames > 0)
+        {
+            iFrames -= Time.deltaTime;
+        }
+
+        // Return to main menu
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             SceneManager.LoadScene("MainMenu_PC");
         }
     }
 
-
-    //Audio handlers, load and play clips into audioSource
-    public void PlayJumpAudio()
+    private void PlayerDeath()
     {
-        audioSource.clip = jumpAudio;
-        audioSource.Play();
-    }
-
-    public void PlayCrouchAudio()
-    {
-        audioSource.clip = crouchAudio;
-        audioSource.Play();
+        
     }
 }

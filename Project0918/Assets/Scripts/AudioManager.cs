@@ -1,3 +1,9 @@
+/**
+* @file AudioManager.cs
+* @author Ryder
+* @brief Stores all audio so it can be referenced and called from a source.
+*/
+
 using UnityEngine;
 using System.Collections.Generic;
 using Unity.VisualScripting;
