@@ -5,33 +5,14 @@ using UnityEngine.UI;
 public class PuzzleManager : MonoBehaviour
 {
 
+    [Header("Puzzle Settings")]
 
+    [Header("References")]
     public GameObject PuzzlePanel;
     public GameObject PuzzleTrigger;
-
+    [HideInInspector] public PuzzleTrigger PT;
     public GameObject door;
 
-    public PuzzleTrigger PT;
-
-
-
-
-    private void Start()
-    {
-        PuzzlePanel.SetActive(false);
-
-        if (PT == null)
-            PT = PuzzleTrigger.GetComponent<PuzzleTrigger>();
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.E) && PT.canDoPuzzle)
-        {
-            PuzzlePanel.SetActive(true);
-        }
-        Debug.Log("Can player attempt puzzle? " + PT.canDoPuzzle);
-    }
 
     [Header("Assign in inspector")]
     public List<Button> Buttons;
@@ -39,7 +20,24 @@ public class PuzzleManager : MonoBehaviour
     [Header("Correct order 0-3")]
     public List<int> correctOrder = new List<int>();
 
-    private int currentStep = 0;
+    // Private variables
+    [HideInInspector] private int currentStep = 0;
+
+    private void Start()
+    {
+        PuzzlePanel.SetActive(false);
+
+        PT = PuzzleTrigger.GetComponent<PuzzleTrigger>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && PT.canDoPuzzle)
+        {
+            PuzzlePanel.SetActive(true);
+        }
+        Debug.Log("Can player attempt puzzle? " + PT.canDoPuzzle);
+    }
 
     public void Button1Clicked()
     {

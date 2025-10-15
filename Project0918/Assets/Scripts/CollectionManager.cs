@@ -6,11 +6,13 @@ public class CollectionManager : MonoBehaviour
 {
     public static CollectionManager instance { get; private set; }
 
-    [SerializeField]
-    private TextMeshPro _scoreText;
-
+    [Header("Settings")]
     public int score;
     public int highScore;
+
+    [Header("References")]
+    [SerializeField] private TextMeshPro _scoreText;
+
 
     void Start()
     {

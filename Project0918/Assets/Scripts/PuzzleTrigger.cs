@@ -18,9 +18,4 @@ public class PuzzleTrigger : MonoBehaviour
             canDoPuzzle = false;
         }
     }
-
-    private void Update()
-    {
-        
-    }
 }

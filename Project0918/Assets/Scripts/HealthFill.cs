@@ -39,18 +39,14 @@ public class HealthFill : MonoBehaviour
         UpdateHealthAmount();
     }
 
-
-
     public void UpdateFillAmount()
     {
         battery.fillAmount = Mathf.Clamp01(BatteryCurrentAmount / BatteryMaxAmount);
-
     }
 
     public void UpdateHealthAmount()
     {
         healthText.text = hp.ToString();
     }
-
 
 }

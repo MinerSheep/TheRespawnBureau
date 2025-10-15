@@ -3,17 +3,14 @@ using UnityEngine.SceneManagement;
 
 public class Goal : MonoBehaviour
 {
+    [Header("Settings")]
+    public float transitionTimer = 3.0f;
+
+    [Header("References")]
     [SerializeField] GameObject confetti;
 
-    bool finished = false;
+    [HideInInspector] bool finished = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
-    float transitionTimer = 3.0f;
     // Update is called once per frame
     void Update()
     {
@@ -27,7 +24,7 @@ public class Goal : MonoBehaviour
             }
         }
     }
-    
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player") && !finished)

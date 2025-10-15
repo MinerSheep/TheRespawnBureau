@@ -2,17 +2,20 @@ using UnityEngine;
 
 public class FlashLight : MonoBehaviour
 {
+    [Header("Settings")]
     public float batteryMax = 100.0f;
     public float batteryUseRate = 1.0f;
     public float batteryCurrent;
-
-    public GameObject spriteMask;
-    public LightMethod lightMethod = LightMethod.Static;
     public bool flashLightOn = true;
+    public LightMethod lightMethod = LightMethod.Static;
+
+    [Header("References")]
+    public GameObject spriteMask;
     public KeyCode flashLightflip = KeyCode.F;
+
     //public FlipCamera flipCamera = null;
 
-    int direction = 1;
+    [HideInInspector] int direction = 1;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
