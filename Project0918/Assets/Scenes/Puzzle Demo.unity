@@ -830,6 +830,12 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 8986649088406608913, guid: 6b64963ca93b9c343866523546c413ec, type: 3}
+    - target: {fileID: 3760905338412347800, guid: c3ae583b744dc6f42bb090a970ee7d99, type: 3}
+      propertyPath: m_text
+      value: 'Provide inputs in order
+
+'
+      objectReference: {fileID: 0}
     - target: {fileID: 3926218617107307572, guid: c3ae583b744dc6f42bb090a970ee7d99, type: 3}
       propertyPath: m_Sprite
       value: 
