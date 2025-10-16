@@ -2,17 +2,20 @@ using UnityEngine;
 
 public class FlashLight : MonoBehaviour
 {
+    [Header("Settings")]
     public float batteryMax = 100.0f;
     public float batteryUseRate = 1.0f;
     public float batteryCurrent;
-
-    public GameObject spriteMask;
-    public LightMethod lightMethod = LightMethod.Static;
     public bool flashLightOn = true;
+    public LightMethod lightMethod = LightMethod.Static;
+
+    [Header("References")]
+    public GameObject spriteMask;
     public KeyCode flashLightflip = KeyCode.F;
+
     //public FlipCamera flipCamera = null;
 
-    int direction = 1;
+    [HideInInspector] int direction = 1;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -62,11 +65,6 @@ public class FlashLight : MonoBehaviour
                 break;
         }
 
-        //flipping flashlight by flip the sprite mask
-        if (Input.GetKeyDown(flashLightflip) && lightMethod == LightMethod.Static)
-        {
-            flip();
-        }
     }
 
     void FlashLightOff()
@@ -82,12 +80,15 @@ public class FlashLight : MonoBehaviour
         batteryCurrent += batteryChange;
     }
 
-    void flip()
+    public void flip()
     {
-        spriteMask.transform.Rotate(0f, 180f, 0f, Space.Self);
-        direction = direction == 0 ? 1 : 0;
+        if (lightMethod == LightMethod.Static)
+        {
+            spriteMask.transform.Rotate(0f, 180f, 0f, Space.Self);
+            direction = direction == 0 ? 1 : 0;
 
-        PlayerEvents.OnFlipFlashlight.Invoke(direction);
+            PlayerEvents.OnFlipFlashlight.Invoke(direction);
+        }
     }
 
     public enum LightMethod

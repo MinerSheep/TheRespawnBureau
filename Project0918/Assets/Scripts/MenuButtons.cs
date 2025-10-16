@@ -4,18 +4,19 @@ using UnityEngine.SceneManagement;
 
 public class MenuButtons : MonoBehaviour
 {
+    [Header("References")]
     public GameObject PlayPanel;
     public GameObject OnlinePanel;
 
     private bool PlayPanelActive = false;
     private bool OnlinePanelActive = false;
-    
+
 
     public void TogglePlayMenu()
     {
-        if(PlayPanel != null)
+        if (PlayPanel != null)
         {
-            if(!PlayPanelActive)
+            if (!PlayPanelActive)
             {
                 ShowPlayPanel();
                 HideOnlinePanel();
@@ -31,7 +32,7 @@ public class MenuButtons : MonoBehaviour
     {
         if (OnlinePanel != null)
         {
-            if(!OnlinePanelActive)
+            if (!OnlinePanelActive)
             {
                 ShowOnlinePanel();
                 HidePlayPanel();

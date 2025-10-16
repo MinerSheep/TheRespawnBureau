@@ -5,15 +5,18 @@ using UnityEngine.Rendering.Universal;
 
 public class FlickerLight : MonoBehaviour
 {
-    [SerializeField] public GameObject spriteMask;
-    [SerializeField] public GameObject spriteMask2;
+    [Header("Settings")]
     public float flickerSpeed = 5f;
     public float flickerAmount = 0.1f;
     public float baseIntensity = 0.6f;
-
     public bool removeSprite = true;
-
     public float rotateSpeed = 5;
+
+    [Header("References")]
+    [SerializeField] public GameObject spriteMask;
+    [SerializeField] public GameObject spriteMask2;
+
+
 
     void Start()
     {
