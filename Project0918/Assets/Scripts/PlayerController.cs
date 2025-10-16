@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     public float FallingForce = 3f;
     public float iFrameMax = 0.2f;
 
+    [HideInInspector] private InputBuffer inputBuffer;
     [HideInInspector] public Rigidbody2D RB;
     [HideInInspector] public CapsuleCollider2D cC;
     [HideInInspector] public bool Jumping = false;
@@ -63,7 +64,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && GD.Grounded)
+        if (inputBuffer.Consume("Jump") && GD.Grounded)
         {
             RB.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
             //PM.PlayerModelStats = 2;
@@ -78,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
     public void Crouch()
     {
-        if (Input.GetKeyDown(KeyCode.S) && Jumping == false)
+        if (inputBuffer.Consume("Crouch") && Jumping == false)
         {
             if (!Crouching)
             {
@@ -89,7 +90,7 @@ public class PlayerController : MonoBehaviour
                 AudioManager.instance.Play("crouch");
             }
         }
-        else if (Input.GetKeyDown(KeyCode.S) && Jumping == true)
+        else if (inputBuffer.Consume("Crouch") && Jumping == true)
         {
             RB.AddForce(Vector2.down * FallingForce);
             Debug.Log("SFA");
@@ -100,7 +101,7 @@ public class PlayerController : MonoBehaviour
             if (crouchingTimer > CrouchingTime)
             {
                 crouchingTimer = 0;
-                if (!Input.GetKeyDown(KeyCode.S))
+                if (!inputBuffer.Consume("Crouch"))
                 {
                     Crouching = false;
                     cC.size = new Vector2(1, 2);
@@ -114,6 +115,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        inputBuffer = GetComponent<InputBuffer>();
         RB = GetComponent<Rigidbody2D>();
         cC = GetComponent<CapsuleCollider2D>();
 
@@ -131,6 +133,10 @@ public class PlayerController : MonoBehaviour
         }
         Jump();
         Crouch();
+
+        //flipping flashlight by flip the sprite mask
+        if (inputBuffer.Consume("FlipFlashlight"))
+            flashlight?.flip();
 
         // iFrame counter
         if (iFrames > 0)
