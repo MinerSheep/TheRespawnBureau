@@ -2,19 +2,17 @@ using UnityEngine;
 
 public class GroundDetection : MonoBehaviour
 {
-
-    [HideInInspector] public bool Grounded;
-    [HideInInspector] private int GroundCount = 0;
-
-    [Header("References")]
+    public bool Grounded;
+    private int GroundCount = 0;
     public PlayerController PC;
+    //public PlayerModel PM;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Ground"))
         {
             GroundCount++;
-            if (GroundCount >= 1)
+            if(GroundCount >= 1)
             {
                 Grounded = true;
                 if (PC.Jumping)
@@ -32,7 +30,7 @@ public class GroundDetection : MonoBehaviour
         if (collision.CompareTag("Ground"))
         {
             GroundCount--;
-            if (GroundCount < 1)
+            if(GroundCount < 1)
             {
                 Grounded = false;
             }

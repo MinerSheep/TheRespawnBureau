@@ -4,20 +4,15 @@ using UnityEngine.SceneManagement;
 
 public class MonsterBehavior : MonoBehaviour
 {
-    [Header("Settings")]
-    public MonsterState state;
-    [SerializeField] float speed = 0.1f;
-    public float flashedSpeed = 0f;
-    public float speedUpRate = 0.1f;
-
-    [Header("References")]
     [SerializeField] GameObject Target;
+    [SerializeField] float speed = 0.1f;
+    public float currentSpeed;
+    public float speedUpRate = 0.1f;
+    public float flashedSpeed = 0f;
+    public bool isflashed = false;
+    public MonsterState state;
 
-    [HideInInspector] public bool isflashed = false;
-    [HideInInspector] float buildUpSpeed = 0.5f;  // Percent of speed build up (0 -> 1) after being flashed
-    [HideInInspector] public float currentSpeed;
-    [HideInInspector] float distance = 10f;
-
+    float distance = 10f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -33,10 +28,11 @@ public class MonsterBehavior : MonoBehaviour
         }
     }
 
+    float buildUpSpeed = 0.5f;
     // Update is called once per frame
     void Update()
     {
-
+        
         if (isflashed)
         {
             currentSpeed = flashedSpeed;
@@ -47,14 +43,14 @@ public class MonsterBehavior : MonoBehaviour
             buildUpSpeed = Mathf.Clamp01(buildUpSpeed + Time.deltaTime * speedUpRate);
             currentSpeed = Mathf.Lerp(flashedSpeed, speed, buildUpSpeed);
         }
-
+        
         // Different scenes have different monster behavior
 
         switch (state)
         {
             // Platformer scene: Monster chases player through walls, moves constantly on both x and y axis (flies)
             case MonsterState.Platformer:
-                if (Target != null)
+                if(Target != null)
                 {
                     transform.position = Vector3.MoveTowards(transform.position, Target.transform.position, currentSpeed * Time.deltaTime);
                 }
@@ -75,6 +71,10 @@ public class MonsterBehavior : MonoBehaviour
                 break;
         }
     }
+
+
+
+
 
     void OnTriggerEnter2D(UnityEngine.Collider2D collision)
     {

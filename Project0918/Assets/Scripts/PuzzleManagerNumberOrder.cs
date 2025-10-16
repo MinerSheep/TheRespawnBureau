@@ -5,37 +5,41 @@ using UnityEngine.UI;
 public class PuzzleManager : MonoBehaviour
 {
 
-    [Header("Puzzle Settings")]
-    public List<Button> Buttons;
-    [Tooltip("Correct order 0-3")] public List<int> correctOrder = new List<int>();
 
-    [Header("References")]
     public GameObject PuzzlePanel;
     public GameObject PuzzleTrigger;
-    [HideInInspector] public PuzzleTrigger PT;
+
     public GameObject door;
 
+    public PuzzleTrigger PT;
 
-    [Header("Correct order 0-3")]
 
-    // Private variables
-    [HideInInspector] private int currentStep = 0;
+
 
     private void Start()
     {
         PuzzlePanel.SetActive(false);
 
-        PT = PuzzleTrigger.GetComponent<PuzzleTrigger>();
+        if (PT == null)
+            PT = PuzzleTrigger.GetComponent<PuzzleTrigger>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && PT.canDoPuzzle)
+        if(Input.GetKeyDown(KeyCode.E) && PT.canDoPuzzle)
         {
             PuzzlePanel.SetActive(true);
         }
         Debug.Log("Can player attempt puzzle? " + PT.canDoPuzzle);
     }
+
+    [Header("Assign in inspector")]
+    public List<Button> Buttons;
+
+    [Header("Correct order 0-3")]
+    public List<int> correctOrder = new List<int>();
+
+    private int currentStep = 0;
 
     public void Button1Clicked()
     {

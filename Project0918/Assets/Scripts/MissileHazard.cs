@@ -15,6 +15,11 @@ public class MissileHazard : MonoBehaviour
         rb.linearVelocity = new Vector2(-missileVelocity, 0);
     }
 
+    void Update()
+    {
+        
+    }
+
     private void OnBecameVisible()
     {
         passedPlayer = true;

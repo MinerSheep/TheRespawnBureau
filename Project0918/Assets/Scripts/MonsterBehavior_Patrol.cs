@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 public enum PatrolBehavior
@@ -10,14 +11,9 @@ public enum PatrolBehavior
 
 public class MonsterBehavior_Patrol : MonoBehaviour
 {
-    [Header("Settings")]
-    [SerializeField] float speed = 1.5f;                    // Movement speed
-
-    [Header("References")]
     [SerializeField] Transform[] patrolPoints;              // List of points that the monster moves between
     [SerializeField] private PatrolBehavior patrolBehavior; // Determines the "style" of movement between patrol points
-    
-    
+    [SerializeField] float speed = 1.5f;                    // Movement speed
     private int destPoint = 0;                              // Index for next patrol point
     private bool patrolDir = true;                          // Determines whether the monster is going forward/backward through patrol points
 
@@ -36,7 +32,7 @@ public class MonsterBehavior_Patrol : MonoBehaviour
         }
 
         // BackAndForth makes the monster reverse direction when hitting the last/first patrol point
-        if (patrolBehavior == PatrolBehavior.BackAndForth)
+        if(patrolBehavior == PatrolBehavior.BackAndForth)
         {
             // If the monster has reached the last point (on either end), reverse direction
             if (destPoint + 1 >= patrolPoints.Length && patrolDir)
@@ -58,13 +54,13 @@ public class MonsterBehavior_Patrol : MonoBehaviour
             }
         }
         // Loop treats all patrol points as a continuous route (last connects to first)
-        else if (patrolBehavior == PatrolBehavior.Loop)
+        else if(patrolBehavior == PatrolBehavior.Loop)
         {
             // Choose the next point in the array as the destination, wrap around if necessary
             destPoint = (destPoint + 1) % patrolPoints.Length;
         }
         // Random is... random, monster picks random points from the list to move to
-        else if (patrolBehavior == PatrolBehavior.Random)
+        else if(patrolBehavior == PatrolBehavior.Random)
         {
             destPoint = Random.Range(0, patrolPoints.Length);
         }
@@ -92,6 +88,10 @@ public class MonsterBehavior_Patrol : MonoBehaviour
             GotoNextPoint();
         }
     }
+
+
+
+
 
     void OnTriggerEnter2D(UnityEngine.Collider2D collision)
     {

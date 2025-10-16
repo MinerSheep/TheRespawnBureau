@@ -1,17 +1,16 @@
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class RunnerScene : MonoBehaviour
 {
-    [Header("Settings")]
     public float StartMovingSpeed = 6f;
     public float EndMovingSpeed = 10f;
     public float ChangeTime = 9000f;
-    public float AutoRunnerTimer = 0f;
+    public float AutoRunnerTimer=0f;
 
-    // Private variables
-    [HideInInspector] public float MovingSpeed;
+    public float MovingSpeed;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

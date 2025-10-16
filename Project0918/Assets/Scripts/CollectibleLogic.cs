@@ -3,11 +3,8 @@ using UnityEngine;
 
 public class CollectibleLogic : MonoBehaviour
 {
-    [Header("Settings")]
     public int scoreValue;
     public int batteryValue;
-
-    // Private variables
     MovementDemoController playerScript;
     PlayerController playerController;
 

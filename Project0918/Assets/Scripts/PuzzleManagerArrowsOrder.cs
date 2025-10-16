@@ -6,6 +6,17 @@ using UnityEngine;
 
 public class PuzzleManagerArrowsOrder : MonoBehaviour
 {
+    //References
+    public GameObject PuzzlePanel;
+    public GameObject PuzzleTrigger;
+
+    public GameObject door;
+
+    public PuzzleTrigger PT;
+
+    public TextMeshProUGUI TimerText;
+    
+
     [Header("Puzzle Settings")]
     public List<KeyCode> correctOrder = new List<KeyCode>
     {
@@ -20,32 +31,25 @@ public class PuzzleManagerArrowsOrder : MonoBehaviour
 
     public List<GameObject> images = new List<GameObject>
     {
-
+        
     };
 
-    [Header("References")]
-    public GameObject PuzzlePanel;
-    public GameObject PuzzleTrigger;
-    [HideInInspector] public PuzzleTrigger PT;
-    public GameObject door;
-    public TextMeshProUGUI TimerText;
 
-    [HideInInspector] public float timeRemaining = 10f;
-    [HideInInspector] public bool timerRunning = false;
-    
-    [HideInInspector] private int currentStep = 0;
-    [HideInInspector] private bool puzzleActive = false;
+    public float timeRemaining = 10f;
+    public bool timerRunning = false;
+
+    private int currentStep = 0;
+    private bool puzzleActive = false;
 
     public void Start()
     {
         PuzzlePanel.SetActive(false);
-        PT = PuzzleTrigger.GetComponent<PuzzleTrigger>();
         TimerText.text = timeRemaining.ToString("F1");
     }
 
     public void Update()
     {
-        if (PT.canDoPuzzle && !puzzleActive && Input.GetKeyDown(KeyCode.E))
+        if(PT.canDoPuzzle && !puzzleActive && Input.GetKeyDown(KeyCode.E))
         {
             PuzzlePanel.SetActive(true);
             puzzleActive = true;
@@ -53,17 +57,17 @@ public class PuzzleManagerArrowsOrder : MonoBehaviour
         }
 
         if (!puzzleActive) return;
-
+        
 
         if (Input.GetKeyDown(KeyCode.LeftArrow)) HandleKeyPress(KeyCode.LeftArrow);
-
+        
         if (Input.GetKeyDown(KeyCode.RightArrow)) HandleKeyPress(KeyCode.RightArrow);
-
-        if (Input.GetKeyDown(KeyCode.UpArrow)) HandleKeyPress(KeyCode.UpArrow);
-
+        
+        if(Input.GetKeyDown(KeyCode.UpArrow)) HandleKeyPress(KeyCode.UpArrow);
+        
         if (Input.GetKeyDown(KeyCode.DownArrow)) HandleKeyPress(KeyCode.DownArrow);
-
-
+        
+        
         if (timerRunning)
         {
             timeRemaining -= Time.deltaTime;
@@ -79,7 +83,8 @@ public class PuzzleManagerArrowsOrder : MonoBehaviour
             TimerText.text = timeRemaining.ToString("F1");
         }
 
-        TimerText.text = timeRemaining.ToString("F1");
+
+            TimerText.text = timeRemaining.ToString("F1");
         Debug.Log(timeRemaining.ToString());
 
         if (timeRemaining <= 0)
@@ -94,7 +99,7 @@ public class PuzzleManagerArrowsOrder : MonoBehaviour
     {
         Debug.Log("Player pressed: " + key + " | Next key: " + correctOrder[currentStep]);
 
-        if (key == correctOrder[currentStep])
+        if(key == correctOrder[currentStep])
         {
             currentStep++;
             images[currentStep - 1].SetActive(false);
@@ -132,5 +137,7 @@ public class PuzzleManagerArrowsOrder : MonoBehaviour
             item.SetActive(true);
         }
     }
+
+    
 }
 

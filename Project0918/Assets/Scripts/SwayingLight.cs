@@ -5,8 +5,8 @@ public class SwayingLight : MonoBehaviour
     [Header("Sway Settings")]
     public float swayAngle = 30f;   // Maximum angle to sway
     public float swaySpeed = 2f;    // Speed of swaying
-    public bool removeSprite = true;
 
+    public bool removeSprite = true;
     private Quaternion initialRotation;
 
     void Start()

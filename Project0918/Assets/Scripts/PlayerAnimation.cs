@@ -2,23 +2,15 @@ using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
-    [Header("Settings")]
-    public float Playerscale = 1.5f;
-    
-    [Header("References")]
-    public Animator AT;
-    public GameObject PlayerModel;
-
-    // Private variables
     private PlayerController pC;
     private Rigidbody2D rB;
-    [HideInInspector] public int direction = 1; //1 means facing right while 0 means facing left
+    public Animator AT;
+    public float Playerscale = 1.5f;
+    public int direction = 1; //1 means facing right while 0 means facing left
+    public GameObject PlayerModel;
 
     private void Turn()
     {
-        if (pC.AutoRunner)
-            return;
-
         if (rB.linearVelocityX < -0.5f)
         {
             PlayerModel.transform.localScale = new Vector3(Playerscale, Playerscale, 1);
@@ -75,7 +67,8 @@ public class PlayerAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Turn();
+        if (!pC.AutoRunner)
+            Turn();
         UpdateStatus();
     }
 

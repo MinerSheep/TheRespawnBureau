@@ -6,7 +6,7 @@ public class Confetti : MonoBehaviour
     void Start()
     {
         GetComponent<SpriteRenderer>().color = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
-        GetComponent<Rigidbody2D>().linearVelocity = new Vector2(Random.Range(-6.0f, 6.0f), Random.Range(5.0f, 8.0f));
+        GetComponent<Rigidbody2D>().linearVelocity = new Vector2(Random.Range(-6, 6), Random.Range(5, 8));
         Destroy(gameObject, 3.0f);
     }
 
