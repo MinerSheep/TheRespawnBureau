@@ -64,8 +64,9 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        if (inputBuffer.Consume("Jump") && GD.Grounded)
+        if (Jumping == false && GD.Grounded && inputBuffer.Consume("Jump"))
         {
+            RB.linearVelocity = new Vector2(RB.linearVelocity.x, 0);
             RB.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
             //PM.PlayerModelStats = 2;
             //PM.ChangePlayerModelStats();
@@ -79,18 +80,15 @@ public class PlayerController : MonoBehaviour
 
     public void Crouch()
     {
-        if (inputBuffer.Consume("Crouch") && Jumping == false)
+        if (Jumping == false && Crouching == false && inputBuffer.Consume("Crouch"))
         {
-            if (!Crouching)
-            {
-                //PM.PlayerModelStats = 1;
-                //PM.ChangePlayerModelStats();
-                Crouching = true;
-                cC.size = new Vector2(1, 1);
-                AudioManager.instance.Play("crouch");
-            }
+            //PM.PlayerModelStats = 1;
+            //PM.ChangePlayerModelStats();
+            Crouching = true;
+            cC.size = new Vector2(1, 1);
+            AudioManager.instance.Play("crouch");
         }
-        else if (inputBuffer.Consume("Crouch") && Jumping == true)
+        else if (Jumping == true && inputBuffer.Consume("Crouch"))
         {
             RB.AddForce(Vector2.down * FallingForce);
             Debug.Log("SFA");
@@ -101,11 +99,8 @@ public class PlayerController : MonoBehaviour
             if (crouchingTimer > CrouchingTime)
             {
                 crouchingTimer = 0;
-                if (!inputBuffer.Consume("Crouch"))
-                {
-                    Crouching = false;
-                    cC.size = new Vector2(1, 2);
-                }
+                Crouching = false;
+                cC.size = new Vector2(1, 2);
 
                 //PM.PlayerModelStats = 0;
                 //PM.ChangePlayerModelStats();
