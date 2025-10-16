@@ -19,6 +19,7 @@ public class LevelGenerator : MonoBehaviour
 
     void Start()
     {
+        currentExit = transform.Find("Entrance")?.transform;
         currentDifficulty = startDifficulty;
         GenerateLevel();
     }
@@ -54,7 +55,7 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-        GameObject newChunk = Instantiate(data.prefab);
+        GameObject newChunk = Instantiate(data.prefab, transform);
 
         // Align with current exit
         if (currentExit != null)
