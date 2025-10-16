@@ -18,7 +18,10 @@ public class PlayerController : MonoBehaviour
     public bool AutoRunner = false;
     public float MoveSpeed = 5f;
     public float MoveForce = 1f;
-    public float JumpForce = 5f;
+    public float JumpForce = 18f;
+    private float DefaultJumpForce = 18f;   // Used to reset jump to normal after leaving a "sticky" platform
+    public bool Jumping = false;
+    public bool Crouching = false;
     public float CrouchingTime = 2f;
     public float FallingForce = 3f;
     public float iFrameMax = 0.2f;
@@ -76,6 +79,15 @@ public class PlayerController : MonoBehaviour
 
             AudioManager.instance.Play("jump");
         }
+    }
+    // Set/reset functions for modifying JumpForce
+    public void SetJumpForce(float NewJumpForce)
+    {
+        JumpForce = NewJumpForce;
+    }
+    public void ResetJumpForce()
+    {
+        JumpForce = DefaultJumpForce;
     }
 
     public void Crouch()

@@ -5,11 +5,16 @@ using UnityEngine.SceneManagement;
 
 public enum Behavior
 {
+    None,
     Moving,
     Breaking,
     Launching,
+    Sticky,
     MoveAndBreak,
-    MoveAndLaunch
+    MoveAndLaunch,
+    MoveAndSticky,
+    BreakAndSticky,
+    MoveBreakSticky
 }
 
 public class PlatformBehavior : MonoBehaviour
@@ -19,9 +24,11 @@ public class PlatformBehavior : MonoBehaviour
     [SerializeField] float speed;   // Movement speed
     [SerializeField] float breakTime;   //For platforms that "break", determines how long they take to break
     [SerializeField] float launchStrength;  // Amount of force applied to player
+    public float modJumpForce = 18f; // Reduced jump height for "sticky" platform
     private int destPoint = 0;  // Index for next movePoint
     private bool moveDir = false;   // Directs the platform to move forward/backward
     private bool touched = false;   // This flag is triggered when the player touches the platform
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,7 +41,7 @@ public class PlatformBehavior : MonoBehaviour
     void Update()
     {
         // Move back and forth between movePoints
-        if (behavior == Behavior.Moving || behavior == Behavior.MoveAndLaunch || behavior == Behavior.MoveAndBreak)
+        if (behavior == Behavior.Moving || behavior == Behavior.MoveAndLaunch || behavior == Behavior.MoveAndBreak || behavior == Behavior.MoveAndSticky || behavior == Behavior.MoveBreakSticky)
         {
             // Get the current movePoint
             Transform target = movePoints[destPoint];
@@ -50,7 +57,7 @@ public class PlatformBehavior : MonoBehaviour
             }
         }
         // Break if the player touches the platform
-        if(behavior == Behavior.Breaking || behavior == Behavior.MoveAndBreak)
+        if(behavior == Behavior.Breaking || behavior == Behavior.MoveAndBreak || behavior == Behavior.BreakAndSticky || behavior == Behavior.MoveBreakSticky)
         {
             // Only decrement the timer once the player touches the platform
             if (touched)
@@ -96,25 +103,43 @@ public class PlatformBehavior : MonoBehaviour
     }
 
     // Collision detection
-    void OnTriggerEnter2D(UnityEngine.Collider2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        GameObject player = collision.gameObject; // Store whatever thing hit the platform
-        string objName = collision.gameObject.name;
-
         // If the player collides with the platform, set the "touched" flag
-        if (player != null && objName == "GroundTrigger")
+        if (collision.gameObject.CompareTag("Player"))
         {
             touched = true;
-            if(behavior == Behavior.Launching || behavior == Behavior.MoveAndLaunch)
+            if (behavior == Behavior.Launching || behavior == Behavior.MoveAndLaunch)
             {
                 float platformTop = GetComponent<Collider2D>().bounds.max.y;    // Top of the platform
-                float playerBot = collision.bounds.min.y; // Bottom of the player's collider
+                float playerBot = collision.collider.bounds.min.y; // Bottom of the player's collider
 
                 // If the player is hitting the top of the platform, launch 'em
                 if (Mathf.Abs(playerBot - platformTop) < 0.2f)
                 {
-                    collision.attachedRigidbody.AddForce(Vector2.up * launchStrength, ForceMode2D.Impulse);
+                    collision.collider.attachedRigidbody.AddForce(Vector2.up * launchStrength, ForceMode2D.Impulse);
                 }
+            }
+            if (behavior == Behavior.Sticky || behavior == Behavior.BreakAndSticky || behavior == Behavior.MoveBreakSticky)
+            {
+                // Modify the player's jump height if they're on a "Sticky" platform
+                PlayerController playerCont = collision.gameObject.GetComponent<PlayerController>();
+                if (playerCont != null)
+                {
+                    playerCont.SetJumpForce(modJumpForce);
+                }
+            }
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            PlayerController playerCont = collision.gameObject.GetComponent<PlayerController>();
+            if (playerCont != null)
+            {
+                playerCont.ResetJumpForce();
             }
         }
     }
