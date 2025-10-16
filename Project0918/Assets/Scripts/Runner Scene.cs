@@ -1,24 +1,39 @@
-using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 public class RunnerScene : MonoBehaviour
 {
+    [Header("Settings")]
     public float StartMovingSpeed = 6f;
     public float EndMovingSpeed = 10f;
     public float ChangeTime = 9000f;
-    public float AutoRunnerTimer=0f;
+    public float AutoRunnerTimer = 0f;
 
-    public float MovingSpeed;
+    // Private variables
+    [HideInInspector] public float MovingSpeed;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         MovingSpeed = StartMovingSpeed;
 
-        foreach (Transform child in transform)
+        SetMaskOnTransform(transform);
+    }
+
+    void SetMaskOnTransform(Transform transformer)
+    {
+        SpriteRenderer sr = transformer.GetComponent<SpriteRenderer>();
+        if (sr != null)
+            sr.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+
+        TilemapRenderer tr = transformer.GetComponent<TilemapRenderer>();
+        if (tr != null)
+            tr.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+
+        foreach (Transform child in transformer)
         {
-            child.GetComponent<SpriteRenderer>().maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+            SetMaskOnTransform(child);
         }
     }
 
@@ -30,6 +45,9 @@ public class RunnerScene : MonoBehaviour
         transform.position += new Vector3(-MovingSpeed * Time.deltaTime, 0, 0);
 
         if (Input.GetKeyDown(KeyCode.R))
-            SceneManager.LoadScene("AutoRunnerTester");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+        if (Input.GetKeyDown(KeyCode.L))
+            SceneManager.LoadScene("AR02");
     }
 }
