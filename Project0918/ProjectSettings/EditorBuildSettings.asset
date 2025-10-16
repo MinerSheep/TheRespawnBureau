@@ -8,15 +8,21 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainScenes/MainMenu_PC.unity
     guid: a042844d395e83a49be654ef0b97bdca
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/OldLevels/AutoRunnerTester.unity
     guid: 10aefb138c8a0114886afcc22ebac55e
   - enabled: 0
     path: Assets/Scenes/Platformer.unity
     guid: 607b557d19b3ad84cbea0a3707812748
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/OldLevels/Platformer.unity
     guid: 5658915d422024f409211e2ba19cdf52
+  - enabled: 1
+    path: Assets/Scenes/MainScenes/AutoRunner.unity
+    guid: 946327127d82856438286e95c1c4cbe1
+  - enabled: 1
+    path: Assets/Scenes/OldPlatformer/PlatformerNewController.unity
+    guid: 9e4a81bb6d7cd104f96cc2a7ff308caa
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
