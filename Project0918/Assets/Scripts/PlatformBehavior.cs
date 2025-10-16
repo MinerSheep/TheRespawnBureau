@@ -104,7 +104,6 @@ public class PlatformBehavior : MonoBehaviour
         // If the player collides with the platform, set the "touched" flag
         if (player != null && objName == "GroundTrigger")
         {
-            Debug.Log("LAUNCH");
             touched = true;
             if(behavior == Behavior.Launching || behavior == Behavior.MoveAndLaunch)
             {
@@ -112,7 +111,7 @@ public class PlatformBehavior : MonoBehaviour
                 float playerBot = collision.bounds.min.y; // Bottom of the player's collider
 
                 // If the player is hitting the top of the platform, launch 'em
-                if (Mathf.Abs(playerBot - platformTop) < 0.1f)
+                if (Mathf.Abs(playerBot - platformTop) < 0.2f)
                 {
                     collision.attachedRigidbody.AddForce(Vector2.up * launchStrength, ForceMode2D.Impulse);
                 }
