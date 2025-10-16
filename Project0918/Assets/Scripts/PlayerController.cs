@@ -20,8 +20,6 @@ public class PlayerController : MonoBehaviour
     public float MoveForce = 1f;
     public float JumpForce = 18f;
     private float DefaultJumpForce = 18f;   // Used to reset jump to normal after leaving a "sticky" platform
-    public bool Jumping = false;
-    public bool Crouching = false;
     public float CrouchingTime = 2f;
     public float FallingForce = 3f;
     public float iFrameMax = 0.2f;
