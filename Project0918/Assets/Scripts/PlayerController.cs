@@ -19,7 +19,8 @@ public class PlayerController : MonoBehaviour
     public bool AutoRunner = false;
     public float MoveSpeed = 5f;
     public float MoveForce = 1f;
-    public float JumpForce = 5f;
+    public float JumpForce = 18f;
+    private float DefaultJumpForce = 18f;   // Used to reset jump to normal after leaving a "sticky" platform
     public bool Jumping = false;
     public bool Crouching = false;
     public float CrouchingTime = 2f;
@@ -69,6 +70,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && GD.Grounded)
         {
+            Debug.Log("JumpForce = " + JumpForce);
             RB.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
             //PM.PlayerModelStats = 2;
             //PM.ChangePlayerModelStats();
@@ -78,6 +80,15 @@ public class PlayerController : MonoBehaviour
 
             PlayJumpAudio();
         }
+    }
+    // Set/reset functions for modifying JumpForce
+    public void SetJumpForce(float NewJumpForce)
+    {
+        JumpForce = NewJumpForce;
+    }
+    public void ResetJumpForce()
+    {
+        JumpForce = DefaultJumpForce;
     }
 
     public void Crouch()
@@ -121,6 +132,8 @@ public class PlayerController : MonoBehaviour
         cC = GetComponent<CapsuleCollider2D>();
 
         audioSource = gameObject.AddComponent<AudioSource>();
+
+        DefaultJumpForce = JumpForce;   // Setting the default jump force to whatever the designers have in the editor
 
         jumpAudio = Resources.Load<AudioClip>("Audio/jump-retro-game-jam-fx-1-00-03");
         if (jumpAudio == null)
