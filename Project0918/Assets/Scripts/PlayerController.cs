@@ -80,8 +80,12 @@ public class PlayerController : MonoBehaviour
             Jumping = true;
             cC.size = new Vector2(1, 2);
             firstJump = true;
-            JumpTimer=JumpHoldTime;
+            JumpTimer = JumpHoldTime;
             AudioManager.instance.Play("jump");
+        }
+        else if (Jumping == true)
+        {
+            JumpHold();
         }
     }
     // Set/reset functions for modifying JumpForce
@@ -99,7 +103,7 @@ public class PlayerController : MonoBehaviour
         if (firstJump)
         {
             JumpTimer-=Time.deltaTime;
-            if(Input.GetKey(KeyCode.Space)&&JumpTimer>0)
+            if(inputBuffer.Consume("Jump")&&JumpTimer>0)
             {
                 RB.AddForce(new Vector2(0,JumpHoldForce));
             }
