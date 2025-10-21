@@ -25,7 +25,6 @@ public class PlayerController : MonoBehaviour
     public float CrouchingTime = 2f;
     public float FallingForce = 3f;
     public float iFrameMax = 0.2f;
-    public HeadTrigger HT;
 
 
     [HideInInspector] private InputBuffer inputBuffer;
@@ -103,11 +102,10 @@ public class PlayerController : MonoBehaviour
     {
         if (firstJump)
         {
-            JumpTimer -= Time.deltaTime;
-            if (Input.GetKey(KeyCode.Space) && JumpTimer > 0)
+            JumpTimer-=Time.deltaTime;
+            if(inputBuffer.Consume("Jump")&&JumpTimer>0)
             {
-                RB.AddForce(new Vector2(0, JumpHoldForce));
-                Debug.Log("Jumphold");
+                RB.AddForce(new Vector2(0,JumpHoldForce));
             }
             else
             {
@@ -128,16 +126,13 @@ public class PlayerController : MonoBehaviour
         }
         else if (Jumping == true && inputBuffer.Consume("Crouch"))
         {
-            RB.AddForce(Vector2.down * FallingForce,ForceMode2D.Impulse);
-            Crouching = true;
-            cC.size = new Vector2(1, 1);
-            AudioManager.instance.Play("crouch");
+            RB.AddForce(Vector2.down * FallingForce);
             Debug.Log("SFA");
         }
         if (Crouching)
         {
             crouchingTimer += Time.deltaTime;
-            if (crouchingTimer > CrouchingTime&&!HT.IsTriggering)
+            if (crouchingTimer > CrouchingTime)
             {
                 crouchingTimer = 0;
                 Crouching = false;
@@ -189,6 +184,6 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerDeath()
     {
-
+        
     }
 }
