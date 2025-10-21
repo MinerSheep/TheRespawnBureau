@@ -20,9 +20,13 @@ public class PlayerController : MonoBehaviour
     public float MoveForce = 1f;
     public float JumpForce = 18f;
     private float DefaultJumpForce = 18f;   // Used to reset jump to normal after leaving a "sticky" platform
+    public float JumpHoldForce = 3f;
+    public float JumpHoldTime = 1f;
     public float CrouchingTime = 2f;
     public float FallingForce = 3f;
     public float iFrameMax = 0.2f;
+    public HeadTrigger HT;
+
 
     [HideInInspector] private InputBuffer inputBuffer;
     [HideInInspector] public Rigidbody2D RB;
@@ -39,6 +43,8 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public int pointValue;
     [HideInInspector] private float crouchingTimer;
     [HideInInspector] private float iFrames;
+    [HideInInspector] private bool firstJump = false;
+    [HideInInspector] private float JumpTimer = 0f;
 
     public void LoseHealth()
     {
@@ -74,8 +80,13 @@ public class PlayerController : MonoBehaviour
             Crouching = false;
             Jumping = true;
             cC.size = new Vector2(1, 2);
-
+            firstJump = true;
+            JumpTimer = JumpHoldTime;
             AudioManager.instance.Play("jump");
+        }
+        else if (Jumping == true)
+        {
+            JumpHold();
         }
     }
     // Set/reset functions for modifying JumpForce
@@ -86,6 +97,23 @@ public class PlayerController : MonoBehaviour
     public void ResetJumpForce()
     {
         JumpForce = DefaultJumpForce;
+    }
+
+    public void JumpHold()
+    {
+        if (firstJump)
+        {
+            JumpTimer -= Time.deltaTime;
+            if (Input.GetKey(KeyCode.Space) && JumpTimer > 0)
+            {
+                RB.AddForce(new Vector2(0, JumpHoldForce));
+                Debug.Log("Jumphold");
+            }
+            else
+            {
+                firstJump = false;
+            }
+        }
     }
 
     public void Crouch()
@@ -100,13 +128,16 @@ public class PlayerController : MonoBehaviour
         }
         else if (Jumping == true && inputBuffer.Consume("Crouch"))
         {
-            RB.AddForce(Vector2.down * FallingForce);
+            RB.AddForce(Vector2.down * FallingForce,ForceMode2D.Impulse);
+            Crouching = true;
+            cC.size = new Vector2(1, 1);
+            AudioManager.instance.Play("crouch");
             Debug.Log("SFA");
         }
         if (Crouching)
         {
             crouchingTimer += Time.deltaTime;
-            if (crouchingTimer > CrouchingTime)
+            if (crouchingTimer > CrouchingTime&&!HT.IsTriggering)
             {
                 crouchingTimer = 0;
                 Crouching = false;
@@ -158,6 +189,6 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerDeath()
     {
-        
+
     }
 }
