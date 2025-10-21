@@ -251,6 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dbffa7b43193944698a7c7557ea5c84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transitionTimer: 3
   confetti: {fileID: 552723859147309886, guid: 53e2b6a009f302d4880279e4d08076ee, type: 3}
 --- !u!1 &8951754530038630988
 GameObject:

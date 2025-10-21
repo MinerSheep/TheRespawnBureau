@@ -9,6 +9,7 @@ public class LevelGenerator : MonoBehaviour
     public List<ChunkData> hardChunks;
 
     [Header("Generation Settings")]
+    public GameObject spawnGoal;
     public int numberOfChunks = 10;
     public string startDifficulty = "Easy";
     public bool increaseDifficultyOverTime = true;
@@ -36,6 +37,21 @@ public class LevelGenerator : MonoBehaviour
             }
 
             SpawnChunk();
+        }
+
+        if (spawnGoal != null)
+            SpawnGoal();
+    }
+
+    void SpawnGoal()
+    {
+        GameObject newChunk = Instantiate(spawnGoal, transform);
+
+        // Align with current exit
+        if (currentExit != null)
+        {
+            Vector3 offset = currentExit.position;
+            newChunk.transform.position = offset + new Vector3(0, 3, 0);
         }
     }
 
