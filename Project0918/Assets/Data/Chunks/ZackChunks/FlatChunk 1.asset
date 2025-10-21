@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FlatChunk 1
   m_EditorClassIdentifier: 
   prefab: {fileID: 1300703788183710643, guid: 79ee95d4d72b22b4e98964d59b6ef812, type: 3}
-  weight: 1
+  weight: 3
   difficulty: Easy
   allowedNextTags:
   - Zack

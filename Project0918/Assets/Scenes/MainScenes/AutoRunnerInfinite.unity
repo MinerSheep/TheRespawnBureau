@@ -12170,6 +12170,7 @@ MonoBehaviour:
   hardChunks:
   - {fileID: 11400000, guid: 0b6ffc03cabb4254fbcf2ba1ebfef337, type: 2}
   - {fileID: 11400000, guid: ed1fbf3d04e8c8e47b61aa62450158d5, type: 2}
+  spawnGoal: {fileID: 5642523940795467872, guid: 925a03e9fe2225c469719b5d1102ea16, type: 3}
   numberOfChunks: 10
   startDifficulty: Easy
   increaseDifficultyOverTime: 1
