@@ -52,6 +52,21 @@ public class LevelGenerator : MonoBehaviour
 
             sequenceIndex++;
         }
+
+        if (spawnGoal != null)
+            SpawnGoal();
+    }
+
+    void SpawnGoal()
+    {
+        GameObject newChunk = Instantiate(spawnGoal, transform);
+
+        // Align with current exit
+        if (currentExit != null)
+        {
+            Vector3 offset = currentExit.position;
+            newChunk.transform.position = offset + new Vector3(0, 3, 0);
+        }
     }
 
     void SpawnChunk()
@@ -70,7 +85,7 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-        GameObject newChunk = Instantiate(data.prefab);
+        GameObject newChunk = Instantiate(data.prefab, transform);
 
         // Align with current exit
         if (currentExit != null)
