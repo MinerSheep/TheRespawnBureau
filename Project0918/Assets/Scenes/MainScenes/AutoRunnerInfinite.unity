@@ -12564,7 +12564,8 @@ PrefabInstance:
       propertyPath: flashlight
       value: 
       objectReference: {fileID: 849009244}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1561173710784729258, guid: 4f5cfa6ebdc33e04dbec05f29bbf99d8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4210157123753652, guid: 4f5cfa6ebdc33e04dbec05f29bbf99d8, type: 3}
