@@ -8,10 +8,12 @@ public class LevelGenerator : MonoBehaviour
     public List<ChunkData> mediumChunks;
     public List<ChunkData> hardChunks;
 
+    [Header("Difficulty Sequence")]
+    public List<DifficultySegment> difficultySequence = new List<DifficultySegment>();
+
     [Header("Generation Settings")]
-    public int numberOfChunks = 10;
-    public string startDifficulty = "Easy";
-    public bool increaseDifficultyOverTime = true;
+    public bool loopSequence = false;   // if true, repeat the sequence if we run out
+    public int totalRoomsOverride = -1; // optional total count override (-1 = use sequence total)
 
     private Transform currentExit;
     private string currentDifficulty;
@@ -19,22 +21,36 @@ public class LevelGenerator : MonoBehaviour
 
     void Start()
     {
-        currentDifficulty = startDifficulty;
         GenerateLevel();
     }
 
     void GenerateLevel()
     {
-        for (int i = 0; i < numberOfChunks; i++)
+        int totalToGenerate = (totalRoomsOverride > 0) ? totalRoomsOverride : GetSequenceTotalRooms();
+
+        int roomsGenerated = 0;
+        int sequenceIndex = 0;
+
+        while (roomsGenerated < totalToGenerate)
         {
-            // Optionally increase difficulty as we go
-            if (increaseDifficultyOverTime)
+            if (sequenceIndex >= difficultySequence.Count)
             {
-                if (i > numberOfChunks * 0.33f) currentDifficulty = "Medium";
-                if (i > numberOfChunks * 0.66f) currentDifficulty = "Hard";
+                if (loopSequence)
+                    sequenceIndex = 0;
+                else
+                    break;
             }
 
-            SpawnChunk();
+            DifficultySegment currentSegment = difficultySequence[sequenceIndex];
+            currentDifficulty = currentSegment.difficultyName;
+
+            for (int i = 0; i < currentSegment.roomCount && roomsGenerated < totalToGenerate; i++)
+            {
+                SpawnChunk();
+                roomsGenerated++;
+            }
+
+            sequenceIndex++;
         }
     }
 
@@ -106,4 +122,19 @@ public class LevelGenerator : MonoBehaviour
         }
         return pool[0];
     }
+
+    int GetSequenceTotalRooms()
+    {
+        int total = 0;
+        foreach (var segment in difficultySequence)
+            total += segment.roomCount;
+        return total;
+    }
+}
+
+[System.Serializable]
+public class DifficultySegment
+{
+    public string difficultyName;
+    public int roomCount = 1;
 }
