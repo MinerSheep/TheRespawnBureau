@@ -3,24 +3,23 @@ using UnityEngine.SceneManagement;
 
 public class KillBox : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
+    public GameObject followTarget;
 
-    }
-
-    // Update is called once per frame
     void Update()
     {
-
+        // Match the x
+        if (followTarget != null)
+            transform.position = new Vector2(followTarget.transform.position.x, transform.position.y);
     }
     
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
+            // Optional
             CollectionManager.instance.SaveScore(); // Save high score to PlayerPrefs
-            SceneManager.LoadScene("PlayerMovementDemo");
+            
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }

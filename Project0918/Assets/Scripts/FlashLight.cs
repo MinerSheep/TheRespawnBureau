@@ -2,20 +2,28 @@ using UnityEngine;
 
 public class FlashLight : MonoBehaviour
 {
+    [Header("Settings")]
     public float batteryMax = 100.0f;
     public float batteryUseRate = 1.0f;
     public float batteryCurrent;
-
-    public GameObject flashLight;
     public bool flashLightOn = true;
-    public bool followMouse = false;
+    public LightMethod lightMethod = LightMethod.Static;
+
+    [Header("References")]
+    public GameObject spriteMask;
     public KeyCode flashLightflip = KeyCode.F;
+
     //public FlipCamera flipCamera = null;
+
+    [HideInInspector] int direction = 1;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         batteryCurrent = batteryMax;
+
+        if (spriteMask == null)
+            spriteMask = transform.Find("Sprite Mask")?.gameObject;
     }
 
     // Update is called once per frame
@@ -38,40 +46,55 @@ public class FlashLight : MonoBehaviour
             FlashLightOff();
         }
 
-        if (followMouse)
+        switch (lightMethod)
         {
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 direction = mousePos - (Vector2)transform.position;
+            case LightMethod.FollowMouse:
+                float rotationSpeed = 10f;
 
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0f, 0f, angle);
+                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 direction = mousePos - (Vector2)transform.position;
+
+                float currentangle = transform.rotation.eulerAngles.z;
+                float targetangle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+                float smoothAngle = Mathf.LerpAngle(currentangle, targetangle, Time.deltaTime * rotationSpeed);
+
+                transform.rotation = Quaternion.Euler(0f, 0f, smoothAngle);
+                break;
+            case LightMethod.FollowMovement:
+                break;
         }
 
-        //flipping flashlight by flip the sprite mask
-        if (Input.GetKeyDown(flashLightflip))
-        {
-            flip();
-        }
     }
 
-    void FlashLightOff() 
+    void FlashLightOff()
     {
-        flashLight.SetActive(false);
+        spriteMask.SetActive(false);
     }
     void FlashLightOn()
     {
-        flashLight.SetActive(true);
+        spriteMask.SetActive(true);
     }
     public void BatteryChange(float batteryChange = 0f)
     {
         batteryCurrent += batteryChange;
     }
 
-    void flip()
+    public void flip()
     {
-        flashLight.transform.Rotate(0f, 180f, 0f, Space.Self);
+        if (lightMethod == LightMethod.Static)
+        {
+            spriteMask.transform.Rotate(0f, 180f, 0f, Space.Self);
+            direction = direction == 0 ? 1 : 0;
 
-        //if (flipCamera != null)
-        //    flipCamera.Flip();
+            PlayerEvents.OnFlipFlashlight.Invoke(direction);
+        }
+    }
+
+    public enum LightMethod
+    {
+        Static,
+        FollowMouse,
+        FollowMovement
     }
 }

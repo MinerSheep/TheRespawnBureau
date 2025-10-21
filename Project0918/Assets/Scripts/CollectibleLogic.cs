@@ -3,12 +3,23 @@ using UnityEngine;
 
 public class CollectibleLogic : MonoBehaviour
 {
+    [Header("Settings")]
     public int scoreValue;
+    public int batteryValue;
+
+    // Private variables
     MovementDemoController playerScript;
+    PlayerController playerController;
 
     void Start()
     {
         playerScript = GameObject.FindWithTag("Player").GetComponent<MovementDemoController>();
+
+        playerController = GameObject.FindAnyObjectByType<PlayerController>();
+        if (!playerController)
+        {
+            Debug.Log("Player Controller null!");
+        }
         
         //audioSource = GameObject.Find("Audio Manager").GetComponent<AudioSource>();
     }
@@ -16,13 +27,34 @@ public class CollectibleLogic : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") == true)
         {
+            if (scoreValue > 0)
+            {
             // Currently this adds points to the Player object by finding the tag "Player"
             // then adds the value of this collectible to the player's score
-            CollectionManager.instance.score += scoreValue;
-            //playerScript.pointValue += scoreValue;
+
+            if (CollectionManager.instance != null)
+            {
+                    CollectionManager.instance.score += scoreValue;
+                    CollectionManager.instance.coinsCollected++;
+            }
+
+            if (playerController != null)
+            {
+                playerController.pointValue += scoreValue;
+                //playerScript.pointValue += scoreValue;
+            }
 
             // Currently calls a game object called "Audio Manager" and sends a play signal
-            AudioManager.instance.Play("coin_collect");
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.Play("coin_collect");
+            }
+                
+            }
+
+            // Give battery if battery value
+            if (batteryValue > 0)
+                playerController.flashlight.BatteryChange(batteryValue);
 
             // Destroys this object
             Destroy(this.gameObject);
