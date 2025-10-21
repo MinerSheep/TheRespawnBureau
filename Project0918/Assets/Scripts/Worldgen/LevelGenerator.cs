@@ -11,13 +11,16 @@ public class LevelGenerator : MonoBehaviour
     [Header("Difficulty Sequence")]
     public List<DifficultySegment> difficultySequence = new List<DifficultySegment>();
 
+    [Header("Chunk Overrides")]
+    public List<ChunkOverride> chunkOverrides = new List<ChunkOverride>();
+
     [Header("Generation Settings")]
-    public bool loopSequence = false;   // if true, repeat the sequence if we run out
-    public int totalRoomsOverride = -1; // optional total count override (-1 = use sequence total)
+    public bool loopSequence = false;   // repeat the difficulty pattern
+    public int totalRoomsOverride = -1; // optional override of total room count (-1 = sum of sequence)
 
     private Transform currentExit;
-    private string currentDifficulty;
     private ChunkData lastChunkData;
+    private int currentChunkIndex = 0;
 
     void Start()
     {
@@ -42,11 +45,12 @@ public class LevelGenerator : MonoBehaviour
             }
 
             DifficultySegment currentSegment = difficultySequence[sequenceIndex];
-            currentDifficulty = currentSegment.difficultyName;
+            Difficulty currentDifficulty = currentSegment.difficulty;
 
             for (int i = 0; i < currentSegment.roomCount && roomsGenerated < totalToGenerate; i++)
             {
-                SpawnChunk();
+                SpawnChunk(currentDifficulty, currentChunkIndex);
+                currentChunkIndex++;
                 roomsGenerated++;
             }
 
@@ -54,25 +58,32 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    void SpawnChunk()
+    void SpawnChunk(Difficulty difficulty, int index)
     {
-        ChunkData data = ChooseWeightedChunk(GetPoolForDifficulty(currentDifficulty));
-        if (data == null) return;
-
-        // Rule-based chaining: ensure new chunk is allowed after last
-        if (lastChunkData != null && lastChunkData.allowedNextTags.Length > 0)
+        // Check if this index has a manual override
+        ChunkData data = GetOverrideChunk(index);
+        if (data == null)
         {
-            int tries = 0;
-            while (!IsAllowedNext(lastChunkData, data) && tries < 10)
+            // Pick random from the pool if not overridden
+            data = ChooseWeightedChunk(GetPoolForDifficulty(difficulty));
+            if (data == null) return;
+
+            // Rule-based chaining (optional)
+            if (lastChunkData != null && lastChunkData.allowedNextTags.Length > 0)
             {
-                data = ChooseWeightedChunk(GetPoolForDifficulty(currentDifficulty));
-                tries++;
+                int tries = 0;
+                while (!IsAllowedNext(lastChunkData, data) && tries < 10)
+                {
+                    data = ChooseWeightedChunk(GetPoolForDifficulty(difficulty));
+                    tries++;
+                }
             }
         }
 
+        // Spawn the chunk prefab
         GameObject newChunk = Instantiate(data.prefab);
 
-        // Align with current exit
+        // Align with previous exit
         if (currentExit != null)
         {
             var chunk = newChunk.GetComponent<Chunk>();
@@ -81,9 +92,21 @@ public class LevelGenerator : MonoBehaviour
             newChunk.transform.position = offset;
         }
 
-        // Update tracking
+        // Update references
         currentExit = newChunk.GetComponent<Chunk>().exitPoint;
         lastChunkData = data;
+    }
+
+    // ---------------- Helper Methods ----------------
+
+    ChunkData GetOverrideChunk(int index)
+    {
+        foreach (var ovr in chunkOverrides)
+        {
+            if (ovr.chunkIndex == index && ovr.specificChunk != null)
+                return ovr.specificChunk;
+        }
+        return null;
     }
 
     bool IsAllowedNext(ChunkData prev, ChunkData next)
@@ -94,12 +117,13 @@ public class LevelGenerator : MonoBehaviour
         return false;
     }
 
-    List<ChunkData> GetPoolForDifficulty(string difficulty)
+    List<ChunkData> GetPoolForDifficulty(Difficulty difficulty)
     {
         switch (difficulty)
         {
-            case "Medium": return mediumChunks;
-            case "Hard": return hardChunks;
+            case Difficulty.Medium: return mediumChunks;
+            case Difficulty.Hard: return hardChunks;
+            case Difficulty.Easy:
             default: return easyChunks;
         }
     }
@@ -135,6 +159,20 @@ public class LevelGenerator : MonoBehaviour
 [System.Serializable]
 public class DifficultySegment
 {
-    public string difficultyName;
+    public Difficulty difficulty; // Now uses the enum!
     public int roomCount = 1;
+}
+
+[System.Serializable]
+public class ChunkOverride
+{
+    public int chunkIndex;
+    public ChunkData specificChunk;
+}
+
+public enum Difficulty
+{
+    Easy,
+    Medium,
+    Hard
 }

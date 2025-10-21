@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff75de6fe8060a948af3983d348b9962, type: 3}
   m_Name: Pit_Data
   m_EditorClassIdentifier: 
-  prefab: {fileID: 1300703788183710643, guid: 3a16fe6e18207cd4ea23da7ec03d1175, type: 3}
+  tagName: Pit
+  difficulty: 1
   weight: 5
-  difficulty: Medium
+  prefab: {fileID: 1300703788183710643, guid: 3a16fe6e18207cd4ea23da7ec03d1175, type: 3}
   allowedNextTags:
   - Upstairs
   - 2Pit
-  tagName: Pit
