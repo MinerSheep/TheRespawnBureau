@@ -93,7 +93,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Grounded: 0
   PC: {fileID: 5987814615721749164}
-  PM: {fileID: 2342536806410089536}
 --- !u!1 &4844247067851034484
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,6 +531,7 @@ GameObject:
   - component: {fileID: 7025357141190287409}
   - component: {fileID: 7093110629789232275}
   - component: {fileID: 5987814615721749164}
+  - component: {fileID: 3869149035208277866}
   m_Layer: 0
   m_Name: Player_Controller
   m_TagString: Player
@@ -696,15 +696,27 @@ MonoBehaviour:
   MoveSpeed: 6
   MoveForce: 6
   JumpForce: 20
-  Jumping: 0
-  Crouching: 0
   CrouchingTime: 1
   FallingForce: 3
   iFrameMax: 0.2
   RB: {fileID: 0}
+  cC: {fileID: 0}
+  Jumping: 0
+  Crouching: 0
   GD: {fileID: 8829983403503924569}
-  PM: {fileID: 2342536806410089536}
-  health: {fileID: 0}
+  hud: {fileID: 0}
+  flashlight: {fileID: 0}
   pointValue: 0
-  jumpAudio: {fileID: 0}
-  crouchAudio: {fileID: 0}
+--- !u!114 &3869149035208277866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8414784399493169385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0f503b033a6de844adba2dc9160beca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bufferTime: 0.2

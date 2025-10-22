@@ -84,6 +84,9 @@ public class MonsterBehavior : MonoBehaviour
         // If the monster collides with the player, kill the player (reload level)
         if (collision.tag == "Player" || objName == "Player_Stand" || objName == "Player_Jump" || objName == "Player_Crouch")
         {
+            // Optional save score
+            CollectionManager.instance.SaveScore();
+            
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 

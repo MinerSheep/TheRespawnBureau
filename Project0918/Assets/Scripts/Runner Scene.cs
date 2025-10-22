@@ -18,7 +18,7 @@ public class RunnerScene : MonoBehaviour
     {
         MovingSpeed = StartMovingSpeed;
 
-        SetMaskOnTransform(transform);
+        //SetMaskOnTransform(transform);
     }
 
     void SetMaskOnTransform(Transform transformer)

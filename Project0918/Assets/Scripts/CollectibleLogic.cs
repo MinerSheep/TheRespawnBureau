@@ -34,7 +34,8 @@ public class CollectibleLogic : MonoBehaviour
 
             if (CollectionManager.instance != null)
             {
-                CollectionManager.instance.score += scoreValue;
+                    CollectionManager.instance.score += scoreValue;
+                    CollectionManager.instance.coinsCollected++;
             }
 
             if (playerController != null)
