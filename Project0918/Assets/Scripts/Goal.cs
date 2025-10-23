@@ -32,9 +32,9 @@ public class Goal : MonoBehaviour
             // Win condition
             finished = true;
 
-            if (CollectionManager.instance != null)
+            if (ScoreManager.instance != null)
             {
-                CollectionManager.instance.SaveScore();
+                ScoreManager.instance.SaveScore();
             }
 
             for (int i = 0; i < 100; i++)
