@@ -152,7 +152,7 @@ public class PlayerController : MonoBehaviour
 
         if (flashlight == null)
             flashlight = transform.Find("FlashLight").GetComponent<FlashLight>();
-        hud.InitializeHUD(flashlight);
+        //hud.InitializeHUD(flashlight);
 
         PlayerEvents.OnPlayerDeath += PlayerDeath;
     }
