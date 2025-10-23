@@ -18,7 +18,6 @@ public class LevelGenerator : MonoBehaviour
     public bool loopSequence = false;   // repeat the difficulty pattern
     public int totalRoomsOverride = -1; // optional override of total room count (-1 = sum of sequence)
 
-    public GameObject spawnGoal;
     private Transform currentExit;
     private ChunkData lastChunkData;
     private int currentChunkIndex = 0;
