@@ -32,10 +32,10 @@ public class CollectibleLogic : MonoBehaviour
             // Currently this adds points to the Player object by finding the tag "Player"
             // then adds the value of this collectible to the player's score
 
-            if (CollectionManager.instance != null)
+            if (ScoreManager.instance != null)
             {
-                    CollectionManager.instance.score += scoreValue;
-                    CollectionManager.instance.coinsCollected++;
+                    ScoreManager.instance.score += scoreValue;
+                    ScoreManager.instance.coinsCollected++;
             }
 
             if (playerController != null)
