@@ -9,21 +9,17 @@ public class GroundDetection : MonoBehaviour
     [Header("References")]
     public PlayerController PC;
 
+    void Update()
+    {
+        Grounded = GroundCount > 0;
+        PC.Jumping = !Grounded;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Ground"))
         {
             GroundCount++;
-            if (GroundCount >= 1)
-            {
-                Grounded = true;
-                if (PC.Jumping)
-                {
-                    PC.Jumping = false;
-                    //PM.PlayerModelStats = 0;
-                    //PM.ChangePlayerModelStats();
-                }
-            }
         }
     }
 
@@ -32,10 +28,6 @@ public class GroundDetection : MonoBehaviour
         if (collision.CompareTag("Ground"))
         {
             GroundCount--;
-            if (GroundCount < 1)
-            {
-                Grounded = false;
-            }
         }
     }
 }
