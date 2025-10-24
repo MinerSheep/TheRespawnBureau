@@ -32,6 +32,9 @@ public class LevelGenerator : MonoBehaviour
     {
         int totalToGenerate = (totalRoomsOverride > 0) ? totalRoomsOverride : GetSequenceTotalRooms();
 
+        if (totalToGenerate == 0)
+            Debug.LogWarning("No rooms to generate");
+
         int roomsGenerated = 0;
         int sequenceIndex = 0;
 
@@ -82,7 +85,7 @@ public class LevelGenerator : MonoBehaviour
         }
 
         // Spawn the chunk prefab
-        GameObject newChunk = Instantiate(data.prefab);
+        GameObject newChunk = Instantiate(data.prefab, transform);
 
         // Align with previous exit
         if (currentExit != null)
