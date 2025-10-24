@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff75de6fe8060a948af3983d348b9962, type: 3}
   m_Name: DownwardStairs_Data
   m_EditorClassIdentifier: 
-  prefab: {fileID: 1300703788183710643, guid: 08925942c804f9a41aa6b12ac84072df, type: 3}
+  tagName: Downstairs
+  difficulty: 2
   weight: 5
-  difficulty: Hard
+  prefab: {fileID: 1300703788183710643, guid: 08925942c804f9a41aa6b12ac84072df, type: 3}
   allowedNextTags:
   - Pit
-  tagName: Downstairs

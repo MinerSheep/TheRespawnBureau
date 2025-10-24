@@ -13,7 +13,7 @@ public class CollectibleLogic : MonoBehaviour
 
     void Start()
     {
-        playerScript = GameObject.FindWithTag("Player").GetComponent<MovementDemoController>();
+        playerScript = GameObject.FindWithTag("Player")?.GetComponent<MovementDemoController>();
 
         playerController = GameObject.FindAnyObjectByType<PlayerController>();
         if (!playerController)

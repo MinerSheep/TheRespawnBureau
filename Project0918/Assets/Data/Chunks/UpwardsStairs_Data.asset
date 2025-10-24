@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff75de6fe8060a948af3983d348b9962, type: 3}
   m_Name: UpwardsStairs_Data
   m_EditorClassIdentifier: 
-  prefab: {fileID: 1300703788183710643, guid: 4b37e6433c87d2c459c370162644c0be, type: 3}
+  tagName: Upstairs
+  difficulty: 2
   weight: 5
-  difficulty: Hard
+  prefab: {fileID: 1300703788183710643, guid: 4b37e6433c87d2c459c370162644c0be, type: 3}
   allowedNextTags:
   - Downstairs
-  tagName: Upstairs

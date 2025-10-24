@@ -150,9 +150,8 @@ public class PlayerController : MonoBehaviour
         RB = GetComponent<Rigidbody2D>();
         cC = GetComponent<CapsuleCollider2D>();
 
-        if (flashlight == null)
-            flashlight = transform.Find("FlashLight").GetComponent<FlashLight>();
-        //hud.InitializeHUD(flashlight);
+        //if (flashlight == null)
+        //    flashlight = transform.Find("FlashLight").GetComponent<FlashLight>();
 
         PlayerEvents.OnPlayerDeath += PlayerDeath;
     }
@@ -166,8 +165,8 @@ public class PlayerController : MonoBehaviour
         Crouch();
 
         //flipping flashlight by flip the sprite mask
-        if (inputBuffer.Consume("FlipFlashlight"))
-            flashlight?.flip();
+        //if (inputBuffer.Consume("FlipFlashlight"))
+        //    flashlight?.flip();
 
         // iFrame counter
         if (iFrames > 0)
