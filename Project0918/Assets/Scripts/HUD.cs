@@ -23,8 +23,8 @@ public class HUD : MonoBehaviour
 
     private void Start()
     {
-        StartX = Player.transform.position.x;
-        GoalX = Goal.transform.position.x;
+        StartX = Player != null ?Player.transform.position.x : 0.0f;
+        GoalX = Goal != null ? Goal.transform.position.x : 1.0f;
     }
 
     private void Update()
@@ -35,7 +35,8 @@ public class HUD : MonoBehaviour
 
     public void UpdateProgress()
     {
-        ProgressBar.fillAmount = (Player.transform.position.x - StartX) / (Goal.transform.position.x - StartX);
+        if (Player != null && Goal != null)
+            ProgressBar.fillAmount = (Player.transform.position.x - StartX) / (Goal.transform.position.x - StartX);
     }
 
     public void UpdateHealthAmount()
