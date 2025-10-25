@@ -1,6 +1,5 @@
 using UnityEngine;
 using TMPro;
-using System.IO;
 
 
 public class ScoreManager : MonoBehaviour
@@ -24,20 +23,20 @@ public class ScoreManager : MonoBehaviour
     {
         instance = this;
 
-        // Declare the folder name in AppData that will store saved data
-        saveFolder = Path.Combine(Application.persistentDataPath, "SpookyRunner");
-
-        // Check if the folder already exists
-        if (!Directory.Exists(saveFolder))
+        // Load high score from file
+        string loadData = SaveManager.Load();
+        // Split the "HighScore : " from the actual score
+        string[] parts = loadData.Split(':');
+        if (parts.Length == 2)
         {
-            Debug.Log("Folder " + saveFolder + " does not exist, creating folder");
-            Directory.CreateDirectory(saveFolder);
+            string score = parts[1].Trim(); // Get the actual number
+                                            // If the result was actually a number, return it!
+            if (!int.TryParse(score, out int highScore))
+            {
+                Debug.Log("Failed to parse loaded data");
+            }
         }
 
-        // Declare the save filepath
-        saveFilePath = Path.Combine(saveFolder, "highscore.dat");
-
-        // Load high score from file and display in HUD
         highScore = LoadScore();
 
         if (_scoreText == null)
@@ -98,17 +97,7 @@ public class ScoreManager : MonoBehaviour
             string loadedScore = File.ReadAllText(saveFilePath);
             Debug.Log("Loaded from file: " + loadedScore);
 
-            // Split the "HighScore : " from the actual score
-            string[] parts = loadedScore.Split(':');
-            if(parts.Length == 2)
-            {
-                string score = parts[1].Trim(); // Get the actual number
-                // If the result was actually a number, return it!
-                if(int.TryParse(score, out int highScore))
-                {
-                    return highScore;
-                }
-            }
+
         }
         else
         {
