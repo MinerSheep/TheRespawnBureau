@@ -14,62 +14,78 @@ public class LevelGenerator : MonoBehaviour
     [Header("Chunk Overrides")]
     public List<ChunkOverride> chunkOverrides = new List<ChunkOverride>();
 
+    [Header("Streaming Settings")]
+    public Transform player;
+    public int chunksAhead = 10;
+    public float chunkDistAhead = 50f;
+    public float chunkDistBehind = 100f;
+
     [Header("Generation Settings")]
-    public bool loopSequence = false;   // repeat the difficulty pattern
-    public int totalRoomsOverride = -1; // optional override of total room count (-1 = sum of sequence)
+    public bool loopSequence = false;
+    public int totalRoomsOverride = -1;
 
     private Transform currentExit;
     private ChunkData lastChunkData;
     private int currentChunkIndex = 0;
+    private List<GameObject> activeChunks = new List<GameObject>();
+
+    private int sequenceIndex = 0;
+    private int totalToGenerate;
 
     void Start()
     {
-        currentExit = transform.Find("Entrance")?.transform;
-        GenerateLevel();
+        totalToGenerate = (totalRoomsOverride > 0) ? totalRoomsOverride : GetSequenceTotalRooms();
+        // Start with one or two chunks initially
+        for (int i = 0; i < chunksAhead; i++)
+        {
+            SpawnNextChunk();
+        }
     }
 
-    void GenerateLevel()
+    void Update()
     {
-        int totalToGenerate = (totalRoomsOverride > 0) ? totalRoomsOverride : GetSequenceTotalRooms();
+        if (player == null || activeChunks.Count == 0)
+            return;
 
-        int roomsGenerated = 0;
-        int sequenceIndex = 0;
+        // Check if the player passed the midpoint of the current chunk
+        var firstChunk = activeChunks[0];
+        var lastChunk = activeChunks[activeChunks.Count - 1];
+        float playerX = player.position.x;
 
-        while (roomsGenerated < totalToGenerate)
+        // Spawn new chunks if player approaches the end of current ones
+        if (playerX > lastChunk.GetComponent<Chunk>().exitPoint.position.x - chunkDistAhead)
         {
-            if (sequenceIndex >= difficultySequence.Count)
-            {
-                if (loopSequence)
-                    sequenceIndex = 0;
-                else
-                    break;
-            }
-
-            DifficultySegment currentSegment = difficultySequence[sequenceIndex];
-            Difficulty currentDifficulty = currentSegment.difficulty;
-
-            for (int i = 0; i < currentSegment.roomCount && roomsGenerated < totalToGenerate; i++)
-            {
-                SpawnChunk(currentDifficulty, currentChunkIndex);
-                currentChunkIndex++;
-                roomsGenerated++;
-            }
-
-            sequenceIndex++;
+            SpawnNextChunk();
         }
+
+        // Despawn old chunks if too far behind
+        while (activeChunks.Count > 0 &&
+               playerX - activeChunks[0].GetComponent<Chunk>().exitPoint.position.x > chunkDistBehind)
+        {
+            Destroy(activeChunks[0]);
+            activeChunks.RemoveAt(0);
+        }
+    }
+
+    void SpawnNextChunk()
+    {
+        if (currentChunkIndex >= totalToGenerate)
+            return;
+
+        Difficulty currentDifficulty = GetDifficultyForIndex(currentChunkIndex);
+        SpawnChunk(currentDifficulty, currentChunkIndex);
+        currentChunkIndex++;
     }
 
     void SpawnChunk(Difficulty difficulty, int index)
     {
-        // Check if this index has a manual override
         ChunkData data = GetOverrideChunk(index);
+
         if (data == null)
         {
-            // Pick random from the pool if not overridden
             data = ChooseWeightedChunk(GetPoolForDifficulty(difficulty));
             if (data == null) return;
 
-            // Rule-based chaining (optional)
             if (lastChunkData != null && lastChunkData.allowedNextTags.Length > 0)
             {
                 int tries = 0;
@@ -81,21 +97,19 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-        // Spawn the chunk prefab
         GameObject newChunk = Instantiate(data.prefab);
+        var chunk = newChunk.GetComponent<Chunk>();
 
-        // Align with previous exit
         if (currentExit != null)
         {
-            var chunk = newChunk.GetComponent<Chunk>();
-            var entry = chunk.entryPoint;
-            Vector3 offset = currentExit.position - (entry.position - newChunk.transform.position);
+            Vector3 offset = currentExit.position - (chunk.entryPoint.position - newChunk.transform.position);
             newChunk.transform.position = offset;
         }
 
-        // Update references
-        currentExit = newChunk.GetComponent<Chunk>().exitPoint;
+        currentExit = chunk.exitPoint;
         lastChunkData = data;
+
+        activeChunks.Add(newChunk);
     }
 
     // ---------------- Helper Methods ----------------
@@ -108,6 +122,20 @@ public class LevelGenerator : MonoBehaviour
                 return ovr.specificChunk;
         }
         return null;
+    }
+
+    Difficulty GetDifficultyForIndex(int index)
+    {
+        int sum = 0;
+        foreach (var segment in difficultySequence)
+        {
+            for (int i = 0; i < segment.roomCount; i++)
+            {
+                if (index == sum) return segment.difficulty;
+                sum++;
+            }
+        }
+        return Difficulty.Easy;
     }
 
     bool IsAllowedNext(ChunkData prev, ChunkData next)
@@ -124,7 +152,6 @@ public class LevelGenerator : MonoBehaviour
         {
             case Difficulty.Medium: return mediumChunks;
             case Difficulty.Hard: return hardChunks;
-            case Difficulty.Easy:
             default: return easyChunks;
         }
     }
@@ -132,13 +159,11 @@ public class LevelGenerator : MonoBehaviour
     ChunkData ChooseWeightedChunk(List<ChunkData> pool)
     {
         if (pool == null || pool.Count == 0) return null;
-
         float totalWeight = 0;
         foreach (var c in pool) totalWeight += c.weight;
 
         float randomValue = Random.value * totalWeight;
         float cumulative = 0;
-
         foreach (var c in pool)
         {
             cumulative += c.weight;
