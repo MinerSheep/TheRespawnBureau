@@ -16,34 +16,36 @@ public class ScoreManager : MonoBehaviour
 
     [HideInInspector] public int coinsCollected;
 
-    private string saveFolder;
-    private string saveFilePath;
-
     void Start()
     {
         instance = this;
 
         // Load high score from file
         string loadData = SaveManager.Load();
-        // Split the "HighScore : " from the actual score
-        string[] parts = loadData.Split(':');
-        if (parts.Length == 2)
+        if (loadData != null)
         {
-            string score = parts[1].Trim(); // Get the actual number
-                                            // If the result was actually a number, return it!
-            if (!int.TryParse(score, out int highScore))
+            // Split the "HighScore : " from the actual score
+            string[] parts = loadData.Split(':');
+            if (parts.Length == 2)
             {
-                Debug.Log("Failed to parse loaded data");
+                string score = parts[1].Trim(); // Get the actual number
+                                                // If the result was actually a number, return it!\
+                if (!int.TryParse(score, out highScore))
+                {
+                    Debug.Log("Failed to parse loaded data");
+                }
             }
         }
-
-        highScore = LoadScore();
+        else
+        {
+            Debug.Log("Failed to load data");
+            highScore = 0;
+        }
 
         if (_scoreText == null)
             _scoreText = transform.Find("Score")?.GetComponent<TextMeshPro>();
         if (_highScoreText == null)
             _highScoreText = transform.Find("HighScore")?.GetComponent<TextMeshPro>();
-
         if (_highScoreText != null)
             _highScoreText.text = "High Score: " + highScore;
     }
@@ -75,36 +77,16 @@ public class ScoreManager : MonoBehaviour
     {
         Debug.Log("HighScore saved: " + highScore);
         Debug.Log("Coins Collected: " + coinsCollected);
-        Debug.Log("Writing high score to: " + saveFilePath);
 
         // Write the high score to the save file
-        File.WriteAllText(saveFilePath, "HighScore: " + highScore);
-
-        //PlayerPrefs.SetInt("score", highScore);
+        SaveManager.SaveScore(highScore);
+        // Write the current score to PlayerPrefs
         PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins") + coinsCollected);
         PlayerPrefs.Save();
 
         Debug.Log("total coins: " + PlayerPrefs.GetInt("coins"));
 
         coinsCollected = 0;
-    }
-
-    // Loads high score from file
-    public int LoadScore()
-    {
-        if(File.Exists(saveFilePath))
-        {
-            string loadedScore = File.ReadAllText(saveFilePath);
-            Debug.Log("Loaded from file: " + loadedScore);
-
-
-        }
-        else
-        {
-            Debug.Log("Save file not found!");
-        }
-        // If we failed to load the score correctly, just return 0
-        return 0;
     }
 
     // Resets high score (for test)
@@ -114,10 +96,7 @@ public class ScoreManager : MonoBehaviour
         score = 0;
 
         // Write the high score to the save file
-        File.WriteAllText(saveFilePath, "HighScore: " + highScore);
-
-        //PlayerPrefs.SetInt("score", 0);
-        //PlayerPrefs.Save();
+        SaveManager.SaveScore(highScore);
 
         if (_highScoreText != null)
             _highScoreText.text = "High Score: " + highScore;

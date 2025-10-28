@@ -2,12 +2,18 @@ using System.Numerics;
 using UnityEngine;
 using System.IO;
 
-public class SaveManager : MonoBehaviour
+public static class SaveManager
 {
-    private string saveFolder;  // Directory for save file
-    private string saveFilePath;    // File path
+    private static string saveFolder;  // Directory for save file
+    private static string saveFilePath;    // File path
 
-    void Start()
+    static SaveManager()
+    {
+        // Initialize the save folder/path
+        Init();
+    }
+
+    public static void Init()
     {
         // Declare the folder name in AppData that will store saved data
         saveFolder = Path.Combine(Application.persistentDataPath, "SpookyRunner");
@@ -24,20 +30,18 @@ public class SaveManager : MonoBehaviour
     }
 
     // Save high score to file
-    public void SaveScore(int score)
+    public static void SaveScore(int score)
     {
         // Write the high score to the save file
         File.WriteAllText(saveFilePath, "HighScore: " + score);
     }
 
     // Loads all data from file
-    public string Load()
+    public static string Load()
     {
         if (File.Exists(saveFilePath))
         {
             string data = File.ReadAllText(saveFilePath);
-            Debug.Log("Loaded from " + saveFilePath);
-
             return data;
         }
 
