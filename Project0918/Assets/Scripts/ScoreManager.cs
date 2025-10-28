@@ -2,9 +2,9 @@ using UnityEngine;
 using TMPro;
 
 
-public class CollectionManager : MonoBehaviour
+public class ScoreManager : MonoBehaviour
 {
-    public static CollectionManager instance { get; private set; }
+    public static ScoreManager instance { get; private set; }
 
     [Header("Settings")]
     public int score;
@@ -20,14 +20,32 @@ public class CollectionManager : MonoBehaviour
     {
         instance = this;
 
-        // Load high score from file and display in HUD
-        highScore = PlayerPrefs.GetInt("score");
+        // Load high score from file
+        string loadData = SaveManager.Load();
+        if (loadData != null)
+        {
+            // Split the "HighScore : " from the actual score
+            string[] parts = loadData.Split(':');
+            if (parts.Length == 2)
+            {
+                string score = parts[1].Trim(); // Get the actual number
+                                                // If the result was actually a number, return it!\
+                if (!int.TryParse(score, out highScore))
+                {
+                    Debug.Log("Failed to parse loaded data");
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("Failed to load data");
+            highScore = 0;
+        }
 
         if (_scoreText == null)
             _scoreText = transform.Find("Score")?.GetComponent<TextMeshPro>();
         if (_highScoreText == null)
             _highScoreText = transform.Find("HighScore")?.GetComponent<TextMeshPro>();
-
         if (_highScoreText != null)
             _highScoreText.text = "High Score: " + highScore;
     }
@@ -57,10 +75,12 @@ public class CollectionManager : MonoBehaviour
     // Saves high score when player dies
     public void SaveScore()
     {
-        Debug.Log("Score saved: " + highScore);
+        Debug.Log("HighScore saved: " + highScore);
         Debug.Log("Coins Collected: " + coinsCollected);
 
-        PlayerPrefs.SetInt("score", highScore);
+        // Write the high score to the save file
+        SaveManager.SaveScore(highScore);
+        // Write the current score to PlayerPrefs
         PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins") + coinsCollected);
         PlayerPrefs.Save();
 
@@ -74,8 +94,9 @@ public class CollectionManager : MonoBehaviour
     {
         highScore = 0;
         score = 0;
-        PlayerPrefs.SetInt("score", 0);
-        PlayerPrefs.Save();
+
+        // Write the high score to the save file
+        SaveManager.SaveScore(highScore);
 
         if (_highScoreText != null)
             _highScoreText.text = "High Score: " + highScore;
