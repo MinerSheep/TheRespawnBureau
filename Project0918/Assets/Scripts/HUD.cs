@@ -5,29 +5,38 @@ using UnityEngine.UI;
 // This class is responsible for hp and flashlight management
 public class HUD : MonoBehaviour
 {
-    [Header("Battery")]
-    public Image battery;
-    public FlashLight FL;
+    [Header("Progress")]
+    public Image ProgressBar;
+    public GameObject Player;
+    public GameObject Goal;
+    public float StartX;
+    public float GoalX;
+    
 
     [Header("Health")]
     public TextMeshProUGUI healthText;
     public int maxHp;
     public int hp;
 
-    public void InitializeHUD(FlashLight flashlight)
+    [Header("Coins")]
+    public TextMeshProUGUI CoinsAmount;
+
+    private void Start()
     {
-        FL = flashlight;
+        StartX = Player != null ?Player.transform.position.x : 0.0f;
+        GoalX = Goal != null ? Goal.transform.position.x : 1.0f;
     }
 
     private void Update()
     {
-        UpdateFillAmount();
+        UpdateProgress();
         UpdateHealthAmount();
     }
 
-    public void UpdateFillAmount()
+    public void UpdateProgress()
     {
-        battery.fillAmount = FL != null ? Mathf.Clamp01(FL.batteryCurrent / FL.batteryMax) : 0;
+        if (Player != null && Goal != null)
+            ProgressBar.fillAmount = (Player.transform.position.x - StartX) / (Goal.transform.position.x - StartX);
     }
 
     public void UpdateHealthAmount()

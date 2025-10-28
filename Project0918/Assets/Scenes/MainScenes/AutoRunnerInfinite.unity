@@ -11745,6 +11745,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 3209247327960945885, guid: 4952b515fcdb2e847a1db67e88e57ec2, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 662545743}
     - target: {fileID: 4737114009947491075, guid: 4952b515fcdb2e847a1db67e88e57ec2, type: 3}
       propertyPath: m_Name
       value: HUD
@@ -12170,10 +12174,16 @@ MonoBehaviour:
   hardChunks:
   - {fileID: 11400000, guid: 0b6ffc03cabb4254fbcf2ba1ebfef337, type: 2}
   - {fileID: 11400000, guid: ed1fbf3d04e8c8e47b61aa62450158d5, type: 2}
-  spawnGoal: {fileID: 5642523940795467872, guid: 925a03e9fe2225c469719b5d1102ea16, type: 3}
-  numberOfChunks: 10
-  startDifficulty: Easy
-  increaseDifficultyOverTime: 1
+  difficultySequence:
+  - difficulty: 0
+    roomCount: 4
+  - difficulty: 1
+    roomCount: 6
+  - difficulty: 2
+    roomCount: 6
+  chunkOverrides: []
+  loopSequence: 1
+  totalRoomsOverride: -1
 --- !u!4 &948575630 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6311746673468665328, guid: e16c4939f7a910a4f9d3165ef74839f8, type: 3}
