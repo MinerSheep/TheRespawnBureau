@@ -22,9 +22,14 @@ public class PlayerController : MonoBehaviour
     private float DefaultJumpForce = 18f;   // Used to reset jump to normal after leaving a "sticky" platform
     public float JumpHoldForce = 3f;
     public float JumpHoldTime = 1f;
+    public float DoubleJumpForce = 12f;
     public float CrouchingTime = 2f;
     public float FallingForce = 3f;
     public float iFrameMax = 0.2f;
+    public float DashSpeed = 8f;
+    public float DashTime = 1f;
+    public float DashCD = 4f;
+    public HeadTrigger HT;
 
 
     [HideInInspector] private InputBuffer inputBuffer;
@@ -44,6 +49,11 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] private float iFrames;
     [HideInInspector] private bool firstJump = false;
     [HideInInspector] private float JumpTimer = 0f;
+    [HideInInspector] private bool doublejump = false;
+    [HideInInspector] private bool dash=false;
+    [HideInInspector] private float DashTimer = 0f;
+    [HideInInspector] private float DashCDTimer = 0f;
+    [HideInInspector] private bool dashing=false;
 
     public void LoseHealth()
     {
@@ -70,7 +80,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        if (Jumping == false && GD.Grounded && inputBuffer.Consume("Jump"))
+        if (Jumping == false && GD.Grounded && inputBuffer.Consume("Jump")&&!HT.IsTriggering)
         {
             RB.linearVelocity = new Vector2(RB.linearVelocity.x, 0);
             RB.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
@@ -80,13 +90,15 @@ public class PlayerController : MonoBehaviour
             Jumping = true;
             cC.size = new Vector2(1, 2);
             firstJump = true;
+            doublejump = true;
             JumpTimer = JumpHoldTime;
             AudioManager.instance.Play("jump");
         }
         else if (Jumping == true)
         {
             JumpHold();
-        }
+            DoubleJump();
+       }
     }
     // Set/reset functions for modifying JumpForce
     public void SetJumpForce(float NewJumpForce)
@@ -98,6 +110,17 @@ public class PlayerController : MonoBehaviour
         JumpForce = DefaultJumpForce;
     }
 
+    public void DoubleJump()
+    {
+        if (inputBuffer.Consume("Jump") && doublejump && !firstJump)
+        {
+            RB.linearVelocity = new Vector2(RB.linearVelocity.x, 0);
+            RB.AddForce(Vector2.up * DoubleJumpForce, ForceMode2D.Impulse);
+            doublejump = false;
+            Debug.Log("Doublejump");
+        }
+    }
+
     public void JumpHold()
     {
         if (firstJump)
@@ -106,6 +129,7 @@ public class PlayerController : MonoBehaviour
             if(inputBuffer.Consume("Jump")&&JumpTimer>0)
             {
                 RB.AddForce(new Vector2(0,JumpHoldForce));
+                Debug.Log("holdjump");
             }
             else
             {
@@ -132,7 +156,7 @@ public class PlayerController : MonoBehaviour
         if (Crouching)
         {
             crouchingTimer += Time.deltaTime;
-            if (crouchingTimer > CrouchingTime)
+            if (crouchingTimer > CrouchingTime&&!HT.IsTriggering)
             {
                 crouchingTimer = 0;
                 Crouching = false;
@@ -141,6 +165,30 @@ public class PlayerController : MonoBehaviour
                 //PM.PlayerModelStats = 0;
                 //PM.ChangePlayerModelStats();
             }
+        }
+    }
+
+    public void Dash()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift) && DashCDTimer <= 0)
+        {
+            DashCDTimer = DashCD;
+            dashing = true;
+            DashTimer = DashTime;
+        }
+        if (dashing)
+        {
+            DashTimer-= Time.deltaTime;
+            RB.AddForce(Vector2.right*DashSpeed);
+            if (DashTimer <= 0)
+            {
+                dashing = false;
+            }
+        }
+        else if(DashCDTimer > 0)
+        {
+            DashCDTimer -= Time.deltaTime;
+            Debug.Log(DashCDTimer);
         }
     }
 
@@ -163,7 +211,7 @@ public class PlayerController : MonoBehaviour
         }
         Jump();
         Crouch();
-
+        Dash();
         //flipping flashlight by flip the sprite mask
         //if (inputBuffer.Consume("FlipFlashlight"))
         //    flashlight?.flip();

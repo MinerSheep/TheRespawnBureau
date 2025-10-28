@@ -12,7 +12,10 @@ public class GroundDetection : MonoBehaviour
     void Update()
     {
         Grounded = GroundCount > 0;
-        PC.Jumping = !Grounded;
+        if(PC.Jumping)
+        {
+            PC.Jumping = !Grounded;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
