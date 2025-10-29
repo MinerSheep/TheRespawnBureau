@@ -1,20 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff75de6fe8060a948af3983d348b9962, type: 3}
-  m_Name: TwoPitChunk
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 1300703788183710643, guid: 7623b2345abef18488be351c23fb5407, type: 3}
-  weight: 3
-  difficulty: Hard
-  allowedNextTags:
-  - Zack
-  tagName: Zack
+version https://git-lfs.github.com/spec/v1
+oid sha256:ac389892c078dfd9c30337fd8c2ddb3b50ec39f28b45b2c11803ffecd8aefa02
+size 564

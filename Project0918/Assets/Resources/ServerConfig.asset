@@ -1,20 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fef4ccfead25714ea53a79846f1b600, type: 3}
-  m_Name: ServerConfig
-  m_EditorClassIdentifier: 
-  useOnlineServer: 1
-  serverURL: http://localhost/game_api
-  notice: 'Team members only need to care about ''Use Online Server'' checkbox!
-
-    Server
-    URL is managed by administrator.'
+version https://git-lfs.github.com/spec/v1
+oid sha256:6707fa1a26a9ec8394435bb4fc19a3f3ef5ccabcb2d74f62596cd7dfab79d6f9
+size 591

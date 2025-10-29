@@ -1,22 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff75de6fe8060a948af3983d348b9962, type: 3}
-  m_Name: FlatPlatform_Data
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 1300703788183710643, guid: f7cd4dc9f39533a4b9fdfef800ce9afe, type: 3}
-  weight: 2
-  difficulty: Easy
-  allowedNextTags:
-  - Pit
-  - Flat
-  - 2Pit
-  tagName: FlatPlatform
+version https://git-lfs.github.com/spec/v1
+oid sha256:1556b8fe0df58c4a1d1cf3876e7901941c145eb121156dc4ebccdebc54a49ab7
+size 595
