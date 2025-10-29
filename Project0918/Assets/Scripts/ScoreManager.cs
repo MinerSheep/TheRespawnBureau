@@ -14,8 +14,6 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private TextMeshPro _scoreText;
     [SerializeField] private TextMeshPro _highScoreText;
 
-    [HideInInspector] public int coinsCollected;
-
     void Start()
     {
         instance = this;
@@ -75,18 +73,15 @@ public class ScoreManager : MonoBehaviour
     // Saves high score when player dies
     public void SaveScore()
     {
+        GetComponent<HUD>()?.SaveCoins();
+
         Debug.Log("HighScore saved: " + highScore);
-        Debug.Log("Coins Collected: " + coinsCollected);
 
         // Write the high score to the save file
         SaveManager.SaveScore(highScore);
+
         // Write the current score to PlayerPrefs
-        PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins") + coinsCollected);
         PlayerPrefs.Save();
-
-        Debug.Log("total coins: " + PlayerPrefs.GetInt("coins"));
-
-        coinsCollected = 0;
     }
 
     // Resets high score (for test)

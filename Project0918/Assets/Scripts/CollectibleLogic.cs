@@ -35,7 +35,7 @@ public class CollectibleLogic : MonoBehaviour
             if (ScoreManager.instance != null)
             {
                     ScoreManager.instance.score += scoreValue;
-                    ScoreManager.instance.coinsCollected++;
+                    HUDEvents.OnCollectCoin?.Invoke();
             }
 
             if (playerController != null)
