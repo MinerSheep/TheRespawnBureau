@@ -8,72 +8,86 @@ public class LevelGenerator : MonoBehaviour
     public List<ChunkData> mediumChunks;
     public List<ChunkData> hardChunks;
 
+    [Header("Difficulty Sequence")]
+    public List<DifficultySegment> difficultySequence = new List<DifficultySegment>();
+
+    [Header("Chunk Overrides")]
+    public List<ChunkOverride> chunkOverrides = new List<ChunkOverride>();
+
     [Header("Generation Settings")]
-    public GameObject spawnGoal;
-    public int numberOfChunks = 10;
-    public string startDifficulty = "Easy";
-    public bool increaseDifficultyOverTime = true;
+    public bool loopSequence = false;   // repeat the difficulty pattern
+    public int totalRoomsOverride = -1; // optional override of total room count (-1 = sum of sequence)
 
     private Transform currentExit;
-    private string currentDifficulty;
     private ChunkData lastChunkData;
+    private int currentChunkIndex = 0;
 
     void Start()
     {
         currentExit = transform.Find("Entrance")?.transform;
-        currentDifficulty = startDifficulty;
         GenerateLevel();
     }
 
     void GenerateLevel()
     {
-        for (int i = 0; i < numberOfChunks; i++)
+        int totalToGenerate = (totalRoomsOverride > 0) ? totalRoomsOverride : GetSequenceTotalRooms();
+
+        if (totalToGenerate == 0)
+            Debug.LogWarning("No rooms to generate");
+
+        int roomsGenerated = 0;
+        int sequenceIndex = 0;
+
+        while (roomsGenerated < totalToGenerate)
         {
-            // Optionally increase difficulty as we go
-            if (increaseDifficultyOverTime)
+            if (sequenceIndex >= difficultySequence.Count)
             {
-                if (i > numberOfChunks * 0.33f) currentDifficulty = "Medium";
-                if (i > numberOfChunks * 0.66f) currentDifficulty = "Hard";
+                if (loopSequence)
+                    sequenceIndex = 0;
+                else
+                    break;
             }
 
-            SpawnChunk();
-        }
+            DifficultySegment currentSegment = difficultySequence[sequenceIndex];
+            Difficulty currentDifficulty = currentSegment.difficulty;
 
-        if (spawnGoal != null)
-            SpawnGoal();
-    }
-
-    void SpawnGoal()
-    {
-        GameObject newChunk = Instantiate(spawnGoal, transform);
-
-        // Align with current exit
-        if (currentExit != null)
-        {
-            Vector3 offset = currentExit.position;
-            newChunk.transform.position = offset + new Vector3(0, 3, 0);
-        }
-    }
-
-    void SpawnChunk()
-    {
-        ChunkData data = ChooseWeightedChunk(GetPoolForDifficulty(currentDifficulty));
-        if (data == null) return;
-
-        // Rule-based chaining: ensure new chunk is allowed after last
-        if (lastChunkData != null && lastChunkData.allowedNextTags.Length > 0)
-        {
-            int tries = 0;
-            while (!IsAllowedNext(lastChunkData, data) && tries < 10)
+            for (int i = 0; i < currentSegment.roomCount && roomsGenerated < totalToGenerate; i++)
             {
-                data = ChooseWeightedChunk(GetPoolForDifficulty(currentDifficulty));
-                tries++;
+                SpawnChunk(currentDifficulty, currentChunkIndex);
+                currentChunkIndex++;
+                roomsGenerated++;
+            }
+
+            sequenceIndex++;
+        }
+    }
+
+    void SpawnChunk(Difficulty difficulty, int index)
+    {
+        // Check if this index has a manual override
+        ChunkData data = GetOverrideChunk(index);
+        if (data == null)
+        {
+            // Pick random from the pool if not overridden
+            data = ChooseWeightedChunk(GetPoolForDifficulty(difficulty));
+            if (data == null) return;
+
+            // Rule-based chaining (optional)
+            if (lastChunkData != null && lastChunkData.allowedNextTags.Length > 0)
+            {
+                int tries = 0;
+                while (!IsAllowedNext(lastChunkData, data) && tries < 10)
+                {
+                    data = ChooseWeightedChunk(GetPoolForDifficulty(difficulty));
+                    tries++;
+                }
             }
         }
 
+        // Spawn the chunk prefab
         GameObject newChunk = Instantiate(data.prefab, transform);
 
-        // Align with current exit
+        // Align with previous exit
         if (currentExit != null)
         {
             var chunk = newChunk.GetComponent<Chunk>();
@@ -82,9 +96,21 @@ public class LevelGenerator : MonoBehaviour
             newChunk.transform.position = offset;
         }
 
-        // Update tracking
+        // Update references
         currentExit = newChunk.GetComponent<Chunk>().exitPoint;
         lastChunkData = data;
+    }
+
+    // ---------------- Helper Methods ----------------
+
+    ChunkData GetOverrideChunk(int index)
+    {
+        foreach (var ovr in chunkOverrides)
+        {
+            if (ovr.chunkIndex == index && ovr.specificChunk != null)
+                return ovr.specificChunk;
+        }
+        return null;
     }
 
     bool IsAllowedNext(ChunkData prev, ChunkData next)
@@ -95,12 +121,13 @@ public class LevelGenerator : MonoBehaviour
         return false;
     }
 
-    List<ChunkData> GetPoolForDifficulty(string difficulty)
+    List<ChunkData> GetPoolForDifficulty(Difficulty difficulty)
     {
         switch (difficulty)
         {
-            case "Medium": return mediumChunks;
-            case "Hard": return hardChunks;
+            case Difficulty.Medium: return mediumChunks;
+            case Difficulty.Hard: return hardChunks;
+            case Difficulty.Easy:
             default: return easyChunks;
         }
     }
@@ -123,4 +150,33 @@ public class LevelGenerator : MonoBehaviour
         }
         return pool[0];
     }
+
+    int GetSequenceTotalRooms()
+    {
+        int total = 0;
+        foreach (var segment in difficultySequence)
+            total += segment.roomCount;
+        return total;
+    }
+}
+
+[System.Serializable]
+public class DifficultySegment
+{
+    public Difficulty difficulty; // Now uses the enum!
+    public int roomCount = 1;
+}
+
+[System.Serializable]
+public class ChunkOverride
+{
+    public int chunkIndex;
+    public ChunkData specificChunk;
+}
+
+public enum Difficulty
+{
+    Easy,
+    Medium,
+    Hard
 }

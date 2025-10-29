@@ -85,7 +85,7 @@ public class MonsterBehavior : MonoBehaviour
         if (collision.tag == "Player" || objName == "Player_Stand" || objName == "Player_Jump" || objName == "Player_Crouch")
         {
             // Optional save score
-            CollectionManager.instance.SaveScore();
+            ScoreManager.instance.SaveScore();
             
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
