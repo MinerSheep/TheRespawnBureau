@@ -27,6 +27,3 @@
 *.xml        text eol=lf
 *.yaml       text eol=lf
 *.yml        text eol=lf
-
-# Windows-only users may uncomment this line to enforce CRLF in batch files
-*.bat text eol=crlf
