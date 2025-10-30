@@ -7,6 +7,9 @@ public class HazardManager : MonoBehaviour
 
     [SerializeField] private float lowClampRandTimer;
     [SerializeField] private float highClampRandTimer;
+    [SerializeField] private float spawnTimer;
+
+    public float spawnRate;
 
     void Start()
     {
@@ -18,12 +21,12 @@ public class HazardManager : MonoBehaviour
 
     void Update()
     {
-        
+        spawnTimer -= spawnRate;
     }
 
     public void hazardManager()
     {
-        float spawnTimer = Random.Range(lowClampRandTimer, highClampRandTimer);
+        spawnTimer = Random.Range(lowClampRandTimer, highClampRandTimer);
     }
 
     private void spawnMissile()
