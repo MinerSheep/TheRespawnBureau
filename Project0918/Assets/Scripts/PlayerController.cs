@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Settings")]
     public bool AutoRunner = false;
+    public bool HasStamina = true;
     public float MoveSpeed = 5f;
     public float MoveForce = 1f;
     public float JumpForce = 18f;
@@ -29,6 +30,8 @@ public class PlayerController : MonoBehaviour
     public float DashSpeed = 8f;
     public float DashTime = 1f;
     public float DashCD = 4f;
+    public float StaminaMax = 1000f;  // Used to reset stamina after death
+    public float StaminaDrainRate = -0.1f;   // Amount removed from stamina per update
     public HeadTrigger HT;
 
 
@@ -50,10 +53,10 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] private bool firstJump = false;
     [HideInInspector] private float JumpTimer = 0f;
     [HideInInspector] private bool doublejump = false;
-    [HideInInspector] private bool dash=false;
     [HideInInspector] private float DashTimer = 0f;
     [HideInInspector] private float DashCDTimer = 0f;
     [HideInInspector] private bool dashing=false;
+    [HideInInspector] private float Stamina = 1000f; // Stamina is constantly decreasing, player dies if it hits zero
 
     public void LoseHealth()
     {
@@ -62,6 +65,20 @@ public class PlayerController : MonoBehaviour
 
         hud.hp -= 1;
         iFrames = iFrameMax;
+    }
+
+    public void UpdateStamina(float adjust)
+    {
+        Stamina = Mathf.Clamp(Stamina + adjust, 0, StaminaMax);
+        hud.stamina = Stamina;
+
+        if (Stamina <= 0.0f)
+        {
+            // TODO: Remove the LoadScene below once we have PlayerDeath implemented
+            PlayerDeath();
+            // If the stamina hits zero, restart the level
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     public void Move()
@@ -202,12 +219,18 @@ public class PlayerController : MonoBehaviour
         //    flashlight = transform.Find("FlashLight").GetComponent<FlashLight>();
 
         PlayerEvents.OnPlayerDeath += PlayerDeath;
+
+        Stamina = StaminaMax;
     }
     void Update()
     {
         if (!AutoRunner)
         {
             Move();
+        }
+        else if(HasStamina)
+        {
+            UpdateStamina(StaminaDrainRate);
         }
         Jump();
         Crouch();
