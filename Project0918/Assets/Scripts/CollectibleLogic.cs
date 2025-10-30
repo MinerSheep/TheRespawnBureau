@@ -54,7 +54,7 @@ public class CollectibleLogic : MonoBehaviour
                 // Currently calls a game object called "Audio Manager" and sends a play signal
                 if (AudioManager.instance != null)
                 {
-                    AudioManager.instance.Play("coin_collect");
+                    AudioManager.instance.PlaySound("coin_collect");
                 }
 
             }

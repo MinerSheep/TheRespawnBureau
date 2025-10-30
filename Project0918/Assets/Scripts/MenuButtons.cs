@@ -70,11 +70,13 @@ public class MenuButtons : MonoBehaviour
 
     public void AutorunnerPlay(string AutoRunnerTester)
     {
+        AudioManager.instance.PlaySound("transition");
         SceneManager.LoadScene(AutoRunnerTester);
     }
 
     public void PlatformerPlay(string Platformer)
     {
+        AudioManager.instance.PlaySound("transition");
         SceneManager.LoadScene(Platformer);
     }
 

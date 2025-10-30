@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
             firstJump = true;
             doublejump = true;
             JumpTimer = JumpHoldTime;
-            AudioManager.instance.Play("jump");
+            AudioManager.instance.PlaySound("jump");
         }
         else if (Jumping == true)
         {
@@ -163,7 +163,7 @@ public class PlayerController : MonoBehaviour
             //PM.ChangePlayerModelStats();
             Crouching = true;
             cC.size = new Vector2(1, 1);
-            AudioManager.instance.Play("crouch");
+            AudioManager.instance.PlaySound("crouch");
         }
         else if (Jumping == true && inputBuffer.Consume("Crouch"))
         {
