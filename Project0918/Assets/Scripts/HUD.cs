@@ -29,7 +29,7 @@ public class HUD : MonoBehaviour
     public TextMeshProUGUI coinsText;
     public int coins;
 
-    
+
 
     private void Start()
     {
@@ -41,10 +41,25 @@ public class HUD : MonoBehaviour
         if (DeviceDetector.IsDesktop)
         {
             //desktop hud
+            AddRemoveHudElements("Desktop", "Mobile");
+
         }
         else if (DeviceDetector.IsMobile)
         {
             //mobile hud
+            AddRemoveHudElements("Mobile", "Desktop");
+        }
+    }
+    
+    public void AddRemoveHudElements(string add, string remove)
+    {
+        foreach (Transform child in transform)
+        {
+            if (child.tag == add)
+                child.gameObject.SetActive(true);
+
+            if (child.tag == remove)
+                child.gameObject.SetActive(false);
         }
     }
 
