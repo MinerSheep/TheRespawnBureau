@@ -68,7 +68,7 @@ public class CollectibleLogic : MonoBehaviour
             // Add stamina
             if(type == CollectibleType.Stamina && staminaValue > 0)
             {
-                playerController.Stamina = Mathf.Clamp(playerController.Stamina + staminaValue, 0, playerController.StaminaMax);
+                playerController.UpdateStamina(staminaValue);
             }
 
             // Destroys this object
