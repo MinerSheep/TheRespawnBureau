@@ -83,7 +83,10 @@ public class HUD : MonoBehaviour
 
     public void UpdateStamina()
     {
-        staminaSlider.value = stamina;
+        if(staminaSlider)
+        {
+            staminaSlider.value = stamina;
+        }
     }
 
     void OnDestroy()

@@ -66,11 +66,10 @@ public class PlayerController : MonoBehaviour
         iFrames = iFrameMax;
     }
 
-    public void LoseStamina()
+    public void UpdateStamina()
     {
-        Debug.Log("Stamina: " + Stamina);
         Stamina -= StaminaDrainRate;
-        hud.stamina -= StaminaDrainRate;
+        hud.stamina = Stamina;
 
         if (Stamina <= 0.0f)
         {
@@ -230,7 +229,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            LoseStamina();
+            UpdateStamina();
         }
         Jump();
         Crouch();
