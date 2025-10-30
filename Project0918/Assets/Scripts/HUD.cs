@@ -35,6 +35,15 @@ public class HUD : MonoBehaviour
         GoalX = Goal != null ? Goal.transform.position.x : 1.0f;
 
         HUDEvents.OnCollectCoin += AddCoin;
+
+        if (DeviceDetector.IsDesktop)
+        {
+            // desktop hud
+        }
+        else if (DeviceDetector.IsMobile)
+        {
+            // mobile hud
+        }
     }
 
     private void Update()
