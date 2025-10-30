@@ -35,6 +35,7 @@ public class LevelGenerator : MonoBehaviour
 
     void Start()
     {
+        currentExit = transform.Find("Entrance")?.transform;
         totalToGenerate = (totalRoomsOverride > 0) ? totalRoomsOverride : GetSequenceTotalRooms();
         Debug.Log($"[LevelGen] Starting Level Generation — total rooms: {totalToGenerate}");
 
@@ -132,7 +133,7 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-        GameObject newChunk = Instantiate(data.prefab);
+        GameObject newChunk = Instantiate(data.prefab, transform);
         newChunk.name = $"Chunk_{index}_{data.name}_{difficulty}";
 
         var chunk = newChunk.GetComponent<Chunk>();
