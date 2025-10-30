@@ -74,6 +74,22 @@ public class AudioManager : MonoBehaviour
             transform.position = go.transform.position;
     }
 
+    public void SetMusicVolume(float value)
+    {
+        foreach (var music in musicDict)
+        {
+            music.Value.volume = value;
+        }
+    }
+    
+    public void SetSFXVolume(float value)
+    {
+        foreach (var sound in soundDict)
+        {
+            sound.Value.volume = value;
+        }
+    }
+
     public void PlayMusic(string name)
     {
         if (fadeOutCoroutine != null)
