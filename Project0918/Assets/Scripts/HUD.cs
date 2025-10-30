@@ -29,6 +29,8 @@ public class HUD : MonoBehaviour
     public TextMeshProUGUI coinsText;
     public int coins;
 
+    
+
     private void Start()
     {
         StartX = Player != null ? Player.transform.position.x : 0.0f;
@@ -38,11 +40,11 @@ public class HUD : MonoBehaviour
 
         if (DeviceDetector.IsDesktop)
         {
-            // desktop hud
+            //desktop hud
         }
         else if (DeviceDetector.IsMobile)
         {
-            // mobile hud
+            //mobile hud
         }
     }
 
