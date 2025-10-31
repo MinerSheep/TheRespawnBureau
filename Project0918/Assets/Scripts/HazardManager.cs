@@ -7,6 +7,7 @@ public class HazardManager : MonoBehaviour
     [SerializeField] private float lowClampRandTimer;
     [SerializeField] private float highClampRandTimer;
     [SerializeField] private float spawnTimer = 0;
+    [SerializeField] private float boulderOffset = 10;
     public float spawnRate;
     public float warningOffsetFromEdge = 50f;    // How far from the edge (in pixels)
 
@@ -30,31 +31,27 @@ public class HazardManager : MonoBehaviour
 
         if (spawnTimer < 0)
         {
-            Debug.Log("spawntimer");
-            switch (Random.Range(0, 1))
+            Transform playerTransform = FindAnyObjectByType<PlayerController>().transform;
+            Transform groundTrigger = playerTransform.Find("GroundTrigger");
+            Transform headTrigger = playerTransform.Find("HeadTrigger");
+                    
+            switch (Random.Range(0, 2))
             {
                 case 1:
-                    SpawnPrefab(missilePrefab);
+                    SpawnPrefab(missilePrefab, missilePrefab.transform.position.x, Random.Range(groundTrigger.position.y, headTrigger.position.y));
                     break;
                 case 0:
-                    SpawnPrefab(boulderPrefab);
+                    SpawnPrefab(boulderPrefab, playerTransform.position.x + boulderOffset, boulderPrefab.transform.position.y);
                     break;
             }
             spawnTimer = Random.Range(lowClampRandTimer, highClampRandTimer);
         }
     }
 
-    private void SpawnPrefab(GameObject prefab)
+    private void SpawnPrefab(GameObject prefab, float x, float y)
     {
-        Debug.Log("spawning " + prefab.name);
-
-        Transform playerTransform = FindAnyObjectByType<PlayerController>().transform;
-        Transform groundTrigger = playerTransform.Find("GroundTrigger");
-        Transform headTrigger = playerTransform.Find("HeadTrigger");
-
         GameObject target = Instantiate(prefab);
-        float y = Random.Range(groundTrigger.position.y, headTrigger.position.y);
-        target.transform.position = new Vector3(target.transform.position.x, y, target.transform.position.z);
+        target.transform.position = new Vector3(x, y, target.transform.position.z);
         target.SetActive(false);
         Warning(target);
     }
@@ -103,7 +100,12 @@ public class HazardManager : MonoBehaviour
         // Convert back to world space
         Vector3 spawnWorldPos = mainCamera.ScreenToWorldPoint(spawnScreenPos);
 
-        // Spawn the prefab
-        Instantiate(prefabToSpawn, spawnWorldPos, Quaternion.identity).GetComponent<HazardWarning>().hazard = target;
+        PlayerController[] players = FindObjectsByType<PlayerController>(FindObjectsSortMode.None);
+
+        foreach(var player in players)
+        {
+            // Spawn the warning for every player
+            Instantiate(prefabToSpawn, spawnWorldPos, Quaternion.identity, player.hud.transform).GetComponent<HazardWarning>().hazard = target;
+        }
     }
 }
