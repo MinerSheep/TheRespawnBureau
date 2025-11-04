@@ -24,6 +24,11 @@ public class HUD : MonoBehaviour
     public int maxHp;
     public int hp;
 
+    [Header("Stamina")]
+    public Slider staminaSlider;
+    public float maxStamina;
+    public float stamina;
+
     [Header("Coins")]
     public TextMeshProUGUI coinsText;
     public int coins;
@@ -34,6 +39,15 @@ public class HUD : MonoBehaviour
         GoalX = Goal != null ? Goal.transform.position.x : 1.0f;
 
         HUDEvents.OnCollectCoin += AddCoin;
+
+        if (DeviceDetector.IsDesktop)
+        {
+            // desktop hud
+        }
+        else if (DeviceDetector.IsMobile)
+        {
+            // mobile hud
+        }
     }
 
     private void Update()
@@ -41,6 +55,7 @@ public class HUD : MonoBehaviour
         UpdateProgress();
         UpdateHealthAmount();
         UpdateCoinsAmount();
+        UpdateStamina();
     }
 
     void AddCoin()
@@ -72,6 +87,14 @@ public class HUD : MonoBehaviour
     public void UpdateCoinsAmount()
     {
         coinsText.text = coins.ToString();
+    }
+
+    public void UpdateStamina()
+    {
+        if(staminaSlider)
+        {
+            staminaSlider.value = stamina;
+        }
     }
 
     void OnDestroy()

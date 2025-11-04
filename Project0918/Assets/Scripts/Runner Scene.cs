@@ -18,6 +18,8 @@ public class RunnerScene : MonoBehaviour
     {
         MovingSpeed = StartMovingSpeed;
 
+        AudioManager.instance.PlayMusic("infinite_runner");
+
         //SetMaskOnTransform(transform);
     }
 
@@ -49,5 +51,10 @@ public class RunnerScene : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.L))
             SceneManager.LoadScene("AR02");
+    }
+
+    void OnDestroy()
+    {
+        AudioManager.instance.StopMusic();
     }
 }

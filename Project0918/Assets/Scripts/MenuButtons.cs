@@ -1,30 +1,41 @@
 using UnityEngine;
 using UnityEngine.InputSystem.Composites;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuButtons : MonoBehaviour
 {
     [Header("References")]
     public GameObject PlayPanel;
+    public GameObject OptionsPanel;
     public GameObject OnlinePanel;
 
-    private bool PlayPanelActive = false;
-    private bool OnlinePanelActive = false;
+    private GameObject ActivePanel = null;
 
-
+    void Start()
+    {
+        if (OptionsPanel != null && AudioManager.instance != null)
+        {
+            OptionsPanel.transform.Find("Music").GetComponent<Slider>().onValueChanged.AddListener(AudioManager.instance.SetMusicVolume);
+            OptionsPanel.transform.Find("Sound").GetComponent<Slider>().onValueChanged.AddListener(AudioManager.instance.SetSFXVolume);
+        }
+    }
+    
     public void TogglePlayMenu()
     {
         if (PlayPanel != null)
         {
-            if (!PlayPanelActive)
-            {
-                ShowPlayPanel();
-                HideOnlinePanel();
-            }
-            else
-            {
-                HidePlayPanel();
-            }
+            ActivePanel?.SetActive(false);
+            ShowPlayPanel();
+        }
+    }
+
+    public void ToggleOptionsMenu()
+    {
+        if (OptionsPanel != null)
+        {
+            ActivePanel?.SetActive(false);
+            ShowOptionsPanel();
         }
     }
 
@@ -32,49 +43,38 @@ public class MenuButtons : MonoBehaviour
     {
         if (OnlinePanel != null)
         {
-            if (!OnlinePanelActive)
-            {
-                ShowOnlinePanel();
-                HidePlayPanel();
-            }
-            else
-            {
-                HideOnlinePanel();
-            }
+            ActivePanel?.SetActive(false);
+            ShowOnlinePanel();
         }
     }
 
     public void ShowPlayPanel()
     {
         PlayPanel.SetActive(true);
-        PlayPanelActive = true;
+        ActivePanel = PlayPanel;
     }
 
-    public void HidePlayPanel()
+    public void ShowOptionsPanel()
     {
-        PlayPanel.SetActive(false);
-        PlayPanelActive = false;
+        OptionsPanel.SetActive(true);
+        ActivePanel = OptionsPanel;
     }
 
     public void ShowOnlinePanel()
     {
         OnlinePanel.SetActive(true);
-        OnlinePanelActive = true;
-    }
-
-    public void HideOnlinePanel()
-    {
-        OnlinePanel.SetActive(false);
-        OnlinePanelActive = false;
+        ActivePanel = OnlinePanel;
     }
 
     public void AutorunnerPlay(string AutoRunnerTester)
     {
+        AudioManager.instance.PlaySound("transition");
         SceneManager.LoadScene(AutoRunnerTester);
     }
 
     public void PlatformerPlay(string Platformer)
     {
+        AudioManager.instance.PlaySound("transition");
         SceneManager.LoadScene(Platformer);
     }
 

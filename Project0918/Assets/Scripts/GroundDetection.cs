@@ -15,6 +15,9 @@ public class GroundDetection : MonoBehaviour
         if(PC.Jumping)
         {
             PC.Jumping = !Grounded;
+
+            //if (!PC.Jumping)
+            //    AudioManager.instance.PlaySound("ground_landing");
         }
     }
 
