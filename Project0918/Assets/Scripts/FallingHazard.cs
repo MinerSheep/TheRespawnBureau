@@ -4,7 +4,6 @@ public class FallingHazard : MonoBehaviour
 {
     [SerializeField] private bool isFalling;
     [SerializeField] private bool damagedPlayer;
-    [SerializeField] private bool destroyOnGround;
     private Rigidbody2D rb;
 
     PlayerController playerScript;
@@ -28,7 +27,7 @@ public class FallingHazard : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player") && !damagedPlayer)
         {
@@ -37,8 +36,7 @@ public class FallingHazard : MonoBehaviour
             Debug.Log("Falling hit landed");
             destroyHazard();
         }
-
-        else if (collision.gameObject.CompareTag("Ground") && destroyOnGround)
+        else if (collision.gameObject.CompareTag("Ground"))
         {
             destroyHazard();
         }
