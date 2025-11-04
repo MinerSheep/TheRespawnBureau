@@ -43,7 +43,7 @@ public class MissileHazard : MonoBehaviour
         }
         else if (other.CompareTag("Ground"))
         {
-            destroyProjectile();
+            //destroyProjectile();
         }
     }
 
