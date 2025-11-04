@@ -22,6 +22,7 @@ public class LevelGenerator : MonoBehaviour
 
     [Header("Generation Settings")]
     public int totalRoomsOverride = -1;
+    public bool infiniteGeneration = false;
 
     private Transform currentExit;
     private ChunkData lastChunkData;
@@ -84,7 +85,7 @@ public class LevelGenerator : MonoBehaviour
 
     void SpawnNextChunk()
     {
-        if (currentChunkIndex >= totalToGenerate)
+        if (!infiniteGeneration && currentChunkIndex >= totalToGenerate)
         {
             // Debug.Log("[LevelGen] All chunks generated, stopping.");
             return;
@@ -96,6 +97,7 @@ public class LevelGenerator : MonoBehaviour
         SpawnChunk(currentDifficulty, currentChunkIndex);
         currentChunkIndex++;
     }
+
 
     void SpawnChunk(Difficulty difficulty, int index)
     {
