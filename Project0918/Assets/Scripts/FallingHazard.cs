@@ -3,6 +3,7 @@ using UnityEngine;
 public class FallingHazard : MonoBehaviour
 {
     [SerializeField] private bool isFalling;
+    [SerializeField] private bool damagedPlayer;
     private Rigidbody2D rb;
 
     PlayerController playerScript;
@@ -26,13 +27,23 @@ public class FallingHazard : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && !damagedPlayer)
         {
             playerScript.LoseHealth();
 
             Debug.Log("Falling hit landed");
+            destroyHazard();
         }
+        else if (collision.gameObject.CompareTag("Ground"))
+        {
+            destroyHazard();
+        }
+    }
+
+    private void destroyHazard()
+    {
+        Destroy(gameObject);
     }
 }

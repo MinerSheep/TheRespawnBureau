@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public static class HUDEvents
 {
-    // Currently unused
     public delegate void HUDDefaultEvent();
     public static HUDDefaultEvent OnCollectCoin;
 }
