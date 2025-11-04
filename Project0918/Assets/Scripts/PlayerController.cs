@@ -231,6 +231,11 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerDeath()
     {
-        
+        RunnerScene[] scenes = FindObjectsByType<RunnerScene>(FindObjectsSortMode.None);
+
+        foreach (var scene in scenes)
+        {
+            scene.StartMovingSpeed = scene.EndMovingSpeed = 0;
+        }
     }
 }
