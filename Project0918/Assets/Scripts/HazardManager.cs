@@ -96,6 +96,7 @@ public class HazardManager : MonoBehaviour
             // Spawn the warning for every player
             HazardWarning hw = Instantiate(prefabToSpawn, player.hud.transform).GetComponent<HazardWarning>();
             hw.hazard = target;
+            hw.timed = spawnXDistance == 0;
             hw.spawnXDistance = spawnXDistance;
         }
     }

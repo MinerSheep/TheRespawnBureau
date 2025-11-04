@@ -7,6 +7,7 @@ public class HazardWarning : MonoBehaviour
 {
     public GameObject hazard;
     public float spawnXDistance = 0;
+    public bool timed = true;
     public float flashDuration = 3f;
     public float flashSpeed = 5f;
     
@@ -65,6 +66,7 @@ public class HazardWarning : MonoBehaviour
     void OnEnable()
     {
         image = GetComponent<Image>();
+
         StartCoroutine(FlashAndDestroy());
     }
 
@@ -73,7 +75,7 @@ public class HazardWarning : MonoBehaviour
         float time = 0f;
         Color baseColor = image.color;
 
-        while (time < flashDuration)
+        while (time < flashDuration || !timed)
         {
             float t = Mathf.PingPong(Time.time * flashSpeed, 1f);
             image.color = new Color(baseColor.r, baseColor.g, baseColor.b, t);
