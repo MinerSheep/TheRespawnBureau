@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -65,6 +66,9 @@ public class PlayerController : MonoBehaviour
 
         hud.hp -= 1;
         iFrames = iFrameMax;
+
+        if (hud.hp <= 0)
+            PlayerEvents.OnPlayerDeath?.Invoke();
     }
 
     public void UpdateStamina(float adjust)
@@ -260,5 +264,23 @@ public class PlayerController : MonoBehaviour
         {
             scene.StartMovingSpeed = scene.EndMovingSpeed = 0;
         }
+
+        StartCoroutine(RestartLevel());
+    }
+
+    IEnumerator RestartLevel()
+    {
+        float time = 0;
+
+        while (time < 1.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        // Optional
+        ScoreManager.instance?.SaveScore(); // Save high score to PlayerPrefs
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
