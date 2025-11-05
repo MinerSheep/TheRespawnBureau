@@ -13,12 +13,16 @@ public static class HUDEvents
 public class HUD : MonoBehaviour
 {
     [Header("Progress")]
-    public Image ProgressBar;
     public GameObject Player;
     public GameObject Goal;
     public float StartX;
     public float GoalX;
 
+    [Header("Stamina")]
+    public float StaminaAmount = 100f;
+    public float StaminaMaximum = 100f;
+    public float StaminaLossRate = 5f;
+    public Image StaminaBarImage;
 
     [Header("Health")]
     public TextMeshProUGUI healthText;
@@ -65,9 +69,10 @@ public class HUD : MonoBehaviour
 
     private void Update()
     {
-        UpdateProgress();
+        //UpdateProgress();
         UpdateHealthAmount();
         UpdateCoinsAmount();
+        UpdateStamina();
     }
 
     void AddCoin()
@@ -84,11 +89,19 @@ public class HUD : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    public void UpdateProgress()
+    //public void UpdateProgress()
+    //{
+    //    if (Player != null && Goal != null)
+    //        ProgressBar.fillAmount = (Player.transform.position.x - StartX) / (Goal.transform.position.x - StartX);
+    //}
+
+    public void UpdateStamina()
     {
-        if (Player != null && Goal != null)
-            ProgressBar.fillAmount = (Player.transform.position.x - StartX) / (Goal.transform.position.x - StartX);
+        StaminaAmount -= Time.deltaTime * StaminaLossRate;
+        StaminaAmount = Mathf.Clamp(StaminaAmount, 0f, StaminaMaximum);
+        StaminaBarImage.fillAmount = StaminaAmount / StaminaMaximum;
     }
+        
 
     public void UpdateHealthAmount()
     {
