@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 public static class PlayerEvents
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour
     public GroundDetection GD;
     public HUD hud;
     public FlashLight flashlight;
+    public Volume attackVol;  // The "damage zone" used when attacking
 
     // Private Variables
     [HideInInspector] public int pointValue;
@@ -57,6 +59,8 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] private float DashCDTimer = 0f;
     [HideInInspector] private bool dashing=false;
     [HideInInspector] private float Stamina = 1000f; // Stamina is constantly decreasing, player dies if it hits zero
+    [HideInInspector] private bool isAttacking = false; // If this is on, the sword is swinging!
+    [HideInInspector] private float AttackTimer = 0f;
 
     public void LoseHealth()
     {
@@ -116,6 +120,31 @@ public class PlayerController : MonoBehaviour
             JumpHold();
             DoubleJump();
        }
+    }
+    // Activates a damage volume in front of the player that will deactivate after a set amount of time
+    public void Attack()
+    {
+        // Check if the volume exists/was set correctly
+        if(attackVol)
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                isAttacking = true;
+                attackVol.enabled = true;
+                Debug.Log("Attack!");
+            }
+            if (isAttacking)
+            {
+                AttackTimer += Time.deltaTime;
+                if (AttackTimer > 1.0f)
+                {
+                    Debug.Log("Attack Ended");
+                    isAttacking = false;
+                    attackVol.enabled = false;
+                    AttackTimer = 0f;
+                }
+            }
+        }
     }
     // Set/reset functions for modifying JumpForce
     public void SetJumpForce(float NewJumpForce)
@@ -221,6 +250,7 @@ public class PlayerController : MonoBehaviour
         PlayerEvents.OnPlayerDeath += PlayerDeath;
 
         Stamina = StaminaMax;
+        attackVol.enabled = false;  // Attack volume is inactive unless attacking
     }
     void Update()
     {
@@ -235,6 +265,7 @@ public class PlayerController : MonoBehaviour
         Jump();
         Crouch();
         Dash();
+        Attack();
         //flipping flashlight by flip the sprite mask
         //if (inputBuffer.Consume("FlipFlashlight"))
         //    flashlight?.flip();
