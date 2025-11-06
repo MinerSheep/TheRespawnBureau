@@ -11,6 +11,9 @@ public static class HUDEvents
 // This class is responsible for hp and flashlight management
 public class HUD : MonoBehaviour
 {
+    [Header("Mobile")]
+    public MobileButtonManager mobileButtonManager;
+
     [Header("Progress")]
     public GameObject Player;
     public GameObject Goal;
@@ -49,7 +52,7 @@ public class HUD : MonoBehaviour
         else if (DeviceDetector.IsMobile)
         {
             //mobile hud
-            AddRemoveHudElements("Mobile", "Desktop");
+            AddRemoveHudElements("MobileLayout", "Desktop");
         }
     }
     
@@ -108,6 +111,21 @@ public class HUD : MonoBehaviour
             // TODO: Remove the LoadScene below once we have PlayerDeath implemented
             PlayerEvents.OnPlayerDeath?.Invoke();
         }
+    
+    }
+        
+
+    public void UpdateStamina()
+    {
+        StaminaAmount -= Time.deltaTime * StaminaLossRate;
+        StaminaAmount = Mathf.Clamp(StaminaAmount, 0f, StaminaMaximum);
+        StaminaBarImage.fillAmount = StaminaAmount / StaminaMaximum;
+
+        if (StaminaAmount <= 0.0f)
+        {
+            // TODO: Remove the LoadScene below once we have PlayerDeath implemented
+            PlayerEvents.OnPlayerDeath?.Invoke();
+        }
     }
         
 
@@ -128,6 +146,47 @@ public class HUD : MonoBehaviour
     //         staminaSlider.value = stamina;
     //     }
     // }
+
+    public void AssignLeftButton(InputBuffer buffer, string action, bool hold)
+    {
+        if (mobileButtonManager == null)
+        {
+            Debug.LogWarning("No mobile button manager");
+            return;
+        }
+
+        mobileButtonManager.LButton.GetComponent<MobileButton>().holdable = hold;
+        mobileButtonManager.LButton.GetComponent<MobileButton>().onClick = null;
+        mobileButtonManager.LButton.GetComponent<MobileButton>().onRelease = null;
+
+        if (hold)
+        {
+            mobileButtonManager.LButton.GetComponent<MobileButton>().onClick += () => buffer.StartHold(action);
+            mobileButtonManager.LButton.GetComponent<MobileButton>().onRelease += () => buffer.EndHold(action);
+        }
+
+        mobileButtonManager.LButton.GetComponent<MobileButton>().onClick += () => buffer.AddToBuffer(action);
+    }
+    public void AssignRightButton(InputBuffer buffer, string action, bool hold)
+    {
+        if (mobileButtonManager == null)
+        {
+            Debug.LogWarning("No mobile button manager");
+            return;
+        }
+
+        mobileButtonManager.RButton.GetComponent<MobileButton>().holdable = hold;
+        mobileButtonManager.RButton.GetComponent<MobileButton>().onClick = null;
+        mobileButtonManager.RButton.GetComponent<MobileButton>().onRelease = null;
+
+        if (hold)
+        {
+            mobileButtonManager.RButton.GetComponent<MobileButton>().onClick += () => buffer.StartHold(action);
+            mobileButtonManager.RButton.GetComponent<MobileButton>().onRelease += () => buffer.EndHold(action);
+        }
+
+        mobileButtonManager.RButton.GetComponent<MobileButton>().onClick += () => buffer.AddToBuffer(action);
+    }
 
     void OnDestroy()
     {
