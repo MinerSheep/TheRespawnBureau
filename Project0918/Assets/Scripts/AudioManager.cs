@@ -25,6 +25,7 @@ public class AudioManager : MonoBehaviour
     [Header("Audio Settings")]
     public List<Sound> music = new List<Sound>();
     public List<Sound> sounds = new List<Sound>();
+    public float soundEffectPitchRange = 0.15f;
 
     private Dictionary<string, Sound> musicDict;
     private Dictionary<string, Sound> soundDict;
@@ -142,15 +143,18 @@ public class AudioManager : MonoBehaviour
         fadeOutCoroutine = null;
     }
 
-    public void PlaySound(string name)
+    public void PlaySound(string name, bool pitchVariation = true)
     {
         if (!soundDict.TryGetValue(name, out Sound s))
         {
             Debug.LogWarning($"AudioManager: Sound '{name}' not found!");
             return;
         }
+        if (pitchVariation && s.pitch > soundEffectPitchRange && s.pitch < 3 - soundEffectPitchRange)
+            mainSource.pitch = Random.Range(s.pitch - soundEffectPitchRange, s.pitch + soundEffectPitchRange);
+        else
+            mainSource.pitch = s.pitch;
 
-        mainSource.pitch = s.pitch;
         mainSource.PlayOneShot(s.clip, s.volume);
 
         mainSource.clip = s.clip;
@@ -158,7 +162,7 @@ public class AudioManager : MonoBehaviour
 
     }
 
-    public void PlaySound(string name, AudioSource source)
+    public void PlaySound(string name, AudioSource source, bool pitchVariation = true)
     {
         if (!soundDict.TryGetValue(name, out Sound s))
         {
@@ -166,9 +170,13 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
+        if (pitchVariation && s.pitch > soundEffectPitchRange && s.pitch < 3 - soundEffectPitchRange)
+            source.pitch = Random.Range(s.pitch - soundEffectPitchRange, s.pitch + soundEffectPitchRange);
+        else
+            source.pitch = s.pitch;
+
         source.clip = s.clip;
         source.volume = s.volume;
-        source.pitch = s.pitch;
         source.loop = s.loop;
         source.Play();
     }
