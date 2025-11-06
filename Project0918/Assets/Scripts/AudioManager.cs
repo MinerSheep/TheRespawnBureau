@@ -112,7 +112,7 @@ public class AudioManager : MonoBehaviour
 
     public void StopMusic()
     {
-        if (musicSource.isPlaying)
+        if (musicSource && musicSource.isPlaying)
         {
             if (fadeOutCoroutine != null)
             {
