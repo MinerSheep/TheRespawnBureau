@@ -32,21 +32,19 @@ public class MenuButtons : MonoBehaviour
     {
         if (PlayPanel != null)
         {
-           if(ActivePanel != PlayPanel)
-           {
+            if (ActivePanel != PlayPanel)
+            {
                 StartCoroutine(SlideInPanel(ActivePanel));
 
                 ActivePanel = PlayPanel;
                 ShowPlayPanel();
-           }
-           else
-           {
+            }
+            else
+            {
                 StartCoroutine(SlideOutPanel(ActivePanel));
                 HidePlayPanel();
-           }
-            
+            }
         }
-
     }
     public void ToggleOptionsMenu()
     {
@@ -72,7 +70,7 @@ public class MenuButtons : MonoBehaviour
     {
         if (OnlinePanel != null)
         {
-            if(ActivePanel != OnlinePanel)
+            if (ActivePanel != OnlinePanel)
             {
                 StartCoroutine(SlideInPanel(ActivePanel));
 
@@ -88,7 +86,6 @@ public class MenuButtons : MonoBehaviour
             }
         }
     }
-
     public void ShowPlayPanel()
     {
         PlayPanel.SetActive(true);
@@ -100,34 +97,26 @@ public class MenuButtons : MonoBehaviour
         StartCoroutine(SlideOutPanel(PlayPanel));
         ActivePanel = null;
     }
-
     public void ShowOptionsPanel()
     {
         OptionsPanel.SetActive(true);
         ActivePanel = OptionsPanel;
     }
-    
-
     public void HideOptionsPanel()
     {
         ActivePanel = null;
     }
-    
-
     public void ShowOnlinePanel()
     {
         OnlinePanel.SetActive(true);
         ActivePanel = OnlinePanel;
         StartCoroutine(SlideInPanel(OnlinePanel));
     }
-
     public void HideOnlinePanel()
     {
         StartCoroutine(SlideOutPanel(OnlinePanel));
         ActivePanel = null;
     }
-
-
     private IEnumerator SlideInPanel(GameObject panel)
     {
         float t = 0f;
@@ -138,7 +127,6 @@ public class MenuButtons : MonoBehaviour
             yield return null;
         }
     }
-
     private IEnumerator SlideOutPanel(GameObject panel)
     {
         float t = 0f;
@@ -150,8 +138,6 @@ public class MenuButtons : MonoBehaviour
         }
         panel.SetActive(false);
     }
-
-
     public void AutorunnerPlay(string AutoRunnerTester)
     {
         AudioManager.instance.PlaySound("transition");
@@ -163,7 +149,6 @@ public class MenuButtons : MonoBehaviour
         AudioManager.instance.PlaySound("transition");
         SceneManager.LoadScene(Platformer);
     }
-
     public void QuitGame()
     {
         Application.Quit();
