@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviour
         if (iFrames > 0)
             return;
 
+        AudioManager.instance.PlaySound("playerdamage");
         hud.hp -= 1;
         iFrames = iFrameMax;
 

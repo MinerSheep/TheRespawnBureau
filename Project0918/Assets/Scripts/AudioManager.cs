@@ -23,6 +23,10 @@ public class AudioManager : MonoBehaviour
     }
 
     [Header("Audio Settings")]
+    public float MasterVolume = 1f;
+    public float MusicVolume = 0.5f;
+    public float SoundVolume = 0.5f;
+
     public List<Sound> music = new List<Sound>();
     public List<Sound> sounds = new List<Sound>();
     public float soundEffectPitchRange = 0.15f;
@@ -74,20 +78,19 @@ public class AudioManager : MonoBehaviour
             transform.position = go.transform.position;
     }
 
+    public void SetMasterVolume(float value)
+    {
+        MasterVolume = value;
+    }
+
     public void SetMusicVolume(float value)
     {
-        foreach (var music in musicDict)
-        {
-            music.Value.volume = value;
-        }
+        MusicVolume = value;
     }
     
     public void SetSFXVolume(float value)
     {
-        foreach (var sound in soundDict)
-        {
-            sound.Value.volume = value;
-        }
+        SoundVolume = value;
     }
 
     public void PlayMusic(string name)
@@ -105,7 +108,7 @@ public class AudioManager : MonoBehaviour
         }
 
         musicSource.clip = m.clip;
-        musicSource.volume = m.volume;
+        musicSource.volume = m.volume * MusicVolume * MasterVolume;
         musicSource.pitch = m.pitch;
         musicSource.loop = m.loop;
         musicSource.Play();
@@ -155,7 +158,7 @@ public class AudioManager : MonoBehaviour
         else
             mainSource.pitch = s.pitch;
 
-        mainSource.PlayOneShot(s.clip, s.volume);
+        mainSource.PlayOneShot(s.clip, s.volume * SoundVolume * MasterVolume);
 
         mainSource.clip = s.clip;
         mainSource.Play();
@@ -176,7 +179,7 @@ public class AudioManager : MonoBehaviour
             source.pitch = s.pitch;
 
         source.clip = s.clip;
-        source.volume = s.volume;
+        source.volume = s.volume * SoundVolume * MasterVolume;
         source.loop = s.loop;
         source.Play();
     }
