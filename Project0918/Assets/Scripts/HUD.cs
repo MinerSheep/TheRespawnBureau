@@ -25,8 +25,7 @@ public class HUD : MonoBehaviour
 
     [Header("Health")]
     public TextMeshProUGUI healthText;
-    public int maxHp;
-    public int hp;
+    public Health PlayerHP;
 
     [Header("Coins")]
     public TextMeshProUGUI coinsText;
@@ -69,7 +68,6 @@ public class HUD : MonoBehaviour
     private void Update()
     {
         //UpdateProgress();
-        UpdateHealthAmount();
         UpdateCoinsAmount();
         UpdateStamina();
     }
@@ -115,8 +113,7 @@ public class HUD : MonoBehaviour
 
     public void UpdateHealthAmount()
     {
-        hp = Mathf.Clamp(hp, 0, maxHp);
-        healthText.text = hp.ToString();
+        healthText.text = PlayerHP.CurrentHP.ToString();
     }
 
     public void UpdateCoinsAmount()

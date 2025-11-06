@@ -31,7 +31,7 @@ public class FallingHazard : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && !damagedPlayer)
         {
-            playerScript.LoseHealth();
+            collision.gameObject.GetComponent<Health>().TakeDamage(1);
 
             Debug.Log("Falling hit landed");
             destroyHazard();

@@ -49,24 +49,18 @@ public class PlayerController : MonoBehaviour
     // Private Variables
     [HideInInspector] public int pointValue;
     [HideInInspector] private float crouchingTimer;
-    [HideInInspector] private float iFrames;
+    [HideInInspector] public float iFrames;
     [HideInInspector] private bool firstJump = false;
+    [HideInInspector] private bool JumpInput=false;
     [HideInInspector] private float JumpTimer = 0f;
     [HideInInspector] private bool doublejump = false;
     [HideInInspector] private float DashTimer = 0f;
     [HideInInspector] private float DashCDTimer = 0f;
     [HideInInspector] private bool dashing=false;
 
-    public void LoseHealth()
+    public void Invincible()
     {
-        if (iFrames > 0)
-            return;
-
-        hud.hp -= 1;
         iFrames = iFrameMax;
-
-        if (hud.hp <= 0)
-            PlayerEvents.OnPlayerDeath?.Invoke();
     }
 
     public void Move()
@@ -85,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        if (Jumping == false && GD.Grounded && inputBuffer.Consume("Jump")&&!HT.IsTriggering)
+        if (Jumping == false && GD.Grounded && inputBuffer.Consume("Jump")&&!HT.IsTriggering&&!JumpInput)
         {
             RB.linearVelocity = new Vector2(RB.linearVelocity.x, 0);
             RB.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
@@ -97,6 +91,7 @@ public class PlayerController : MonoBehaviour
             firstJump = true;
             doublejump = true;
             JumpTimer = JumpHoldTime;
+            JumpInput = true;
             AudioManager.instance.PlaySound("jump");
         }
         else if (Jumping == true)
@@ -104,6 +99,10 @@ public class PlayerController : MonoBehaviour
             JumpHold();
             DoubleJump();
        }
+        if (!inputBuffer.Consume("Jump"))
+        {
+            JumpInput=false;
+        }
     }
     // Set/reset functions for modifying JumpForce
     public void SetJumpForce(float NewJumpForce)
