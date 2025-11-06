@@ -28,11 +28,6 @@ public class HUD : MonoBehaviour
     public int maxHp;
     public int hp;
 
-    [Header("Stamina")]
-    public Slider staminaSlider;
-    public float maxStamina;
-    public float stamina;
-
     [Header("Coins")]
     public TextMeshProUGUI coinsText;
     public int coins;
@@ -99,11 +94,22 @@ public class HUD : MonoBehaviour
     //        ProgressBar.fillAmount = (Player.transform.position.x - StartX) / (Goal.transform.position.x - StartX);
     //}
 
+    public void ChangeStamina(float adjust)
+    {
+        StaminaAmount = Mathf.Clamp(StaminaAmount + adjust, 0f, StaminaMaximum);
+    }
+
     public void UpdateStamina()
     {
         StaminaAmount -= Time.deltaTime * StaminaLossRate;
         StaminaAmount = Mathf.Clamp(StaminaAmount, 0f, StaminaMaximum);
         StaminaBarImage.fillAmount = StaminaAmount / StaminaMaximum;
+
+        if (StaminaAmount <= 0.0f)
+        {
+            // TODO: Remove the LoadScene below once we have PlayerDeath implemented
+            PlayerEvents.OnPlayerDeath?.Invoke();
+        }
     }
         
 
@@ -118,13 +124,13 @@ public class HUD : MonoBehaviour
         coinsText.text = coins.ToString();
     }
 
-    public void UpdateStamina()
-    {
-        if(staminaSlider)
-        {
-            staminaSlider.value = stamina;
-        }
-    }
+    // public void UpdateStamina()
+    // {
+    //     if(staminaSlider)
+    //     {
+    //         staminaSlider.value = stamina;
+    //     }
+    // }
 
     void OnDestroy()
     {
