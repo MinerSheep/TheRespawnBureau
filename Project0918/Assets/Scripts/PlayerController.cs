@@ -45,6 +45,10 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] private bool firstJump = false;
     [HideInInspector] private float JumpTimer = 0f;
 
+
+
+    GameObject running_particle;
+
     public void LoseHealth()
     {
         if (iFrames > 0)
@@ -82,6 +86,7 @@ public class PlayerController : MonoBehaviour
             firstJump = true;
             JumpTimer = JumpHoldTime;
             AudioManager.instance.Play("jump");
+            ParticleManager.Instance.JumpEffectCall(transform.position);
         }
         else if (Jumping == true)
         {
@@ -98,7 +103,6 @@ public class PlayerController : MonoBehaviour
         JumpForce = DefaultJumpForce;
     }
 
-<<<<<<< Updated upstream
     public void JumpHold()
     {
         if (firstJump)
@@ -112,10 +116,8 @@ public class PlayerController : MonoBehaviour
             {
                 firstJump = false;
             }
-=======
-            PlayJumpAudio();
+            AudioManager.instance.Play("jump");
             ParticleManager.Instance.JumpEffectCall(transform.position);
->>>>>>> Stashed changes
         }
     }
 
@@ -160,6 +162,9 @@ public class PlayerController : MonoBehaviour
         hud.InitializeHUD(flashlight);
 
         PlayerEvents.OnPlayerDeath += PlayerDeath;
+
+        running_particle = ParticleManager.Instance.RunnningEffectCreate(transform.position);
+
     }
     void Update()
     {
@@ -169,6 +174,8 @@ public class PlayerController : MonoBehaviour
         }
         Jump();
         Crouch();
+
+        running_particle.GetComponent<Transform>().position = new Vector3(transform.position.x, transform.position.y -0.7f);
 
         //flipping flashlight by flip the sprite mask
         if (inputBuffer.Consume("FlipFlashlight"))

@@ -31,6 +31,8 @@ public class ParticleManager : MonoBehaviour
     private static void Bootstrap() => _ = Instance;
 
     public GameObject JumpEffect;
+    public GameObject RunningEffect;
+
 
     [SerializeField] ParticleSystem SpeedEffect;
 
@@ -42,11 +44,7 @@ public class ParticleManager : MonoBehaviour
             return;
         }
 
-
-
-
         instance = this;
-
 
         // Prevent this object from being destroyed when changing scenes
         transform.parent = null;
@@ -54,13 +52,18 @@ public class ParticleManager : MonoBehaviour
 
 
         JumpEffect = Resources.Load<GameObject>("Particle/JumpParticle");
-
+        RunningEffect = Resources.Load<GameObject>("Particle/RunningParticle");
 
     }
 
     public void JumpEffectCall(Vector3 position)
     {
         Instantiate(JumpEffect,position,Quaternion.identity);
+    }
+
+    public GameObject RunnningEffectCreate(Vector3 position)
+    {
+        return Instantiate(RunningEffect, position, Quaternion.identity);
     }
 
 }
