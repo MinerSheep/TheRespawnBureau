@@ -76,7 +76,7 @@ public class HUD : MonoBehaviour
         //UpdateProgress();
         UpdateHealthAmount();
         UpdateCoinsAmount();
-        UpdateStamina();
+        UpdatePlayerStamina();
     }
 
     void AddCoin()
@@ -118,7 +118,7 @@ public class HUD : MonoBehaviour
         coinsText.text = coins.ToString();
     }
 
-    public void UpdateStamina()
+    public void UpdatePlayerStamina()
     {
         if(staminaSlider)
         {

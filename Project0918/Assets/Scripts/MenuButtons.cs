@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem.Composites;
 using UnityEngine.SceneManagement;
@@ -12,39 +13,79 @@ public class MenuButtons : MonoBehaviour
 
     private GameObject ActivePanel = null;
 
-    void Start()
+    public void Start()
     {
         if (OptionsPanel != null && AudioManager.instance != null)
         {
             OptionsPanel.transform.Find("Music").GetComponent<Slider>().onValueChanged.AddListener(AudioManager.instance.SetMusicVolume);
             OptionsPanel.transform.Find("Sound").GetComponent<Slider>().onValueChanged.AddListener(AudioManager.instance.SetSFXVolume);
         }
+        PlayPanel.transform.position = OffScreenPosition;
+        OnlinePanel.transform.position = OffScreenPosition;
     }
     
+    [Header("Move in from the side")]
+    public Vector3 OffScreenPosition;
+    public Vector3 LandingPosition;
+
     public void TogglePlayMenu()
     {
         if (PlayPanel != null)
         {
-            ActivePanel?.SetActive(false);
-            ShowPlayPanel();
-        }
-    }
+           if(ActivePanel != PlayPanel)
+           {
+                StartCoroutine(SlideInPanel(ActivePanel));
 
+                ActivePanel = PlayPanel;
+                ShowPlayPanel();
+           }
+           else
+           {
+                StartCoroutine(SlideOutPanel(ActivePanel));
+                HidePlayPanel();
+           }
+            
+        }
+
+    }
     public void ToggleOptionsMenu()
     {
         if (OptionsPanel != null)
         {
-            ActivePanel?.SetActive(false);
-            ShowOptionsPanel();
+            if (ActivePanel != OptionsPanel)
+            {
+                StartCoroutine(SlideInPanel(ActivePanel));
+
+                ActivePanel?.SetActive(false);
+                ActivePanel = OptionsPanel;
+                ShowOptionsPanel();
+            }
+            else
+            {
+                StartCoroutine(SlideOutPanel(ActivePanel));
+                ActivePanel?.SetActive(true);
+                HidePlayPanel();
+            }
         }
     }
-
     public void ToggleOnlineMenu()
     {
         if (OnlinePanel != null)
         {
-            ActivePanel?.SetActive(false);
-            ShowOnlinePanel();
+            if(ActivePanel != OnlinePanel)
+            {
+                StartCoroutine(SlideInPanel(ActivePanel));
+
+                ActivePanel?.SetActive(false);
+                ActivePanel = OnlinePanel;
+                ShowOnlinePanel();
+            }
+            else
+            {
+                StartCoroutine(SlideOutPanel(ActivePanel));
+                ActivePanel?.SetActive(true);
+                HideOnlinePanel();
+            }
         }
     }
 
@@ -52,6 +93,12 @@ public class MenuButtons : MonoBehaviour
     {
         PlayPanel.SetActive(true);
         ActivePanel = PlayPanel;
+        StartCoroutine(SlideInPanel(PlayPanel));
+    }
+    public void HidePlayPanel()
+    {
+        StartCoroutine(SlideOutPanel(PlayPanel));
+        ActivePanel = null;
     }
 
     public void ShowOptionsPanel()
@@ -59,12 +106,51 @@ public class MenuButtons : MonoBehaviour
         OptionsPanel.SetActive(true);
         ActivePanel = OptionsPanel;
     }
+    
+
+    public void HideOptionsPanel()
+    {
+        ActivePanel = null;
+    }
+    
 
     public void ShowOnlinePanel()
     {
         OnlinePanel.SetActive(true);
         ActivePanel = OnlinePanel;
+        StartCoroutine(SlideInPanel(OnlinePanel));
     }
+
+    public void HideOnlinePanel()
+    {
+        StartCoroutine(SlideOutPanel(OnlinePanel));
+        ActivePanel = null;
+    }
+
+
+    private IEnumerator SlideInPanel(GameObject panel)
+    {
+        float t = 0f;
+        while (t <= 1f)
+        {
+            t += Time.deltaTime;
+            panel.transform.position = Vector3.Lerp(OffScreenPosition, LandingPosition, t);
+            yield return null;
+        }
+    }
+
+    private IEnumerator SlideOutPanel(GameObject panel)
+    {
+        float t = 0f;
+        while (t <= 1f)
+        {
+            t += Time.deltaTime;
+            panel.transform.position = Vector3.Lerp(LandingPosition, OffScreenPosition, t);
+            yield return null;
+        }
+        panel.SetActive(false);
+    }
+
 
     public void AutorunnerPlay(string AutoRunnerTester)
     {
