@@ -11,6 +11,9 @@ public static class HUDEvents
 // This class is responsible for hp and flashlight management
 public class HUD : MonoBehaviour
 {
+    [Header("Mobile")]
+    public MobileButtonManager mobileButtonManager;
+
     [Header("Progress")]
     public GameObject Player;
     public GameObject Goal;
@@ -44,13 +47,13 @@ public class HUD : MonoBehaviour
         if (DeviceDetector.IsDesktop)
         {
             //desktop hud
-            AddRemoveHudElements("Desktop", "Mobile");
+            AddRemoveHudElements("Desktop", "MobileLayout");
 
         }
         else if (DeviceDetector.IsMobile)
         {
             //mobile hud
-            AddRemoveHudElements("Mobile", "Desktop");
+            AddRemoveHudElements("MobileLayout", "Desktop");
         }
     }
     
