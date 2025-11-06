@@ -98,6 +98,7 @@ public class PlayerController : MonoBehaviour
         JumpForce = DefaultJumpForce;
     }
 
+<<<<<<< Updated upstream
     public void JumpHold()
     {
         if (firstJump)
@@ -111,6 +112,10 @@ public class PlayerController : MonoBehaviour
             {
                 firstJump = false;
             }
+=======
+            PlayJumpAudio();
+            ParticleManager.Instance.JumpEffectCall(transform.position);
+>>>>>>> Stashed changes
         }
     }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MovementDemoController : MonoBehaviour
@@ -25,6 +26,16 @@ public class MovementDemoController : MonoBehaviour
     private void Start()
     {
         //Component Call
+        if(this.GetComponent<Rigidbody2D>() == null)
+        {
+            this.AddComponent<Rigidbody2D>();
+        }
+
+        if(this.GetComponent<CapsuleCollider2D>() == null)
+        {
+            this.AddComponent<CapsuleCollider2D>();
+        }
+
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -54,6 +65,7 @@ public class MovementDemoController : MonoBehaviour
         {
             rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
             jumpTimer += .05f;
+            ParticleManager.Instance.JumpEffectCall(transform.position);
             isGrounded = false;
             isJumping = true;
         }
