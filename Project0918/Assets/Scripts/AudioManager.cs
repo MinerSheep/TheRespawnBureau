@@ -6,7 +6,7 @@
 
 using UnityEngine;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Collections;
 
 public class AudioManager : MonoBehaviour
 {
@@ -23,12 +23,15 @@ public class AudioManager : MonoBehaviour
     }
 
     [Header("Audio Settings")]
-    // public List<Sound> music = new List<Sound>();
+    public List<Sound> music = new List<Sound>();
     public List<Sound> sounds = new List<Sound>();
 
-
+    private Dictionary<string, Sound> musicDict;
     private Dictionary<string, Sound> soundDict;
+    private AudioSource musicSource;
     [SerializeField] private AudioSource mainSource;  // usually player source
+
+    private Coroutine fadeOutCoroutine;
 
     private void Awake()
     {
@@ -42,6 +45,14 @@ public class AudioManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
 
+        musicDict = new Dictionary<string, Sound>();
+        foreach (Sound m in music)
+        {
+            if (m.clip == null) continue;
+            if (!musicDict.ContainsKey(m.name))
+                musicDict.Add(m.name, m);
+        }
+
         soundDict = new Dictionary<string, Sound>();
         foreach (Sound s in sounds)
         {
@@ -50,6 +61,7 @@ public class AudioManager : MonoBehaviour
                 soundDict.Add(s.name, s);
         }
 
+        musicSource = GetComponent<AudioSource>();
         mainSource = gameObject.AddComponent<AudioSource>();
     }
 
@@ -61,7 +73,76 @@ public class AudioManager : MonoBehaviour
             transform.position = go.transform.position;
     }
 
-    public void Play(string name)
+    public void SetMusicVolume(float value)
+    {
+        foreach (var music in musicDict)
+        {
+            music.Value.volume = value;
+        }
+    }
+    
+    public void SetSFXVolume(float value)
+    {
+        foreach (var sound in soundDict)
+        {
+            sound.Value.volume = value;
+        }
+    }
+
+    public void PlayMusic(string name)
+    {
+        if (fadeOutCoroutine != null)
+        {
+            StopCoroutine(fadeOutCoroutine);
+            fadeOutCoroutine = null;
+        }
+
+        if (!musicDict.TryGetValue(name, out Sound m))
+        {
+            Debug.LogWarning($"AudioManager: Sound '{name}' not found!");
+            return;
+        }
+
+        musicSource.clip = m.clip;
+        musicSource.volume = m.volume;
+        musicSource.pitch = m.pitch;
+        musicSource.loop = m.loop;
+        musicSource.Play();
+    }
+
+    public void StopMusic()
+    {
+        if (musicSource.isPlaying)
+        {
+            if (fadeOutCoroutine != null)
+            {
+                StopCoroutine(fadeOutCoroutine);
+                fadeOutCoroutine = null;
+            }
+            else
+            {
+                fadeOutCoroutine = StartCoroutine(FadeOutMusic());
+            }
+        }
+    }
+
+    private IEnumerator FadeOutMusic(float duration = 1f)
+    {
+        float startVolume = musicSource.volume;
+
+        while (musicSource.volume > 0)
+        {
+            musicSource.volume -= startVolume * Time.deltaTime / duration;
+            yield return null;
+        }
+
+        musicSource.Stop();
+        musicSource.volume = startVolume; // reset for next playback
+
+        fadeOutCoroutine = null;
+    }
+
+    public void PlaySound(string name)
     {
         if (!soundDict.TryGetValue(name, out Sound s))
         {
@@ -77,7 +158,7 @@ public class AudioManager : MonoBehaviour
 
     }
 
-    public void Play(string name, AudioSource source)
+    public void PlaySound(string name, AudioSource source)
     {
         if (!soundDict.TryGetValue(name, out Sound s))
         {

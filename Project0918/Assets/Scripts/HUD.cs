@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public static class HUDEvents
 {
-    // Currently unused
     public delegate void HUDDefaultEvent();
     public static HUDDefaultEvent OnCollectCoin;
 }
@@ -28,6 +27,11 @@ public class HUD : MonoBehaviour
     public TextMeshProUGUI healthText;
     public int maxHp;
     public int hp;
+
+    [Header("Stamina")]
+    public Slider staminaSlider;
+    public float maxStamina;
+    public float stamina;
 
     [Header("Coins")]
     public TextMeshProUGUI coinsText;
@@ -112,6 +116,14 @@ public class HUD : MonoBehaviour
     public void UpdateCoinsAmount()
     {
         coinsText.text = coins.ToString();
+    }
+
+    public void UpdateStamina()
+    {
+        if(staminaSlider)
+        {
+            staminaSlider.value = stamina;
+        }
     }
 
     void OnDestroy()
