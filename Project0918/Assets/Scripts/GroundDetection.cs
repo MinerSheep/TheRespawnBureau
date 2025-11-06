@@ -17,6 +17,7 @@ public class GroundDetection : MonoBehaviour
             if (GroundCount >= 1)
             {
                 Grounded = true;
+                ParticleManager.Instance.RunningEffectCall(transform.position);
                 if (PC.Jumping)
                 {
                     PC.Jumping = false;
@@ -35,6 +36,7 @@ public class GroundDetection : MonoBehaviour
             if (GroundCount < 1)
             {
                 Grounded = false;
+                ParticleManager.Instance.RunningEffectDestory();
             }
         }
     }
