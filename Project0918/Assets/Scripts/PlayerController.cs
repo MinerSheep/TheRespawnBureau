@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] private bool dashing=false;
     [HideInInspector] private float Stamina = 1000f; // Stamina is constantly decreasing, player dies if it hits zero
     [HideInInspector] private float AttackTimer = 0f;   // Counts up while attacking
+    [HideInInspector] private float AttackTimerEnd = 0.5f;   // How long should the attack volume/animation be active?
 
     public void LoseHealth()
     {
@@ -136,7 +137,7 @@ public class PlayerController : MonoBehaviour
             if (Attacking)
             {
                 AttackTimer += Time.deltaTime;
-                if (AttackTimer > 1.0f)
+                if (AttackTimer > AttackTimerEnd)
                 {
                     Debug.Log("Attack Ended");
                     Attacking = false;
