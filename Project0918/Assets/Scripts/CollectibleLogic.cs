@@ -66,7 +66,7 @@ public class CollectibleLogic : MonoBehaviour
             // Add stamina
             if(type == CollectibleType.Stamina && value > 0)
             {
-                playerController.UpdateStamina(value);
+                playerController.hud.ChangeStamina(value);
             }
 
             // Destroys this object

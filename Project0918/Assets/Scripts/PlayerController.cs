@@ -31,7 +31,6 @@ public class PlayerController : MonoBehaviour
     public float DashSpeed = 8f;
     public float DashTime = 1f;
     public float DashCD = 4f;
-    public float StaminaMax = 1000f;  // Used to reset stamina after death
     public float StaminaDrainRate = -0.1f;   // Amount removed from stamina per update
     public HeadTrigger HT;
 
@@ -57,7 +56,6 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] private float DashTimer = 0f;
     [HideInInspector] private float DashCDTimer = 0f;
     [HideInInspector] private bool dashing=false;
-    [HideInInspector] private float Stamina = 1000f; // Stamina is constantly decreasing, player dies if it hits zero
 
     public void LoseHealth()
     {
@@ -69,20 +67,6 @@ public class PlayerController : MonoBehaviour
 
         if (hud.hp <= 0)
             PlayerEvents.OnPlayerDeath?.Invoke();
-    }
-
-    public void UpdateStamina(float adjust)
-    {
-        Stamina = Mathf.Clamp(Stamina + adjust, 0, StaminaMax);
-        hud.stamina = Stamina;
-
-        if (Stamina <= 0.0f)
-        {
-            // TODO: Remove the LoadScene below once we have PlayerDeath implemented
-            PlayerDeath();
-            // If the stamina hits zero, restart the level
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
     }
 
     public void Move()
@@ -223,18 +207,12 @@ public class PlayerController : MonoBehaviour
         //    flashlight = transform.Find("FlashLight").GetComponent<FlashLight>();
 
         PlayerEvents.OnPlayerDeath += PlayerDeath;
-
-        Stamina = StaminaMax;
     }
     void Update()
     {
         if (!AutoRunner)
         {
             Move();
-        }
-        else if(HasStamina)
-        {
-            UpdateStamina(StaminaDrainRate);
         }
         Jump();
         Crouch();
