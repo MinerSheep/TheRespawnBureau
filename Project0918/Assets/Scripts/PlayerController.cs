@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public CapsuleCollider2D cC;
     [HideInInspector] public bool Jumping = false;
     [HideInInspector] public bool Crouching = false;
+    [HideInInspector] public bool Attacking = false; // If this is on, the sword is swinging!
 
     [Header("References")]
     public GroundDetection GD;
@@ -59,8 +60,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] private float DashCDTimer = 0f;
     [HideInInspector] private bool dashing=false;
     [HideInInspector] private float Stamina = 1000f; // Stamina is constantly decreasing, player dies if it hits zero
-    [HideInInspector] private bool isAttacking = false; // If this is on, the sword is swinging!
-    [HideInInspector] private float AttackTimer = 0f;
+    [HideInInspector] private float AttackTimer = 0f;   // Counts up while attacking
 
     public void LoseHealth()
     {
@@ -129,17 +129,17 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
-                isAttacking = true;
+                Attacking = true;
                 attackVol.enabled = true;
                 Debug.Log("Attack!");
             }
-            if (isAttacking)
+            if (Attacking)
             {
                 AttackTimer += Time.deltaTime;
                 if (AttackTimer > 1.0f)
                 {
                     Debug.Log("Attack Ended");
-                    isAttacking = false;
+                    Attacking = false;
                     attackVol.enabled = false;
                     AttackTimer = 0f;
                 }
