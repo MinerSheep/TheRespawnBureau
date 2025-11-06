@@ -4,35 +4,48 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+// Data structure for submitting scores to the server
 [Serializable]
 public class ScoreData
 {
-    public string username;
+    public string player_name;
     public int score;
 }
 
+// Response structure when submitting scores
 [Serializable]
 public class ScoreResponse
 {
     public bool success;
     public string message;
-    public int best_score;
+    public int id;
 }
 
+// Data structure for leaderboard entries
 [Serializable]
 public class LeaderboardEntry
 {
-    public string username;
-    public int best_score;
+    public string player_name;
+    public int score;
 }
 
+// Wrapper for leaderboard array response
 [Serializable]
-public class LeaderboardResponse
+public class LeaderboardWrapper
 {
-    public bool success;
-    public LeaderboardEntry[] leaderboard;
+    public LeaderboardEntry[] entries;
 }
 
+// Response structure for player rank queries
+[Serializable]
+public class RankResponse
+{
+    public int rank;
+}
+
+// Manages database operations for leaderboard system
+// Supports both online (Node.js server) and offline modes
+// Automatically falls back to offline mode if server is unavailable
 public class DatabaseManager : MonoBehaviour
 {
     [Header("Server Configuration")]
@@ -47,34 +60,86 @@ public class DatabaseManager : MonoBehaviour
     private Dictionary<string, int> offlineScores = new Dictionary<string, int>();
     private bool isOfflineMode = false;
 
+    private static DatabaseManager instance;
+
+    // Singleton instance of DatabaseManager
+    public static DatabaseManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<DatabaseManager>();
+                if (instance == null)
+                {
+                    GameObject go = new GameObject("DatabaseManager");
+                    instance = go.AddComponent<DatabaseManager>();
+                    DontDestroyOnLoad(go);
+                }
+            }
+            return instance;
+        }
+    }
+
+    void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Start()
     {
         if (serverConfig == null)
         {
-            Debug.LogError("ServerConfig is not assigned! Please assign it in the Inspector.");
+            Debug.LogError("[DatabaseManager] ServerConfig is not assigned! Using offline mode.");
             isOfflineMode = true;
+            InitMockData();
             return;
         }
 
         if (!serverConfig.useOnlineServer)
         {
             isOfflineMode = true;
-            Debug.Log("Offline mode enabled (Development)");
+            Debug.Log("[DatabaseManager] Offline mode enabled (Development)");
             InitMockData();
         }
         else
         {
-            Debug.Log("Online mode enabled - Server: " + serverConfig.serverURL);
+            Debug.Log("[DatabaseManager] Online mode enabled - Server: " + serverConfig.serverURL);
+            StartCoroutine(TestServerHealth());
         }
 
-        // Run test if enabled
         if (testOnStart)
         {
             TestServerConnection();
         }
     }
 
-    // Test server connection and functionality
+    // Tests server health endpoint
+    private IEnumerator TestServerHealth()
+    {
+        UnityWebRequest request = UnityWebRequest.Get(serverConfig.serverURL + "/api/health");
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("[DatabaseManager] Server health check passed: " + request.downloadHandler.text);
+        }
+        else
+        {
+            Debug.LogWarning("[DatabaseManager] Server health check failed - Switching to offline mode");
+            isOfflineMode = true;
+            InitMockData();
+        }
+    }
+
+    // Tests server connection and all API endpoints
+    // Can be called from Inspector context menu
     [ContextMenu("Test Server Connection")]
     public void TestServerConnection()
     {
@@ -90,22 +155,19 @@ public class DatabaseManager : MonoBehaviour
         StartCoroutine(TestSequence());
     }
 
-    // Test sequence coroutine
+    // Runs a sequence of tests for all API endpoints
     private IEnumerator TestSequence()
     {
-        // Test 1: Save score
         Debug.Log("Test 1: Saving score...");
         SaveScore(testUsername, testScore);
         yield return new WaitForSeconds(2f);
 
-        // Test 2: Get individual score
-        Debug.Log("Test 2: Getting individual score...");
-        GetScore(testUsername);
+        Debug.Log("Test 2: Getting leaderboard...");
+        GetLeaderboard(5);
         yield return new WaitForSeconds(2f);
 
-        // Test 3: Get leaderboard
-        Debug.Log("Test 3: Getting leaderboard...");
-        GetLeaderboard(5);
+        Debug.Log("Test 3: Getting player rank...");
+        GetPlayerRank(testUsername);
         yield return new WaitForSeconds(2f);
 
         Debug.Log("========================================");
@@ -117,228 +179,286 @@ public class DatabaseManager : MonoBehaviour
     // Initialize mock data for offline testing
     private void InitMockData()
     {
+        offlineScores.Clear();
         offlineScores["Player1"] = 1000;
         offlineScores["Player2"] = 850;
         offlineScores["Player3"] = 700;
         offlineScores["DevTest"] = 500;
+        Debug.Log("[DatabaseManager] Mock data initialized for offline mode");
     }
 
-    // Save score to database or offline storage
-    public void SaveScore(string username, int score)
+    // Save player score to database or offline storage
+    // <param name="playerName">Name of the player</param>
+    // <param name="score">Score achieved</param>
+    // <param name="callback">Optional callback with success status</param>
+    public void SaveScore(string playerName, int score, Action<bool> callback = null)
     {
         if (isOfflineMode)
         {
-            SaveScoreOffline(username, score);
+            SaveScoreOffline(playerName, score);
+            callback?.Invoke(true);
         }
         else
         {
-            StartCoroutine(SaveScoreCoroutine(username, score));
+            StartCoroutine(SaveScoreCoroutine(playerName, score, callback));
         }
     }
 
     // Save score in offline mode
-    private void SaveScoreOffline(string username, int score)
+    private void SaveScoreOffline(string playerName, int score)
     {
-        if (offlineScores.ContainsKey(username))
+        if (offlineScores.ContainsKey(playerName))
         {
-            if (score > offlineScores[username])
+            if (score > offlineScores[playerName])
             {
-                offlineScores[username] = score;
-                Debug.Log($"[Offline] New record! {username}: {score} points");
+                offlineScores[playerName] = score;
+                Debug.Log($"[Offline] New record! {playerName}: {score} points");
             }
             else
             {
-                Debug.Log($"[Offline] Record maintained. Best: {offlineScores[username]} points");
+                Debug.Log($"[Offline] Record maintained. Best: {offlineScores[playerName]} points");
             }
         }
         else
         {
-            offlineScores[username] = score;
-            Debug.Log($"[Offline] First score! {username}: {score} points");
+            offlineScores[playerName] = score;
+            Debug.Log($"[Offline] First score! {playerName}: {score} points");
         }
     }
 
     // Save score coroutine for online mode
-    private IEnumerator SaveScoreCoroutine(string username, int score)
+    // Automatically switches to offline mode if server fails
+    private IEnumerator SaveScoreCoroutine(string playerName, int score, Action<bool> callback)
     {
-        ScoreData data = new ScoreData { username = username, score = score };
+        ScoreData data = new ScoreData { player_name = playerName, score = score };
         string jsonData = JsonUtility.ToJson(data);
 
-        UnityWebRequest request = UnityWebRequest.PostWwwForm(serverConfig.serverURL + "/save_score.php", "POST");
-        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
-        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type", "application/json");
+        Debug.Log($"[DatabaseManager] Submitting score: {playerName} - {score} points");
+
+        UnityWebRequest request = UnityWebRequest.Post(
+            serverConfig.serverURL + "/api/score",
+            jsonData,
+            "application/json"
+        );
 
         yield return request.SendWebRequest();
 
         if (request.result == UnityWebRequest.Result.Success)
         {
-            // Check if response is HTML instead of JSON
-            if (request.downloadHandler.text.Contains("<html>"))
-            {
-                Debug.LogWarning("Server returned HTML - Switching to offline mode");
-                isOfflineMode = true;
-                SaveScoreOffline(username, score);
-                yield break;
-            }
-
-            try
-            {
-                ScoreResponse response = JsonUtility.FromJson<ScoreResponse>(request.downloadHandler.text);
-                Debug.Log($"[Online] {response.message} - Best: {response.best_score} points");
-            }
-            catch (Exception e)
-            {
-                Debug.LogWarning("Server error - Switching to offline mode: " + e.Message);
-                isOfflineMode = true;
-                SaveScoreOffline(username, score);
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Server connection failed - Using offline mode");
-            isOfflineMode = true;
-            SaveScoreOffline(username, score);
-        }
-    }
-
-    // Get individual player score
-    public void GetScore(string username)
-    {
-        if (isOfflineMode)
-        {
-            GetScoreOffline(username);
-        }
-        else
-        {
-            StartCoroutine(GetScoreCoroutine(username));
-        }
-    }
-
-    // Get score in offline mode
-    private void GetScoreOffline(string username)
-    {
-        if (offlineScores.ContainsKey(username))
-        {
-            Debug.Log($"[Offline] {username}: {offlineScores[username]} points");
-        }
-        else
-        {
-            Debug.Log($"[Offline] {username} - No record found");
-        }
-    }
-
-    // Get score coroutine for online mode
-    private IEnumerator GetScoreCoroutine(string username)
-    {
-        UnityWebRequest request = UnityWebRequest.Get(serverConfig.serverURL + "/get_score.php?username=" + username);
-
-        yield return request.SendWebRequest();
-
-        if (request.result == UnityWebRequest.Result.Success)
-        {
-            if (request.downloadHandler.text.Contains("<html>"))
-            {
-                Debug.LogWarning("Server returned HTML - Switching to offline mode");
-                isOfflineMode = true;
-                GetScoreOffline(username);
-                yield break;
-            }
-
             try
             {
                 ScoreResponse response = JsonUtility.FromJson<ScoreResponse>(request.downloadHandler.text);
                 if (response.success)
                 {
-                    Debug.Log($"[Online] {username}: {response.best_score} points");
+                    Debug.Log($"[Online] Score saved successfully: {response.message}");
+                    callback?.Invoke(true);
                 }
                 else
                 {
-                    Debug.Log($"[Online] {response.message}");
+                    Debug.LogWarning($"[Online] Server returned error: {response.message}");
+                    callback?.Invoke(false);
                 }
             }
-            catch
+            catch (Exception e)
             {
+                Debug.LogWarning("[DatabaseManager] Server error - Switching to offline mode: " + e.Message);
                 isOfflineMode = true;
-                GetScoreOffline(username);
+                SaveScoreOffline(playerName, score);
+                callback?.Invoke(true);
             }
         }
         else
         {
+            Debug.LogWarning("[DatabaseManager] Server connection failed - Using offline mode: " + request.error);
             isOfflineMode = true;
-            GetScoreOffline(username);
+            SaveScoreOffline(playerName, score);
+            callback?.Invoke(true);
         }
     }
 
-    // Get leaderboard
-    public void GetLeaderboard(int limit = 10)
+    // Get leaderboard entries
+    // <param name="limit">Number of top entries to retrieve</param>
+    // <param name="callback">Optional callback with list of entries</param>
+    public void GetLeaderboard(int limit = 10, Action<List<LeaderboardEntry>> callback = null)
     {
         if (isOfflineMode)
         {
-            GetLeaderboardOffline(limit);
+            List<LeaderboardEntry> entries = GetLeaderboardOffline(limit);
+            callback?.Invoke(entries);
         }
         else
         {
-            StartCoroutine(GetLeaderboardCoroutine(limit));
+            StartCoroutine(GetLeaderboardCoroutine(limit, callback));
         }
     }
 
     // Get leaderboard in offline mode
-    private void GetLeaderboardOffline(int limit)
+    private List<LeaderboardEntry> GetLeaderboardOffline(int limit)
     {
         Debug.Log("[Offline] === Leaderboard ===");
 
         var sortedScores = new List<KeyValuePair<string, int>>(offlineScores);
         sortedScores.Sort((a, b) => b.Value.CompareTo(a.Value));
 
+        List<LeaderboardEntry> entries = new List<LeaderboardEntry>();
         int count = Mathf.Min(limit, sortedScores.Count);
+
         for (int i = 0; i < count; i++)
         {
+            entries.Add(new LeaderboardEntry
+            {
+                player_name = sortedScores[i].Key,
+                score = sortedScores[i].Value
+            });
             Debug.Log($"{i + 1}. {sortedScores[i].Key} - {sortedScores[i].Value} points");
         }
+
+        return entries;
     }
 
     // Get leaderboard coroutine for online mode
-    private IEnumerator GetLeaderboardCoroutine(int limit)
+    private IEnumerator GetLeaderboardCoroutine(int limit, Action<List<LeaderboardEntry>> callback)
     {
-        UnityWebRequest request = UnityWebRequest.Get(serverConfig.serverURL + "/get_leaderboard.php?limit=" + limit);
+        UnityWebRequest request = UnityWebRequest.Get(
+            serverConfig.serverURL + "/api/leaderboard"
+        );
 
         yield return request.SendWebRequest();
 
         if (request.result == UnityWebRequest.Result.Success)
         {
-            if (request.downloadHandler.text.Contains("<html>"))
-            {
-                Debug.LogWarning("Server returned HTML - Switching to offline mode");
-                isOfflineMode = true;
-                GetLeaderboardOffline(limit);
-                yield break;
-            }
-
             try
             {
-                LeaderboardResponse response = JsonUtility.FromJson<LeaderboardResponse>(request.downloadHandler.text);
-                if (response.success)
+                string json = "{\"entries\":" + request.downloadHandler.text + "}";
+                LeaderboardWrapper wrapper = JsonUtility.FromJson<LeaderboardWrapper>(json);
+
+                List<LeaderboardEntry> entries = new List<LeaderboardEntry>(wrapper.entries);
+
+                Debug.Log($"[Online] Leaderboard retrieved: {entries.Count} entries");
+                for (int i = 0; i < entries.Count; i++)
                 {
-                    Debug.Log("[Online] === Leaderboard ===");
-                    for (int i = 0; i < response.leaderboard.Length; i++)
-                    {
-                        var entry = response.leaderboard[i];
-                        Debug.Log($"{i + 1}. {entry.username} - {entry.best_score} points");
-                    }
+                    Debug.Log($"{i + 1}. {entries[i].player_name} - {entries[i].score} points");
                 }
+
+                callback?.Invoke(entries);
             }
-            catch
+            catch (Exception e)
             {
+                Debug.LogWarning("[DatabaseManager] Parse error - Switching to offline mode: " + e.Message);
                 isOfflineMode = true;
-                GetLeaderboardOffline(limit);
+                List<LeaderboardEntry> entries = GetLeaderboardOffline(limit);
+                callback?.Invoke(entries);
             }
         }
         else
         {
+            Debug.LogWarning("[DatabaseManager] Server connection failed - Using offline mode");
             isOfflineMode = true;
-            GetLeaderboardOffline(limit);
+            List<LeaderboardEntry> entries = GetLeaderboardOffline(limit);
+            callback?.Invoke(entries);
+        }
+    }
+
+    // Get specific player's rank
+    // <param name="playerName">Name of the player</param>
+    // <param name="callback">Optional callback with rank number</param>
+    public void GetPlayerRank(string playerName, Action<int> callback = null)
+    {
+        if (isOfflineMode)
+        {
+            int rank = GetPlayerRankOffline(playerName);
+            callback?.Invoke(rank);
+        }
+        else
+        {
+            StartCoroutine(GetPlayerRankCoroutine(playerName, callback));
+        }
+    }
+
+    // Get player rank in offline mode
+    private int GetPlayerRankOffline(string playerName)
+    {
+        if (!offlineScores.ContainsKey(playerName))
+        {
+            Debug.Log($"[Offline] {playerName} - No record found");
+            return -1;
+        }
+
+        var sortedScores = new List<KeyValuePair<string, int>>(offlineScores);
+        sortedScores.Sort((a, b) => b.Value.CompareTo(a.Value));
+
+        for (int i = 0; i < sortedScores.Count; i++)
+        {
+            if (sortedScores[i].Key == playerName)
+            {
+                Debug.Log($"[Offline] {playerName} rank: {i + 1}");
+                return i + 1;
+            }
+        }
+
+        return -1;
+    }
+
+    // Get player rank coroutine for online mode
+    private IEnumerator GetPlayerRankCoroutine(string playerName, Action<int> callback)
+    {
+        UnityWebRequest request = UnityWebRequest.Get(
+            serverConfig.serverURL + "/api/rank/" + UnityWebRequest.EscapeURL(playerName)
+        );
+
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            try
+            {
+                RankResponse response = JsonUtility.FromJson<RankResponse>(request.downloadHandler.text);
+                Debug.Log($"[Online] {playerName} rank: {response.rank}");
+                callback?.Invoke(response.rank);
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning("[DatabaseManager] Parse error - Switching to offline mode: " + e.Message);
+                isOfflineMode = true;
+                int rank = GetPlayerRankOffline(playerName);
+                callback?.Invoke(rank);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("[DatabaseManager] Server connection failed - Using offline mode");
+            isOfflineMode = true;
+            int rank = GetPlayerRankOffline(playerName);
+            callback?.Invoke(rank);
+        }
+    }
+
+    // Check if currently in offline mode
+    public bool IsOfflineMode()
+    {
+        return isOfflineMode;
+    }
+
+    // Manually switch to offline mode
+    public void ForceOfflineMode()
+    {
+        isOfflineMode = true;
+        InitMockData();
+        Debug.Log("[DatabaseManager] Forced offline mode");
+    }
+
+    // Manually retry online connection
+    public void RetryOnlineConnection()
+    {
+        if (serverConfig != null && serverConfig.useOnlineServer)
+        {
+            isOfflineMode = false;
+            Debug.Log("[DatabaseManager] Retrying online connection...");
+            StartCoroutine(TestServerHealth());
+        }
+        else
+        {
+            Debug.LogWarning("[DatabaseManager] Cannot retry - Online server is disabled in ServerConfig");
         }
     }
 }

@@ -11,9 +11,7 @@ public enum CollectibleType
 public class CollectibleLogic : MonoBehaviour
 {
     [Header("Settings")]
-    public int scoreValue;
-    public int batteryValue;
-    public int staminaValue;
+    public int value = 100; // Default value to 100
     public CollectibleType type = CollectibleType.Coin; // Default to coin
 
     // Private variables
@@ -38,17 +36,17 @@ public class CollectibleLogic : MonoBehaviour
         {
             // Currently this adds points to the Player object by finding the tag "Player"
             // then adds the value of this collectible to the player's score
-            if (type == CollectibleType.Coin && scoreValue > 0)
+            if (type == CollectibleType.Coin && value > 0)
             {
                 if (ScoreManager.instance != null)
                 {
-                    ScoreManager.instance.score += scoreValue;
+                    ScoreManager.instance.score += value;
                     HUDEvents.OnCollectCoin?.Invoke();
                 }
 
                 if (playerController != null)
                 {
-                    playerController.pointValue += scoreValue;
+                    playerController.pointValue += value;
                 }
 
                 // Currently calls a game object called "Audio Manager" and sends a play signal
@@ -60,15 +58,15 @@ public class CollectibleLogic : MonoBehaviour
             }
 
             // Give battery if battery value
-            if (type == CollectibleType.Battery && batteryValue > 0)
+            if (type == CollectibleType.Battery && value > 0)
             {
-                playerController.flashlight.BatteryChange(batteryValue);
+                playerController.flashlight.BatteryChange(value);
             }
 
             // Add stamina
-            if(type == CollectibleType.Stamina && staminaValue > 0)
+            if(type == CollectibleType.Stamina && value > 0)
             {
-                playerController.UpdateStamina(staminaValue);
+                playerController.hud.ChangeStamina(value);
             }
 
             // Destroys this object

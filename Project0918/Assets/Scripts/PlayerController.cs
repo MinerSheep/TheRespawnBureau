@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
@@ -31,7 +32,6 @@ public class PlayerController : MonoBehaviour
     public float DashSpeed = 8f;
     public float DashTime = 1f;
     public float DashCD = 4f;
-    public float StaminaMax = 1000f;  // Used to reset stamina after death
     public float StaminaDrainRate = -0.1f;   // Amount removed from stamina per update
     public HeadTrigger HT;
 
@@ -59,7 +59,6 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] private float DashTimer = 0f;
     [HideInInspector] private float DashCDTimer = 0f;
     [HideInInspector] private bool dashing=false;
-    [HideInInspector] private float Stamina = 1000f; // Stamina is constantly decreasing, player dies if it hits zero
     [HideInInspector] private float AttackTimer = 0f;   // Counts up while attacking
     [HideInInspector] private float AttackTimerEnd = 0.5f;   // How long should the attack volume/animation be active?
 
@@ -70,20 +69,9 @@ public class PlayerController : MonoBehaviour
 
         hud.hp -= 1;
         iFrames = iFrameMax;
-    }
 
-    public void UpdateStamina(float adjust)
-    {
-        Stamina = Mathf.Clamp(Stamina + adjust, 0, StaminaMax);
-        hud.stamina = Stamina;
-
-        if (Stamina <= 0.0f)
-        {
-            // TODO: Remove the LoadScene below once we have PlayerDeath implemented
-            PlayerDeath();
-            // If the stamina hits zero, restart the level
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
+        if (hud.hp <= 0)
+            PlayerEvents.OnPlayerDeath?.Invoke();
     }
 
     public void Move()
@@ -245,12 +233,14 @@ public class PlayerController : MonoBehaviour
         RB = GetComponent<Rigidbody2D>();
         cC = GetComponent<CapsuleCollider2D>();
 
+        hud.AssignLeftButton(inputBuffer, "Jump", true);
+        hud.AssignRightButton(inputBuffer, "Crouch", false);
+
         //if (flashlight == null)
         //    flashlight = transform.Find("FlashLight").GetComponent<FlashLight>();
 
         PlayerEvents.OnPlayerDeath += PlayerDeath;
-
-        Stamina = StaminaMax;
+        
         attackVol.enabled = false;  // Attack volume is inactive unless attacking
     }
     void Update()
@@ -258,10 +248,6 @@ public class PlayerController : MonoBehaviour
         if (!AutoRunner)
         {
             Move();
-        }
-        else if(HasStamina)
-        {
-            UpdateStamina(StaminaDrainRate);
         }
         Jump();
         Crouch();
@@ -286,6 +272,29 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerDeath()
     {
-        
+        RunnerScene[] scenes = FindObjectsByType<RunnerScene>(FindObjectsSortMode.None);
+
+        foreach (var scene in scenes)
+        {
+            scene.StartMovingSpeed = scene.EndMovingSpeed = 0;
+        }
+
+        StartCoroutine(RestartLevel());
+    }
+
+    IEnumerator RestartLevel()
+    {
+        float time = 0;
+
+        while (time < 1.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        // Optional
+        ScoreManager.instance?.SaveScore(); // Save high score to PlayerPrefs
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

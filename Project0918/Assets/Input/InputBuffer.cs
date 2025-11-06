@@ -34,12 +34,12 @@ public class InputBuffer : MonoBehaviour
         }
     }
 
-    private void AddToBuffer(string action)
+    public void AddToBuffer(string action)
     {
         buffer.Add(new BufferedInput(action, Time.time));
     }
 
-    private void StartHold(string action)
+    public void StartHold(string action)
     {
         AddToBuffer(action);
 
@@ -47,7 +47,7 @@ public class InputBuffer : MonoBehaviour
         heldBuffer[action].time = Time.time;
     }
 
-    private void EndHold(string action)
+    public void EndHold(string action)
     {
         heldBuffer[action].held = false;
     }
