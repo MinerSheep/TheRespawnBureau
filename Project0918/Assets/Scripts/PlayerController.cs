@@ -142,7 +142,7 @@ public class PlayerController : MonoBehaviour
             {
                 firstJump = false;
             }
-            AudioManager.instance.Play("jump");
+            AudioManager.instance.PlaySound("jump");
             ParticleManager.Instance.JumpEffectCall(transform.position);
         }
     }

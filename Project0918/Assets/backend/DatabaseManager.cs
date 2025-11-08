@@ -69,7 +69,7 @@ public class DatabaseManager : MonoBehaviour
         {
             if (instance == null)
             {
-                instance = FindObjectOfType<DatabaseManager>();
+                instance = FindAnyObjectByType<DatabaseManager>();
                 if (instance == null)
                 {
                     GameObject go = new GameObject("DatabaseManager");
