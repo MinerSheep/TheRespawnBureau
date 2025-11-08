@@ -1,11 +1,18 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
+public enum CollectibleType
+{
+    Coin,
+    Battery,
+    Stamina
+}
+
 public class CollectibleLogic : MonoBehaviour
 {
     [Header("Settings")]
-    public int scoreValue;
-    public int batteryValue;
+    public int value = 100; // Default value to 100
+    public CollectibleType type = CollectibleType.Coin; // Default to coin
 
     // Private variables
     MovementDemoController playerScript;
@@ -13,7 +20,7 @@ public class CollectibleLogic : MonoBehaviour
 
     void Start()
     {
-        playerScript = GameObject.FindWithTag("Player").GetComponent<MovementDemoController>();
+        playerScript = GameObject.FindWithTag("Player")?.GetComponent<MovementDemoController>();
 
         playerController = GameObject.FindAnyObjectByType<PlayerController>();
         if (!playerController)
@@ -27,34 +34,47 @@ public class CollectibleLogic : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") == true)
         {
-            if (scoreValue > 0)
-            {
-            // Currently this adds points to the Player object by finding the tag "Player"
-            // then adds the value of this collectible to the player's score
-
-            if (CollectionManager.instance != null)
-            {
-                    CollectionManager.instance.score += scoreValue;
-                    CollectionManager.instance.coinsCollected++;
-            }
-
-            if (playerController != null)
-            {
-                playerController.pointValue += scoreValue;
-                //playerScript.pointValue += scoreValue;
-            }
-
             // Currently calls a game object called "Audio Manager" and sends a play signal
             if (AudioManager.instance != null)
             {
-                AudioManager.instance.Play("coin_collect");
+                switch (type)
+                {
+                    case CollectibleType.Coin:
+                        AudioManager.instance.PlaySound("coin_collect");
+                        break;
+                    default:
+                        AudioManager.instance.PlaySound("powerup");
+                        break;
+                }
             }
-                
+            
+            // Currently this adds points to the Player object by finding the tag "Player"
+            // then adds the value of this collectible to the player's score
+            if (type == CollectibleType.Coin && value > 0)
+            {
+                if (ScoreManager.instance != null)
+                {
+                    ScoreManager.instance.score += value;
+                    HUDEvents.OnCollectCoin?.Invoke();
+                }
+
+                if (playerController != null)
+                {
+                    playerController.pointValue += value;
+                }
             }
 
             // Give battery if battery value
-            if (batteryValue > 0)
-                playerController.flashlight.BatteryChange(batteryValue);
+            if (type == CollectibleType.Battery && value > 0)
+            {
+                playerController.flashlight.BatteryChange(value);
+            }
+
+            // Add stamina
+            if(type == CollectibleType.Stamina && value > 0)
+            {
+                playerController.hud.ChangeStamina(value);
+            }
 
             // Destroys this object
             Destroy(this.gameObject);

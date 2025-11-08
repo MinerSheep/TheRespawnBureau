@@ -9,22 +9,28 @@ public class GroundDetection : MonoBehaviour
     [Header("References")]
     public PlayerController PC;
 
+    void Update()
+    {
+        Grounded = GroundCount > 0;
+        if (Grounded)
+          ParticleManager.Instance.RunningEffectCall(transform.position);
+        else
+          ParticleManager.Instance.RunningEffectDestory();
+          
+        if(PC.Jumping)
+        {
+            PC.Jumping = !Grounded;
+
+            //if (!PC.Jumping)
+            //    AudioManager.instance.PlaySound("ground_landing");
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Ground"))
         {
             GroundCount++;
-            if (GroundCount >= 1)
-            {
-                Grounded = true;
-                ParticleManager.Instance.RunningEffectCall(transform.position);
-                if (PC.Jumping)
-                {
-                    PC.Jumping = false;
-                    //PM.PlayerModelStats = 0;
-                    //PM.ChangePlayerModelStats();
-                }
-            }
         }
     }
 
@@ -33,11 +39,6 @@ public class GroundDetection : MonoBehaviour
         if (collision.CompareTag("Ground"))
         {
             GroundCount--;
-            if (GroundCount < 1)
-            {
-                Grounded = false;
-                ParticleManager.Instance.RunningEffectDestory();
-            }
         }
     }
 }
