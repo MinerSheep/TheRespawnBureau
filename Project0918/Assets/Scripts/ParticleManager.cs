@@ -5,49 +5,46 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class ParticleManager : MonoBehaviour
 {
-    private static ParticleManager instance;
+    public static ParticleManager instance { get; private set; }
 
-    private static bool _isQuitting = false;
-
-    public static ParticleManager Instance
-    {
-        get
-        {
-            if (_isQuitting) return null; // don't spawn during teardown
-
-            if (instance == null)
-            {
-                // Try to find the instance in the scene
-                instance = FindAnyObjectByType<ParticleManager>(FindObjectsInactive.Exclude);
-                if (instance == null)
-                {
-                    // If still null, log an error
-                    //Debug.LogError("Partcile Manager is not initialized. Make sure it's in the scene.");
-
-                    // Create one so callers never get null
-                    var go = new GameObject("ParticleManager");
-                    instance = go.AddComponent<ParticleManager>(); // Awake will run now
-
-                }
-            }
-            return instance;
-        }
-    }
-
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    private static void Bootstrap() => _ = Instance;
-
-    public GameObject JumpEffect;
-    public GameObject RunningEffect;
-
-    public GameObject ActivateRunningEffect;
-
-    List<GameObject> DyingEffects;
+    [Header("References")]
+    [HideInInspector] public GameObject JumpEffect;
+    [HideInInspector] public GameObject RunningEffect;
+    [HideInInspector] List<GameObject> DyingEffects;
+    [HideInInspector] public GameObject ActivateRunningEffect;
 
     [SerializeField] ParticleSystem SpeedEffect;
 
+    // public static ParticleManager Instance
+    // {
+    //     get
+    //     {
+    //         if (_isQuitting) return null; // don't spawn during teardown
+
+    //         if (instance == null)
+    //         {
+    //             // Try to find the instance in the scene
+    //             instance = FindAnyObjectByType<ParticleManager>(FindObjectsInactive.Exclude);
+    //             if (instance == null)
+    //             {
+    //                 // If still null, log an error
+    //                 //Debug.LogError("Partcile Manager is not initialized. Make sure it's in the scene.");
+
+    //                 // Create one so callers never get null
+    //                 var go = new GameObject("ParticleManager");
+    //                 instance = go.AddComponent<ParticleManager>(); // Awake will run now
+
+    //             }
+    //         }
+    //         return instance;
+    //     }
+    // }
+    // [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    // private static void Bootstrap() => _ = Instance;
+
     void Awake()
     {
+        // Singleton pattern
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
@@ -55,6 +52,7 @@ public class ParticleManager : MonoBehaviour
         }
 
         instance = this;
+        DontDestroyOnLoad(gameObject);
 
         DyingEffects = new List<GameObject>();
 
@@ -83,7 +81,7 @@ public class ParticleManager : MonoBehaviour
             return;
         }
     }
-
+    
     public void RunningEffectDestory()
     {
         if (ActivateRunningEffect != null)

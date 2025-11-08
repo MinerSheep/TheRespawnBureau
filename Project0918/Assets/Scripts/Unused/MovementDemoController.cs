@@ -65,7 +65,7 @@ public class MovementDemoController : MonoBehaviour
         {
             rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
             jumpTimer += .05f;
-            ParticleManager.Instance.JumpEffectCall(transform.position);
+            ParticleManager.instance.JumpEffectCall(transform.position);
             isGrounded = false;
             isJumping = true;
         }
