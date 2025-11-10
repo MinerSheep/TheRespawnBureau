@@ -1,16 +1,16 @@
 # === Unity Git LFS Configuration ===
 
 # Track large binary assets with Git LFS
-*.unity      filter=lfs diff=lfs merge=lfs -text
-*.prefab     filter=lfs diff=lfs merge=lfs -text
-*.anim       filter=lfs diff=lfs merge=lfs -text
-*.controller filter=lfs diff=lfs merge=lfs -text
-*.asset      filter=lfs diff=lfs merge=lfs -text
-*.fbx        filter=lfs diff=lfs merge=lfs -text
-*.png        filter=lfs diff=lfs merge=lfs -text
-*.jpg        filter=lfs diff=lfs merge=lfs -text
-*.wav        filter=lfs diff=lfs merge=lfs -text
-*.mp3        filter=lfs diff=lfs merge=lfs -text
+Project0918/**/*.unity      filter=lfs diff=lfs merge=lfs -text
+Project0918/**/*.prefab     filter=lfs diff=lfs merge=lfs -text
+Project0918/**/*.anim       filter=lfs diff=lfs merge=lfs -text
+Project0918/**/*.controller filter=lfs diff=lfs merge=lfs -text
+Project0918/**/*.asset      filter=lfs diff=lfs merge=lfs -text
+Project0918/**/*.fbx        filter=lfs diff=lfs merge=lfs -text
+Project0918/**/*.png        filter=lfs diff=lfs merge=lfs -text
+Project0918/**/*.jpg        filter=lfs diff=lfs merge=lfs -text
+Project0918/**/*.wav        filter=lfs diff=lfs merge=lfs -text
+Project0918/**/*.mp3        filter=lfs diff=lfs merge=lfs -text
 
 # === Important: Do NOT track .meta files ===
 # Unity meta files must remain plain text for version control.
