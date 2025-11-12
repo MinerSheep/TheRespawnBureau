@@ -4,11 +4,6 @@
 Project0918/**/*.unity      filter=lfs diff=lfs merge=lfs -text
 Project0918/**/*.prefab     filter=lfs diff=lfs merge=lfs -text
 Project0918/**/*.anim       filter=lfs diff=lfs merge=lfs -text
-Project0918/**/*.controller filter=lfs diff=lfs merge=lfs -text
-Project0918/**/*.asset      filter=lfs diff=lfs merge=lfs -text
-Project0918/**/*.fbx        filter=lfs diff=lfs merge=lfs -text
-Project0918/**/*.png        filter=lfs diff=lfs merge=lfs -text
-Project0918/**/*.jpg        filter=lfs diff=lfs merge=lfs -text
 Project0918/**/*.wav        filter=lfs diff=lfs merge=lfs -text
 Project0918/**/*.mp3        filter=lfs diff=lfs merge=lfs -text
 
