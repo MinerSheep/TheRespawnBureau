@@ -10,8 +10,7 @@ class AutoLock : UnityEditor.AssetModificationProcessor
     // Called when assets are about to be opened for editing
     static string[] OnWillSaveAssets(string[] paths)
     {
-        string[] lockExtensions = { ".unity", ".prefab", ".anim", ".controller", ".asset",
-        ".fbx", ".png", ".jpg", ".wav", ".mp3" };
+        string[] lockExtensions = { ".unity", ".prefab", ".anim", ".controller", ".asset" };
 
         foreach (var path in paths)
         {
