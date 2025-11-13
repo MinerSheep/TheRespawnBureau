@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     public float DashCD = 4f;
     public float StaminaDrainRate = -0.1f;   // Amount removed from stamina per update
     public HeadTrigger HT;
+    public float iFrames;
 
 
     [HideInInspector] private InputBuffer inputBuffer;
@@ -49,7 +50,6 @@ public class PlayerController : MonoBehaviour
     // Private Variables
     [HideInInspector] public int pointValue;
     [HideInInspector] private float crouchingTimer;
-    [HideInInspector] public float iFrames;
     [HideInInspector] private bool firstJump = false;
     [HideInInspector] private bool JumpInput=false;
     [HideInInspector] private float JumpTimer = 0f;
