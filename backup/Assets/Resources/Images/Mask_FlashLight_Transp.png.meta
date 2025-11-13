@@ -1,0 +1,1547 @@
+fileFormatVersion: 2
+guid: d65161455fc0ddf4d8c9418c2426d129
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -537244041887354904
+    second: Mask_FlashLight_Transp_0
+  - first:
+      213: -8047116325614556833
+    second: Mask_FlashLight_Transp_1
+  - first:
+      213: -1111267280644956403
+    second: Mask_FlashLight_Transp_2
+  - first:
+      213: -2528064301755392859
+    second: Mask_FlashLight_Transp_3
+  - first:
+      213: 4457573398773374449
+    second: Mask_FlashLight_Transp_4
+  - first:
+      213: -6040095638061944147
+    second: Mask_FlashLight_Transp_5
+  - first:
+      213: 4549300919089246173
+    second: Mask_FlashLight_Transp_6
+  - first:
+      213: 8931180972217354446
+    second: Mask_FlashLight_Transp_7
+  - first:
+      213: -1763982728995294702
+    second: Mask_FlashLight_Transp_8
+  - first:
+      213: -194235776285351173
+    second: Mask_FlashLight_Transp_9
+  - first:
+      213: -992112774369663649
+    second: Mask_FlashLight_Transp_10
+  - first:
+      213: 6837801373566805053
+    second: Mask_FlashLight_Transp_11
+  - first:
+      213: 2186693670649281279
+    second: Mask_FlashLight_Transp_12
+  - first:
+      213: 2043178406565305082
+    second: Mask_FlashLight_Transp_13
+  - first:
+      213: -5902101721309405014
+    second: Mask_FlashLight_Transp_14
+  - first:
+      213: 8943797751984248757
+    second: Mask_FlashLight_Transp_15
+  - first:
+      213: 5675485960308798515
+    second: Mask_FlashLight_Transp_16
+  - first:
+      213: -6655271658020545522
+    second: Mask_FlashLight_Transp_17
+  - first:
+      213: -7982418603826634664
+    second: Mask_FlashLight_Transp_18
+  - first:
+      213: 8547248642192939212
+    second: Mask_FlashLight_Transp_19
+  - first:
+      213: -6304715827676800488
+    second: Mask_FlashLight_Transp_20
+  - first:
+      213: 4813899448069523326
+    second: Mask_FlashLight_Transp_21
+  - first:
+      213: 3742125372046342424
+    second: Mask_FlashLight_Transp_22
+  - first:
+      213: 5195074455908627721
+    second: Mask_FlashLight_Transp_23
+  - first:
+      213: 1202192809401419921
+    second: Mask_FlashLight_Transp_24
+  - first:
+      213: -8453582453652730827
+    second: Mask_FlashLight_Transp_25
+  - first:
+      213: 5782148722314998716
+    second: Mask_FlashLight_Transp_26
+  - first:
+      213: -2813446216728972310
+    second: Mask_FlashLight_Transp_27
+  - first:
+      213: 6699935330801436577
+    second: Mask_FlashLight_Transp_28
+  - first:
+      213: -4343102406978713364
+    second: Mask_FlashLight_Transp_29
+  - first:
+      213: -4117352136724978639
+    second: Mask_FlashLight_Transp_30
+  - first:
+      213: -7600975797905111844
+    second: Mask_FlashLight_Transp_31
+  - first:
+      213: 5181462776843324575
+    second: Mask_FlashLight_Transp_32
+  - first:
+      213: 2623039688405463127
+    second: Mask_FlashLight_Transp_33
+  - first:
+      213: -4384060395131456998
+    second: Mask_FlashLight_Transp_34
+  - first:
+      213: 651321210903849539
+    second: Mask_FlashLight_Transp_35
+  - first:
+      213: 6156536482985219265
+    second: Mask_FlashLight_Transp_36
+  - first:
+      213: 6681081134841208802
+    second: Mask_FlashLight_Transp_37
+  - first:
+      213: -7132526506773692908
+    second: Mask_FlashLight_Transp_38
+  - first:
+      213: -1421696528650733833
+    second: Mask_FlashLight_Transp_39
+  - first:
+      213: 6823009524146745368
+    second: Mask_FlashLight_Transp_40
+  - first:
+      213: 6842202392543466823
+    second: Mask_FlashLight_Transp_41
+  - first:
+      213: -3892859689849766794
+    second: Mask_FlashLight_Transp_42
+  - first:
+      213: -6373362494899944789
+    second: Mask_FlashLight_Transp_43
+  - first:
+      213: -2834207143042754285
+    second: Mask_FlashLight_Transp_44
+  - first:
+      213: 1819660169219893134
+    second: Mask_FlashLight_Transp_45
+  - first:
+      213: -6666604507260533741
+    second: Mask_FlashLight_Transp_46
+  - first:
+      213: -3602478139588110927
+    second: Mask_FlashLight_Transp_47
+  - first:
+      213: -2086823506914773001
+    second: Mask_FlashLight_Transp_48
+  - first:
+      213: -8138181201659781555
+    second: Mask_FlashLight_Transp_49
+  - first:
+      213: 7163409940519137339
+    second: Mask_FlashLight_Transp_50
+  - first:
+      213: 5431702433955830108
+    second: Mask_FlashLight_Transp_51
+  - first:
+      213: 192800588886616309
+    second: Mask_FlashLight_Transp_52
+  - first:
+      213: 7704283668237885264
+    second: Mask_FlashLight_Transp_53
+  - first:
+      213: 8592092563580956707
+    second: Mask_FlashLight_Transp_54
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_0
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 14
+        width: 1334
+        height: 934
+      alignment: 9
+      pivot: {x: 0.19612506, y: 0.577605}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8efeb9de3635b88f0800000000000000
+      internalID: -537244041887354904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_1
+      rect:
+        serializedVersion: 2
+        x: 1298
+        y: 938
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f596f795656e25090800000000000000
+      internalID: -8047116325614556833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_2
+      rect:
+        serializedVersion: 2
+        x: 1303
+        y: 920
+        width: 24
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0f94a6cb4cf390f0800000000000000
+      internalID: -1111267280644956403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_3
+      rect:
+        serializedVersion: 2
+        x: 1326
+        y: 944
+        width: 21
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ac168c69e28aecd0800000000000000
+      internalID: -2528064301755392859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_4
+      rect:
+        serializedVersion: 2
+        x: 1344
+        y: 958
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fd1e12936b7cdd30800000000000000
+      internalID: 4457573398773374449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_5
+      rect:
+        serializedVersion: 2
+        x: 1346
+        y: 952
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da27eebd4054d2ca0800000000000000
+      internalID: -6040095638061944147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_6
+      rect:
+        serializedVersion: 2
+        x: 1352
+        y: 871
+        width: 35
+        height: 85
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddf2caa251d522f30800000000000000
+      internalID: 4549300919089246173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_7
+      rect:
+        serializedVersion: 2
+        x: 1353
+        y: 959
+        width: 41
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec84eb956cde1fb70800000000000000
+      internalID: 8931180972217354446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_8
+      rect:
+        serializedVersion: 2
+        x: 1365
+        y: 957
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 212bf40dd031587e0800000000000000
+      internalID: -1763982728995294702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_9
+      rect:
+        serializedVersion: 2
+        x: 1368
+        y: 951
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf2e6df279fed4df0800000000000000
+      internalID: -194235776285351173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_10
+      rect:
+        serializedVersion: 2
+        x: 1390
+        y: 948
+        width: 18
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f55a19a20be4b32f0800000000000000
+      internalID: -992112774369663649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_11
+      rect:
+        serializedVersion: 2
+        x: 1391
+        y: 972
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d34a02cfe10c4ee50800000000000000
+      internalID: 6837801373566805053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_12
+      rect:
+        serializedVersion: 2
+        x: 1393
+        y: 938
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffa35afce42b85e10800000000000000
+      internalID: 2186693670649281279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_13
+      rect:
+        serializedVersion: 2
+        x: 1403
+        y: 945
+        width: 12
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afad2108fe3da5c10800000000000000
+      internalID: 2043178406565305082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_14
+      rect:
+        serializedVersion: 2
+        x: 1405
+        y: 950
+        width: 64
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa0a12151c5871ea0800000000000000
+      internalID: -5902101721309405014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_15
+      rect:
+        serializedVersion: 2
+        x: 1428
+        y: 950
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b755fd4ba0ce1c70800000000000000
+      internalID: 8943797751984248757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_16
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 939
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3343cef296063ce40800000000000000
+      internalID: 5675485960308798515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_17
+      rect:
+        serializedVersion: 2
+        x: 1461
+        y: 966
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0cd5fb20b9b3a3a0800000000000000
+      internalID: -6655271658020545522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_18
+      rect:
+        serializedVersion: 2
+        x: 1477
+        y: 972
+        width: 15
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 850a17e8290c83190800000000000000
+      internalID: -7982418603826634664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_19
+      rect:
+        serializedVersion: 2
+        x: 1478
+        y: 830
+        width: 90
+        height: 173
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc899d4da5ded9670800000000000000
+      internalID: 8547248642192939212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_20
+      rect:
+        serializedVersion: 2
+        x: 1499
+        y: 952
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81a9a89cb562188a0800000000000000
+      internalID: -6304715827676800488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_21
+      rect:
+        serializedVersion: 2
+        x: 1527
+        y: 918
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7702aafa086ec240800000000000000
+      internalID: 4813899448069523326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_22
+      rect:
+        serializedVersion: 2
+        x: 1532
+        y: 913
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8197cc10333bee330800000000000000
+      internalID: 3742125372046342424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_23
+      rect:
+        serializedVersion: 2
+        x: 1545
+        y: 959
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 905b32661bc981840800000000000000
+      internalID: 5195074455908627721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_24
+      rect:
+        serializedVersion: 2
+        x: 1546
+        y: 949
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19886eb9dfb0fa010800000000000000
+      internalID: 1202192809401419921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_25
+      rect:
+        serializedVersion: 2
+        x: 1546
+        y: 922
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53ccd822c87deaa80800000000000000
+      internalID: -8453582453652730827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_26
+      rect:
+        serializedVersion: 2
+        x: 1565
+        y: 956
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb37018b0a15e3050800000000000000
+      internalID: 5782148722314998716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_27
+      rect:
+        serializedVersion: 2
+        x: 1482
+        y: 773
+        width: 38
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae3f3397291a4f8d0800000000000000
+      internalID: -2813446216728972310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_28
+      rect:
+        serializedVersion: 2
+        x: 1477
+        y: 689
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a742828fa3fafc50800000000000000
+      internalID: 6699935330801436577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_29
+      rect:
+        serializedVersion: 2
+        x: 1510
+        y: 661
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce8c3e02f533ab3c0800000000000000
+      internalID: -4343102406978713364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_30
+      rect:
+        serializedVersion: 2
+        x: 1476
+        y: 648
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 134ef4bdb0a3cd6c0800000000000000
+      internalID: -4117352136724978639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_31
+      rect:
+        serializedVersion: 2
+        x: 1484
+        y: 644
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd4468398c8e38690800000000000000
+      internalID: -7600975797905111844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_32
+      rect:
+        serializedVersion: 2
+        x: 1493
+        y: 636
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9cc7a661f048e740800000000000000
+      internalID: 5181462776843324575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_33
+      rect:
+        serializedVersion: 2
+        x: 1469
+        y: 623
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 750b82bf2b8e66420800000000000000
+      internalID: 2623039688405463127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_34
+      rect:
+        serializedVersion: 2
+        x: 1492
+        y: 635
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a12b4526c40b823c0800000000000000
+      internalID: -4384060395131456998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_35
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 624
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34ae992c035f90900800000000000000
+      internalID: 651321210903849539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_36
+      rect:
+        serializedVersion: 2
+        x: 1473
+        y: 593
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c411130059607550800000000000000
+      internalID: 6156536482985219265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_37
+      rect:
+        serializedVersion: 2
+        x: 1492
+        y: 576
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ef16cde4e7f7bc50800000000000000
+      internalID: 6681081134841208802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_38
+      rect:
+        serializedVersion: 2
+        x: 1480
+        y: 553
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41e32bc8eec240d90800000000000000
+      internalID: -7132526506773692908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_39
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 565
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f6fd572a8e154ce0800000000000000
+      internalID: -1421696528650733833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_40
+      rect:
+        serializedVersion: 2
+        x: 1475
+        y: 549
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 810bfd9230330be50800000000000000
+      internalID: 6823009524146745368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_41
+      rect:
+        serializedVersion: 2
+        x: 1480
+        y: 540
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74591e013d264fe50800000000000000
+      internalID: 6842202392543466823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_42
+      rect:
+        serializedVersion: 2
+        x: 1480
+        y: 531
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67c3112ccb8c9f9c0800000000000000
+      internalID: -3892859689849766794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_43
+      rect:
+        serializedVersion: 2
+        x: 1479
+        y: 510
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba201b214944d87a0800000000000000
+      internalID: -6373362494899944789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_44
+      rect:
+        serializedVersion: 2
+        x: 1475
+        y: 480
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 319df03ae9fdaa8d0800000000000000
+      internalID: -2834207143042754285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_45
+      rect:
+        serializedVersion: 2
+        x: 1489
+        y: 453
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e87674e684bb04910800000000000000
+      internalID: 1819660169219893134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_46
+      rect:
+        serializedVersion: 2
+        x: 1480
+        y: 424
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 314c7b695867b73a0800000000000000
+      internalID: -6666604507260533741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_47
+      rect:
+        serializedVersion: 2
+        x: 1332
+        y: 58
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b59db2083d610ec0800000000000000
+      internalID: -3602478139588110927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_48
+      rect:
+        serializedVersion: 2
+        x: 1338
+        y: 59
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f7f861b31d1a03e0800000000000000
+      internalID: -2086823506914773001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_49
+      rect:
+        serializedVersion: 2
+        x: 1348
+        y: 60
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4e9e45a05f5f0f80800000000000000
+      internalID: -8138181201659781555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_50
+      rect:
+        serializedVersion: 2
+        x: 1358
+        y: 50
+        width: 11
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b303525336b896360800000000000000
+      internalID: 7163409940519137339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_51
+      rect:
+        serializedVersion: 2
+        x: 1367
+        y: 58
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c59df85d598416b40800000000000000
+      internalID: 5431702433955830108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_52
+      rect:
+        serializedVersion: 2
+        x: 1375
+        y: 58
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f8a2153d17fca200800000000000000
+      internalID: 192800588886616309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_53
+      rect:
+        serializedVersion: 2
+        x: 1387
+        y: 53
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05f992e5d2d1bea60800000000000000
+      internalID: 7704283668237885264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask_FlashLight_Transp_54
+      rect:
+        serializedVersion: 2
+        x: 1376
+        y: 46
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 320b489e9ae3d3770800000000000000
+      internalID: 8592092563580956707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 99222da26c415e74393cc2346edbb474
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Mask_FlashLight_Transp_0: -537244041887354904
+      Mask_FlashLight_Transp_1: -8047116325614556833
+      Mask_FlashLight_Transp_10: -992112774369663649
+      Mask_FlashLight_Transp_11: 6837801373566805053
+      Mask_FlashLight_Transp_12: 2186693670649281279
+      Mask_FlashLight_Transp_13: 2043178406565305082
+      Mask_FlashLight_Transp_14: -5902101721309405014
+      Mask_FlashLight_Transp_15: 8943797751984248757
+      Mask_FlashLight_Transp_16: 5675485960308798515
+      Mask_FlashLight_Transp_17: -6655271658020545522
+      Mask_FlashLight_Transp_18: -7982418603826634664
+      Mask_FlashLight_Transp_19: 8547248642192939212
+      Mask_FlashLight_Transp_2: -1111267280644956403
+      Mask_FlashLight_Transp_20: -6304715827676800488
+      Mask_FlashLight_Transp_21: 4813899448069523326
+      Mask_FlashLight_Transp_22: 3742125372046342424
+      Mask_FlashLight_Transp_23: 5195074455908627721
+      Mask_FlashLight_Transp_24: 1202192809401419921
+      Mask_FlashLight_Transp_25: -8453582453652730827
+      Mask_FlashLight_Transp_26: 5782148722314998716
+      Mask_FlashLight_Transp_27: -2813446216728972310
+      Mask_FlashLight_Transp_28: 6699935330801436577
+      Mask_FlashLight_Transp_29: -4343102406978713364
+      Mask_FlashLight_Transp_3: -2528064301755392859
+      Mask_FlashLight_Transp_30: -4117352136724978639
+      Mask_FlashLight_Transp_31: -7600975797905111844
+      Mask_FlashLight_Transp_32: 5181462776843324575
+      Mask_FlashLight_Transp_33: 2623039688405463127
+      Mask_FlashLight_Transp_34: -4384060395131456998
+      Mask_FlashLight_Transp_35: 651321210903849539
+      Mask_FlashLight_Transp_36: 6156536482985219265
+      Mask_FlashLight_Transp_37: 6681081134841208802
+      Mask_FlashLight_Transp_38: -7132526506773692908
+      Mask_FlashLight_Transp_39: -1421696528650733833
+      Mask_FlashLight_Transp_4: 4457573398773374449
+      Mask_FlashLight_Transp_40: 6823009524146745368
+      Mask_FlashLight_Transp_41: 6842202392543466823
+      Mask_FlashLight_Transp_42: -3892859689849766794
+      Mask_FlashLight_Transp_43: -6373362494899944789
+      Mask_FlashLight_Transp_44: -2834207143042754285
+      Mask_FlashLight_Transp_45: 1819660169219893134
+      Mask_FlashLight_Transp_46: -6666604507260533741
+      Mask_FlashLight_Transp_47: -3602478139588110927
+      Mask_FlashLight_Transp_48: -2086823506914773001
+      Mask_FlashLight_Transp_49: -8138181201659781555
+      Mask_FlashLight_Transp_5: -6040095638061944147
+      Mask_FlashLight_Transp_50: 7163409940519137339
+      Mask_FlashLight_Transp_51: 5431702433955830108
+      Mask_FlashLight_Transp_52: 192800588886616309
+      Mask_FlashLight_Transp_53: 7704283668237885264
+      Mask_FlashLight_Transp_54: 8592092563580956707
+      Mask_FlashLight_Transp_6: 4549300919089246173
+      Mask_FlashLight_Transp_7: 8931180972217354446
+      Mask_FlashLight_Transp_8: -1763982728995294702
+      Mask_FlashLight_Transp_9: -194235776285351173
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
