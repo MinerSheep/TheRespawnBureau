@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 public static class PlayerEvents
@@ -40,11 +41,13 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public CapsuleCollider2D cC;
     [HideInInspector] public bool Jumping = false;
     [HideInInspector] public bool Crouching = false;
+    [HideInInspector] public bool Attacking = false; // If this is on, the sword is swinging!
 
     [Header("References")]
     public GroundDetection GD;
     public HUD hud;
     public FlashLight flashlight;
+    public Volume attackVol;  // The "damage zone" used when attacking
 
     // Private Variables
     [HideInInspector] public int pointValue;
@@ -57,6 +60,8 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] private float DashTimer = 0f;
     [HideInInspector] private float DashCDTimer = 0f;
     [HideInInspector] private bool dashing=false;
+    [HideInInspector] private float AttackTimer = 0f;   // Counts up while attacking
+    [HideInInspector] private float AttackTimerEnd = 0.5f;   // How long should the attack volume/animation 
 
     public void Invincible()
     {
@@ -103,6 +108,31 @@ public class PlayerController : MonoBehaviour
         if (!inputBuffer.Consume("Jump"))
         {
             JumpInput = false;
+        }
+    }
+    // Activates a damage volume in front of the player that will deactivate after a set amount of time
+    public void Attack()
+    {
+        // Check if the volume exists/was set correctly
+        if (attackVol)
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                Attacking = true;
+                attackVol.enabled = true;
+                Debug.Log("Attack!");
+            }
+            if (Attacking)
+            {
+                AttackTimer += Time.deltaTime;
+                if (AttackTimer > AttackTimerEnd)
+                {
+                    Debug.Log("Attack Ended");
+                    Attacking = false;
+                    attackVol.enabled = false;
+                    AttackTimer = 0f;
+                }
+            }
         }
     }
     // Set/reset functions for modifying JumpForce
@@ -225,7 +255,7 @@ public class PlayerController : MonoBehaviour
         Crouch();
         ParticleManager.instance.SetRunningEffectPosition(transform.position);
         Dash();
-        
+        Attack();
         //flipping flashlight by flip the sprite mask
         //if (inputBuffer.Consume("FlipFlashlight"))
         //    flashlight?.flip();

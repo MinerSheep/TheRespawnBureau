@@ -62,6 +62,10 @@ public class PlayerAnimation : MonoBehaviour
         {
             AT.SetInteger("PlayerState", 2);
         }
+        else if (pC.Attacking)
+        {
+            AT.SetInteger("PlayerState", 4);
+        }
         else if (rB.linearVelocityX > 0.5f || rB.linearVelocityX < -0.5f)
         {
             AT.SetInteger("PlayerState", 1);

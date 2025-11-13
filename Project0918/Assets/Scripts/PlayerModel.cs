@@ -7,7 +7,7 @@ public class PlayerModel : MonoBehaviour
     public int PlayerModelStats = 0;//Player Model Stats 0=Standing;1=Crouching; 2=Jumping;
 
     [Header("References")]
-    public GameObject StandModel, CrouchModel, JumpModel;
+    public GameObject StandModel, CrouchModel, JumpModel, AttackModel;
 
     public void ChangePlayerModelStats()
     {
@@ -16,18 +16,28 @@ public class PlayerModel : MonoBehaviour
             StandModel.SetActive(true);
             CrouchModel.SetActive(false);
             JumpModel.SetActive(false);
+            AttackModel.SetActive(false);
         }
         if (PlayerModelStats == 1)
         {
             StandModel.SetActive(false);
             CrouchModel.SetActive(true);
             JumpModel.SetActive(false);
+            AttackModel.SetActive(false);
         }
         if (PlayerModelStats == 2)
         {
             StandModel.SetActive(false);
             CrouchModel.SetActive(false);
             JumpModel.SetActive(true);
+            AttackModel.SetActive(false);
+        }
+        if (PlayerModelStats == 3)
+        {
+            StandModel.SetActive(false);
+            CrouchModel.SetActive(false);
+            JumpModel.SetActive(false);
+            AttackModel.SetActive(true);
         }
     }
 
@@ -37,5 +47,6 @@ public class PlayerModel : MonoBehaviour
         StandModel = transform.GetChild(0).gameObject;
         CrouchModel = transform.GetChild(1).gameObject;
         JumpModel = transform.GetChild(2).gameObject;
+        AttackModel = transform.GetChild(3).gameObject;
     }
 }
