@@ -18,6 +18,9 @@ public class InputBuffer : MonoBehaviour
         controls.Player.FlipFlashlight.performed += ctx => AddToBuffer("FlipFlashlight");
         controls.Player.Crouch.performed += ctx => AddToBuffer("Crouch");
 
+        controls.Player.GeneralInput1.performed += ctx => AddToBuffer("GeneralInput1");
+        controls.Player.GeneralInput1.performed += ctx => AddToBuffer("GeneralInput2");
+
         // Holding keys
         heldBuffer["Jump"] = new HeldInput();
         controls.Player.Jump.performed += ctx => StartHold("Jump");

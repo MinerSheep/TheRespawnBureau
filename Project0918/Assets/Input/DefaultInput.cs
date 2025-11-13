@@ -127,6 +127,24 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GeneralInput1"",
+                    ""type"": ""Button"",
+                    ""id"": ""560e9685-7d14-4fb6-bce7-5e3f64890c89"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GeneralInput2"",
+                    ""type"": ""Button"",
+                    ""id"": ""ec8e2073-5414-489e-b2af-a0f5ad49eada"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -173,6 +191,28 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7d15253d-44f1-4dbe-9d53-8db85535eb25"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GeneralInput1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""407bf39e-d861-4cdf-8e03-a928fb90fdac"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GeneralInput2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -185,6 +225,8 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_GeneralInput1 = m_Player.FindAction("GeneralInput1", throwIfNotFound: true);
+        m_Player_GeneralInput2 = m_Player.FindAction("GeneralInput2", throwIfNotFound: true);
     }
 
     ~@DefaultInput()
@@ -269,6 +311,8 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_GeneralInput1;
+    private readonly InputAction m_Player_GeneralInput2;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -296,6 +340,14 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Pause".
         /// </summary>
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/GeneralInput1".
+        /// </summary>
+        public InputAction @GeneralInput1 => m_Wrapper.m_Player_GeneralInput1;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/GeneralInput2".
+        /// </summary>
+        public InputAction @GeneralInput2 => m_Wrapper.m_Player_GeneralInput2;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -334,6 +386,12 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @GeneralInput1.started += instance.OnGeneralInput1;
+            @GeneralInput1.performed += instance.OnGeneralInput1;
+            @GeneralInput1.canceled += instance.OnGeneralInput1;
+            @GeneralInput2.started += instance.OnGeneralInput2;
+            @GeneralInput2.performed += instance.OnGeneralInput2;
+            @GeneralInput2.canceled += instance.OnGeneralInput2;
         }
 
         /// <summary>
@@ -357,6 +415,12 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @GeneralInput1.started -= instance.OnGeneralInput1;
+            @GeneralInput1.performed -= instance.OnGeneralInput1;
+            @GeneralInput1.canceled -= instance.OnGeneralInput1;
+            @GeneralInput2.started -= instance.OnGeneralInput2;
+            @GeneralInput2.performed -= instance.OnGeneralInput2;
+            @GeneralInput2.canceled -= instance.OnGeneralInput2;
         }
 
         /// <summary>
@@ -425,5 +489,19 @@ public partial class @DefaultInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPause(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "GeneralInput1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnGeneralInput1(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "GeneralInput2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnGeneralInput2(InputAction.CallbackContext context);
     }
 }
