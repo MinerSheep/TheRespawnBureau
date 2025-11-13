@@ -32,9 +32,14 @@ public class Goal : MonoBehaviour
             // Win condition
             finished = true;
 
-            if (CollectionManager.instance != null)
+            if (AudioManager.instance != null)
             {
-                CollectionManager.instance.SaveScore();
+                AudioManager.instance.PlaySound("victory");
+            }
+
+            if (ScoreManager.instance != null)
+            {
+                ScoreManager.instance.SaveScore();
             }
 
             for (int i = 0; i < 100; i++)

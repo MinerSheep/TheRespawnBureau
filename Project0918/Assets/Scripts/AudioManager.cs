@@ -6,7 +6,7 @@
 
 using UnityEngine;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Collections;
 
 public class AudioManager : MonoBehaviour
 {
@@ -23,12 +23,20 @@ public class AudioManager : MonoBehaviour
     }
 
     [Header("Audio Settings")]
-    // public List<Sound> music = new List<Sound>();
+    public float MasterVolume = 1f;
+    public float MusicVolume = 0.5f;
+    public float SoundVolume = 0.5f;
+
+    public List<Sound> music = new List<Sound>();
     public List<Sound> sounds = new List<Sound>();
+    public float soundEffectPitchRange = 0.15f;
 
-
+    private Dictionary<string, Sound> musicDict;
     private Dictionary<string, Sound> soundDict;
+    private AudioSource musicSource;
     [SerializeField] private AudioSource mainSource;  // usually player source
+
+    private Coroutine fadeOutCoroutine;
 
     private void Awake()
     {
@@ -42,6 +50,14 @@ public class AudioManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
 
+        musicDict = new Dictionary<string, Sound>();
+        foreach (Sound m in music)
+        {
+            if (m.clip == null) continue;
+            if (!musicDict.ContainsKey(m.name))
+                musicDict.Add(m.name, m);
+        }
+
         soundDict = new Dictionary<string, Sound>();
         foreach (Sound s in sounds)
         {
@@ -50,6 +66,7 @@ public class AudioManager : MonoBehaviour
                 soundDict.Add(s.name, s);
         }
 
+        musicSource = GetComponent<AudioSource>();
         mainSource = gameObject.AddComponent<AudioSource>();
     }
 
@@ -61,23 +78,94 @@ public class AudioManager : MonoBehaviour
             transform.position = go.transform.position;
     }
 
-    public void Play(string name)
+    public void SetMasterVolume(float value)
+    {
+        MasterVolume = value;
+    }
+
+    public void SetMusicVolume(float value)
+    {
+        MusicVolume = value;
+    }
+    
+    public void SetSFXVolume(float value)
+    {
+        SoundVolume = value;
+    }
+
+    public void PlayMusic(string name)
+    {
+        if (fadeOutCoroutine != null)
+        {
+            StopCoroutine(fadeOutCoroutine);
+            fadeOutCoroutine = null;
+        }
+
+        if (!musicDict.TryGetValue(name, out Sound m))
+        {
+            Debug.LogWarning($"AudioManager: Sound '{name}' not found!");
+            return;
+        }
+
+        musicSource.clip = m.clip;
+        musicSource.volume = m.volume * MusicVolume * MasterVolume;
+        musicSource.pitch = m.pitch;
+        musicSource.loop = m.loop;
+        musicSource.Play();
+    }
+
+    public void StopMusic()
+    {
+        if (musicSource && musicSource.isPlaying)
+        {
+            if (fadeOutCoroutine != null)
+            {
+                StopCoroutine(fadeOutCoroutine);
+                fadeOutCoroutine = null;
+            }
+            else
+            {
+                fadeOutCoroutine = StartCoroutine(FadeOutMusic());
+            }
+        }
+    }
+
+    private IEnumerator FadeOutMusic(float duration = 1f)
+    {
+        float startVolume = musicSource.volume;
+
+        while (musicSource.volume > 0)
+        {
+            musicSource.volume -= startVolume * Time.deltaTime / duration;
+            yield return null;
+        }
+
+        musicSource.Stop();
+        musicSource.volume = startVolume; // reset for next playback
+
+        fadeOutCoroutine = null;
+    }
+
+    public void PlaySound(string name, bool pitchVariation = true)
     {
         if (!soundDict.TryGetValue(name, out Sound s))
         {
             Debug.LogWarning($"AudioManager: Sound '{name}' not found!");
             return;
         }
+        if (pitchVariation && s.pitch > soundEffectPitchRange && s.pitch < 3 - soundEffectPitchRange)
+            mainSource.pitch = Random.Range(s.pitch - soundEffectPitchRange, s.pitch + soundEffectPitchRange);
+        else
+            mainSource.pitch = s.pitch;
 
-        mainSource.pitch = s.pitch;
-        mainSource.PlayOneShot(s.clip, s.volume);
+        mainSource.PlayOneShot(s.clip, s.volume * SoundVolume * MasterVolume);
 
         mainSource.clip = s.clip;
         mainSource.Play();
 
     }
 
-    public void Play(string name, AudioSource source)
+    public void PlaySound(string name, AudioSource source, bool pitchVariation = true)
     {
         if (!soundDict.TryGetValue(name, out Sound s))
         {
@@ -85,9 +173,13 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
+        if (pitchVariation && s.pitch > soundEffectPitchRange && s.pitch < 3 - soundEffectPitchRange)
+            source.pitch = Random.Range(s.pitch - soundEffectPitchRange, s.pitch + soundEffectPitchRange);
+        else
+            source.pitch = s.pitch;
+
         source.clip = s.clip;
-        source.volume = s.volume;
-        source.pitch = s.pitch;
+        source.volume = s.volume * SoundVolume * MasterVolume;
         source.loop = s.loop;
         source.Play();
     }
