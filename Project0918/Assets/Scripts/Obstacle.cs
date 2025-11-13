@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
-    public int DamageAmount;
+    public int DamageAmount=1;
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))

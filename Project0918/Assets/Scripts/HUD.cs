@@ -54,6 +54,7 @@ public class HUD : MonoBehaviour
             //mobile hud
             AddRemoveHudElements("MobileLayout", "Desktop");
         }
+        UpdateHealthAmount();
     }
     
     public void AddRemoveHudElements(string add, string remove)
