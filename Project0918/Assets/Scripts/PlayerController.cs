@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
        }
         if (!inputBuffer.Consume("Jump"))
         {
-            JumpInput=false;
+            JumpInput = false;
         }
     }
     // Set/reset functions for modifying JumpForce
