@@ -28,13 +28,14 @@ public class HUD : MonoBehaviour
 
     [Header("Health")]
     public TextMeshProUGUI healthText;
-    public int maxHp;
-    public int hp;
+    public Health PlayerHP;
 
     [Header("Coins")]
     public TextMeshProUGUI coinsText;
     public int coins;
-    
+
+
+
     private void Start()
     {
         StartX = Player != null ? Player.transform.position.x : 0.0f;
@@ -45,7 +46,7 @@ public class HUD : MonoBehaviour
         if (DeviceDetector.IsDesktop)
         {
             //desktop hud
-            AddRemoveHudElements("Desktop", "MobileLayout");
+            AddRemoveHudElements("Desktop", "Mobile");
 
         }
         else if (DeviceDetector.IsMobile)
@@ -70,7 +71,6 @@ public class HUD : MonoBehaviour
     private void Update()
     {
         //UpdateProgress();
-        UpdateHealthAmount();
         UpdateCoinsAmount();
         UpdateStamina();
     }
@@ -111,13 +111,13 @@ public class HUD : MonoBehaviour
             // TODO: Remove the LoadScene below once we have PlayerDeath implemented
             PlayerEvents.OnPlayerDeath?.Invoke();
         }
+    
     }
         
 
     public void UpdateHealthAmount()
     {
-        hp = Mathf.Clamp(hp, 0, maxHp);
-        healthText.text = hp.ToString();
+        healthText.text = PlayerHP.CurrentHP.ToString();
     }
 
     public void UpdateCoinsAmount()

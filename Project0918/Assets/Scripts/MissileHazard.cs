@@ -7,6 +7,7 @@ public class MissileHazard : MonoBehaviour
     [SerializeField] private bool passedPlayer;
     [SerializeField] private bool damagedPlayer;
     public int projectileHealth;
+    public int DamageAmount;
     private Rigidbody2D rb;
     private Transform tf;
 
@@ -34,8 +35,7 @@ public class MissileHazard : MonoBehaviour
     {
         if (other.CompareTag("Player") && !damagedPlayer)
         {
-            PlayerController playercontroller = other.GetComponent<PlayerController>();
-            playercontroller.LoseHealth();
+            other.gameObject.GetComponent<Health>().TakeDamage(DamageAmount);
 
             Debug.Log("Missile hit landed");
             damagedPlayer = true;

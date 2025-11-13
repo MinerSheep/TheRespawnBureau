@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class FallingHazard : MonoBehaviour
 {
+    public int DamageAmount;
     [SerializeField] private bool isFalling;
     [SerializeField] private bool damagedPlayer;
     private Rigidbody2D rb;
@@ -31,7 +32,7 @@ public class FallingHazard : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && !damagedPlayer)
         {
-            playerScript.LoseHealth();
+            collision.gameObject.GetComponent<Health>().TakeDamage(DamageAmount);
 
             Debug.Log("Falling hit landed");
             destroyHazard();
