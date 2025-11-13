@@ -1,0 +1,8 @@
+Run it by Ryder before you make a new folder
+
+Backend: Database Server
+Data: Scriptable Objects
+Editor: Unity Editor Scripts
+Prefabs: All Prefabs go here
+Resources: Holds images, sounds, tiles, and other assets that may be loaded in a C# script
+Scripts: All scripts go here
