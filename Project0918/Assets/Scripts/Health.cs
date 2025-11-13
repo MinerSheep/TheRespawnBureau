@@ -8,7 +8,7 @@ public class Health : MonoBehaviour
     public bool IsPlayer = true;
     public HUD PlayerHud;
     private PlayerController pC;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // Start is called once before the first execution of Update after the MonoBehaviour is createdk
     void Start()
     {
         if(gameObject.TryGetComponent<PlayerController>(out PlayerController pC))

@@ -115,20 +115,6 @@ public class HUD : MonoBehaviour
     }
         
 
-    public void UpdateStamina()
-    {
-        StaminaAmount -= Time.deltaTime * StaminaLossRate;
-        StaminaAmount = Mathf.Clamp(StaminaAmount, 0f, StaminaMaximum);
-        StaminaBarImage.fillAmount = StaminaAmount / StaminaMaximum;
-
-        if (StaminaAmount <= 0.0f)
-        {
-            // TODO: Remove the LoadScene below once we have PlayerDeath implemented
-            PlayerEvents.OnPlayerDeath?.Invoke();
-        }
-    }
-        
-
     public void UpdateHealthAmount()
     {
         healthText.text = PlayerHP.CurrentHP.ToString();
