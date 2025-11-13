@@ -34,6 +34,20 @@ public class CollectibleLogic : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") == true)
         {
+            // Currently calls a game object called "Audio Manager" and sends a play signal
+            if (AudioManager.instance != null)
+            {
+                switch (type)
+                {
+                    case CollectibleType.Coin:
+                        AudioManager.instance.PlaySound("coin_collect");
+                        break;
+                    default:
+                        AudioManager.instance.PlaySound("powerup");
+                        break;
+                }
+            }
+            
             // Currently this adds points to the Player object by finding the tag "Player"
             // then adds the value of this collectible to the player's score
             if (type == CollectibleType.Coin && value > 0)
@@ -48,13 +62,6 @@ public class CollectibleLogic : MonoBehaviour
                 {
                     playerController.pointValue += value;
                 }
-
-                // Currently calls a game object called "Audio Manager" and sends a play signal
-                if (AudioManager.instance != null)
-                {
-                    AudioManager.instance.PlaySound("coin_collect");
-                }
-
             }
 
             // Give battery if battery value

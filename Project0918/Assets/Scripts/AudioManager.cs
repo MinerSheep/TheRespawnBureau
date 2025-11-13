@@ -23,8 +23,13 @@ public class AudioManager : MonoBehaviour
     }
 
     [Header("Audio Settings")]
+    public float MasterVolume = 1f;
+    public float MusicVolume = 0.5f;
+    public float SoundVolume = 0.5f;
+
     public List<Sound> music = new List<Sound>();
     public List<Sound> sounds = new List<Sound>();
+    public float soundEffectPitchRange = 0.15f;
 
     private Dictionary<string, Sound> musicDict;
     private Dictionary<string, Sound> soundDict;
@@ -73,20 +78,19 @@ public class AudioManager : MonoBehaviour
             transform.position = go.transform.position;
     }
 
+    public void SetMasterVolume(float value)
+    {
+        MasterVolume = value;
+    }
+
     public void SetMusicVolume(float value)
     {
-        foreach (var music in musicDict)
-        {
-            music.Value.volume = value;
-        }
+        MusicVolume = value;
     }
     
     public void SetSFXVolume(float value)
     {
-        foreach (var sound in soundDict)
-        {
-            sound.Value.volume = value;
-        }
+        SoundVolume = value;
     }
 
     public void PlayMusic(string name)
@@ -104,7 +108,7 @@ public class AudioManager : MonoBehaviour
         }
 
         musicSource.clip = m.clip;
-        musicSource.volume = m.volume;
+        musicSource.volume = m.volume * MusicVolume * MasterVolume;
         musicSource.pitch = m.pitch;
         musicSource.loop = m.loop;
         musicSource.Play();
@@ -112,7 +116,7 @@ public class AudioManager : MonoBehaviour
 
     public void StopMusic()
     {
-        if (musicSource.isPlaying)
+        if (musicSource && musicSource.isPlaying)
         {
             if (fadeOutCoroutine != null)
             {
@@ -142,23 +146,26 @@ public class AudioManager : MonoBehaviour
         fadeOutCoroutine = null;
     }
 
-    public void PlaySound(string name)
+    public void PlaySound(string name, bool pitchVariation = true)
     {
         if (!soundDict.TryGetValue(name, out Sound s))
         {
             Debug.LogWarning($"AudioManager: Sound '{name}' not found!");
             return;
         }
+        if (pitchVariation && s.pitch > soundEffectPitchRange && s.pitch < 3 - soundEffectPitchRange)
+            mainSource.pitch = Random.Range(s.pitch - soundEffectPitchRange, s.pitch + soundEffectPitchRange);
+        else
+            mainSource.pitch = s.pitch;
 
-        mainSource.pitch = s.pitch;
-        mainSource.PlayOneShot(s.clip, s.volume);
+        mainSource.PlayOneShot(s.clip, s.volume * SoundVolume * MasterVolume);
 
         mainSource.clip = s.clip;
         mainSource.Play();
 
     }
 
-    public void PlaySound(string name, AudioSource source)
+    public void PlaySound(string name, AudioSource source, bool pitchVariation = true)
     {
         if (!soundDict.TryGetValue(name, out Sound s))
         {
@@ -166,9 +173,13 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
+        if (pitchVariation && s.pitch > soundEffectPitchRange && s.pitch < 3 - soundEffectPitchRange)
+            source.pitch = Random.Range(s.pitch - soundEffectPitchRange, s.pitch + soundEffectPitchRange);
+        else
+            source.pitch = s.pitch;
+
         source.clip = s.clip;
-        source.volume = s.volume;
-        source.pitch = s.pitch;
+        source.volume = s.volume * SoundVolume * MasterVolume;
         source.loop = s.loop;
         source.Play();
     }

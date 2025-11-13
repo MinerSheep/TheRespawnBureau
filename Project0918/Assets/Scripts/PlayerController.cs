@@ -93,6 +93,7 @@ public class PlayerController : MonoBehaviour
             JumpTimer = JumpHoldTime;
             JumpInput = true;
             AudioManager.instance.PlaySound("jump");
+            ParticleManager.instance.JumpEffectCall(transform.position);
         }
         else if (Jumping == true)
         {
@@ -139,6 +140,8 @@ public class PlayerController : MonoBehaviour
             {
                 firstJump = false;
             }
+            AudioManager.instance.PlaySound("jump");
+            ParticleManager.instance.JumpEffectCall(transform.position);
         }
     }
 
@@ -149,6 +152,7 @@ public class PlayerController : MonoBehaviour
             //PM.PlayerModelStats = 1;
             //PM.ChangePlayerModelStats();
             Crouching = true;
+            ParticleManager.instance.RunningEffectDestory();
             cC.size = new Vector2(1, 1);
             AudioManager.instance.PlaySound("crouch");
         }
@@ -164,6 +168,7 @@ public class PlayerController : MonoBehaviour
             {
                 crouchingTimer = 0;
                 Crouching = false;
+                ParticleManager.instance.RunningEffectCall(transform.position);
                 cC.size = new Vector2(1, 2);
 
                 //PM.PlayerModelStats = 0;
@@ -218,7 +223,9 @@ public class PlayerController : MonoBehaviour
         }
         Jump();
         Crouch();
+        ParticleManager.instance.SetRunningEffectPosition(transform.position);
         Dash();
+        
         //flipping flashlight by flip the sprite mask
         //if (inputBuffer.Consume("FlipFlashlight"))
         //    flashlight?.flip();
@@ -263,4 +270,6 @@ public class PlayerController : MonoBehaviour
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+
 }
