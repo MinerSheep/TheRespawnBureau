@@ -25,10 +25,13 @@ public class Health : MonoBehaviour
     {
         if (IsPlayer)
         {
-            CurrentHP = Mathf.Clamp(CurrentHP - DamageAmount, MinHP, MaxHP);
-            HPUpdate();
-            PlayerHud.UpdateHealthAmount();
-            Debug.Log(DamageAmount);
+            if(pC.iFrames>0)
+            {
+                CurrentHP = Mathf.Clamp(CurrentHP - DamageAmount, MinHP, MaxHP);
+                HPUpdate();
+                PlayerHud.UpdateHealthAmount();
+                Debug.Log(DamageAmount);
+            }
         }
         else if (!IsPlayer)
         {
