@@ -52,18 +52,18 @@ MonoBehaviour:
   music:
   - name: infinite_runner
     clip: {fileID: 8300000, guid: c4eed7e70100b5242b32a18a43f783b9, type: 3}
-    volume: 0.5
+    volume: 0.35
     pitch: 1
     loop: 1
   sounds:
   - name: coin_collect
     clip: {fileID: 8300000, guid: 048eef3ce13c069448c3e901dbee44fa, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     loop: 0
   - name: jump
     clip: {fileID: 8300000, guid: 44cd1241f14f835459fd8e81f7ca3cf7, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     loop: 0
   - name: crouch
