@@ -9,15 +9,22 @@ public class MenuButtons : MonoBehaviour
     public GameObject PlayPanel;
     public GameObject OptionsPanel;
     public GameObject OnlinePanel;
+    public GameObject OptionsPanelSliderContent;
+
 
     private GameObject ActivePanel = null;
 
-    void Start()
+    void OnEnable()
     {
-        if (OptionsPanel != null && AudioManager.instance != null)
+        if (OptionsPanelSliderContent != null && AudioManager.instance != null)
         {
-            OptionsPanel.transform.Find("Music").GetComponent<Slider>().onValueChanged.AddListener(AudioManager.instance.SetMusicVolume);
-            OptionsPanel.transform.Find("Sound").GetComponent<Slider>().onValueChanged.AddListener(AudioManager.instance.SetSFXVolume);
+            OptionsPanelSliderContent.transform.Find("Master").GetComponent<Slider>().onValueChanged.AddListener(AudioManager.instance.SetMasterVolume);
+            OptionsPanelSliderContent.transform.Find("Music").GetComponent<Slider>().onValueChanged.AddListener(AudioManager.instance.SetMusicVolume);
+            OptionsPanelSliderContent.transform.Find("Sound").GetComponent<Slider>().onValueChanged.AddListener(AudioManager.instance.SetSFXVolume);
+
+            OptionsPanelSliderContent.transform.Find("Master").GetComponent<Slider>().value = AudioManager.instance.MasterVolume;
+            OptionsPanelSliderContent.transform.Find("Music").GetComponent<Slider>().value = AudioManager.instance.MusicVolume;
+            OptionsPanelSliderContent.transform.Find("Sound").GetComponent<Slider>().value = AudioManager.instance.SoundVolume;
         }
     }
     
