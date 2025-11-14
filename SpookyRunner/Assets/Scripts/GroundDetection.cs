@@ -12,10 +12,11 @@ public class GroundDetection : MonoBehaviour
     void Update()
     {
         Grounded = GroundCount > 0;
+
         if (Grounded)
-          ParticleManager.instance.RunningEffectCall(transform.position);
+            ParticleManager.instance.RunningEffectCall(transform.position);
         else
-          ParticleManager.instance.RunningEffectDestory();
+            ParticleManager.instance.RunningEffectDestory();
           
         if(PC.Jumping)
         {
@@ -30,6 +31,7 @@ public class GroundDetection : MonoBehaviour
     {
         if (collision.CompareTag("Ground"))
         {
+            Debug.Log("Collide with " + collision.name);
             GroundCount++;
         }
     }

@@ -54,7 +54,6 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public int pointValue;
     [HideInInspector] private float crouchingTimer;
     [HideInInspector] private bool firstJump = false;
-    [HideInInspector] private bool JumpInput=false;
     [HideInInspector] private float JumpTimer = 0f;
     [HideInInspector] private bool doublejump = false;
     [HideInInspector] private float DashTimer = 0f;
@@ -84,7 +83,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        if (Jumping == false && GD.Grounded && inputBuffer.Consume("Jump")&&!HT.IsTriggering&&!JumpInput)
+        if (Jumping == false && GD.Grounded && inputBuffer.Consume("Jump") && !HT.IsTriggering)
         {
             RB.linearVelocity = new Vector2(RB.linearVelocity.x, 0);
             RB.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
@@ -96,7 +95,6 @@ public class PlayerController : MonoBehaviour
             firstJump = true;
             doublejump = true;
             JumpTimer = JumpHoldTime;
-            JumpInput = true;
             AudioManager.instance.PlaySound("jump");
             ParticleManager.instance.JumpEffectCall(transform.position);
         }
@@ -104,10 +102,6 @@ public class PlayerController : MonoBehaviour
         {
             JumpHold();
             DoubleJump();
-       }
-        if (!inputBuffer.Consume("Jump"))
-        {
-            JumpInput = false;
         }
     }
     // Activates a damage volume in front of the player that will deactivate after a set amount of time
@@ -170,8 +164,6 @@ public class PlayerController : MonoBehaviour
             {
                 firstJump = false;
             }
-            AudioManager.instance.PlaySound("jump");
-            ParticleManager.instance.JumpEffectCall(transform.position);
         }
     }
 
@@ -273,8 +265,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private bool dead = false;
     private void PlayerDeath()
     {
+        if (dead) return;
+        dead = true;
+
         RunnerScene[] scenes = FindObjectsByType<RunnerScene>(FindObjectsSortMode.None);
 
         foreach (var scene in scenes)
