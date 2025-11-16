@@ -12125,15 +12125,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   easyChunks:
-  - {fileID: 11400000, guid: 620a58d3748fec14495c32f7f235d1c3, type: 2}
-  - {fileID: 11400000, guid: 040028e8175ef4e47874937bff317f4b, type: 2}
-  - {fileID: 11400000, guid: b1586be20337bed479ffbc92415f70d6, type: 2}
+  - {fileID: 11400000, guid: 519b78a2e83942e449d242a72e0331d6, type: 2}
+  - {fileID: 11400000, guid: 2e3849d88a436764cab74ee7e5ee383c, type: 2}
+  - {fileID: 11400000, guid: 24db198c87238e242b9e1e344ef2a6df, type: 2}
+  - {fileID: 11400000, guid: e7954300fe069194198b880e7da18637, type: 2}
   mediumChunks:
-  - {fileID: 11400000, guid: d0b3989f7e1d9cb4a9ff236e0013705a, type: 2}
-  - {fileID: 11400000, guid: 2349469561f67bd469ab542b72cdce60, type: 2}
+  - {fileID: 11400000, guid: 82f58f53e4378f249a42f05598845f69, type: 2}
+  - {fileID: 11400000, guid: c760bc45835c0b040aa9179ff6b08e72, type: 2}
+  - {fileID: 11400000, guid: e9e85b81dc84baa43859dc89ae720de9, type: 2}
   hardChunks:
-  - {fileID: 11400000, guid: 0b6ffc03cabb4254fbcf2ba1ebfef337, type: 2}
-  - {fileID: 11400000, guid: ed1fbf3d04e8c8e47b61aa62450158d5, type: 2}
+  - {fileID: 11400000, guid: 22ccf889fa1c9e246a0c0dc45f7b96f1, type: 2}
+  - {fileID: 11400000, guid: 01c3fecd732447841989d5772e9b6332, type: 2}
   difficultySequence:
   - difficulty: 0
     roomCount: 1
@@ -12169,7 +12171,7 @@ MonoBehaviour:
   warningUIOffsetFromEdge: 50
   spawnTimer: 0
   next: -1
-  mainCamera: {fileID: 0}
+  mainCamera: {fileID: 1844140759}
   prefabToSpawn: {fileID: 7698083774210493666, guid: fef94f9c8bebe4c4f8ef11da4a437fab, type: 3}
   missilePrefab: {fileID: 1014264682}
   boulderPrefab: {fileID: 748208525}

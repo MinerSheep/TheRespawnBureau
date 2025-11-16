@@ -11,15 +11,8 @@ public class Health : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is createdk
     void Start()
     {
-        if(gameObject.TryGetComponent<PlayerController>(out PlayerController pC))
-        {
-            IsPlayer=true;
-            pC=gameObject.GetComponent<PlayerController>();
-        }
-        else
-        {
-            IsPlayer=false;
-        }
+        pC = GetComponent<PlayerController>();
+        IsPlayer = pC != null;
     }
     public void TakeDamage(int DamageAmount)
     {
