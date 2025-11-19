@@ -52,7 +52,7 @@ public class DistanceScoreTracker : MonoBehaviour
     {
         if (levelGen.player == null) return null;
         float playerX = levelGen.player.position.x;
-        Chunk[] allChunks = FindObjectsOfType<Chunk>();
+        Chunk[] allChunks = FindObjectsByType<Chunk>(FindObjectsSortMode.None);
         foreach (var chunk in allChunks)
         {
             if (playerX > chunk.entryPoint.position.x &&
