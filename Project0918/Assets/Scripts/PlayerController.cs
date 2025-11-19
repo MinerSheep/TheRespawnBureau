@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 public static class PlayerEvents
@@ -16,6 +18,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Settings")]
     public bool AutoRunner = false;
+    public bool HasStamina = true;
     public float MoveSpeed = 5f;
     public float MoveForce = 1f;
     public float JumpForce = 18f;
@@ -29,7 +32,9 @@ public class PlayerController : MonoBehaviour
     public float DashSpeed = 8f;
     public float DashTime = 1f;
     public float DashCD = 4f;
+    public float StaminaDrainRate = -0.1f;   // Amount removed from stamina per update
     public HeadTrigger HT;
+    public float iFrames;
 
 
     [HideInInspector] private InputBuffer inputBuffer;
@@ -37,30 +42,29 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public CapsuleCollider2D cC;
     [HideInInspector] public bool Jumping = false;
     [HideInInspector] public bool Crouching = false;
+    [HideInInspector] public bool Attacking = false; // If this is on, the sword is swinging!
 
     [Header("References")]
     public GroundDetection GD;
     public HUD hud;
     public FlashLight flashlight;
+    public Volume attackVol;  // The "damage zone" used when attacking
 
     // Private Variables
     [HideInInspector] public int pointValue;
     [HideInInspector] private float crouchingTimer;
-    [HideInInspector] private float iFrames;
     [HideInInspector] private bool firstJump = false;
+    [HideInInspector] private bool JumpInput=false;
     [HideInInspector] private float JumpTimer = 0f;
     [HideInInspector] private bool doublejump = false;
-    [HideInInspector] private bool dash=false;
     [HideInInspector] private float DashTimer = 0f;
     [HideInInspector] private float DashCDTimer = 0f;
     [HideInInspector] private bool dashing=false;
+    [HideInInspector] private float AttackTimer = 0f;   // Counts up while attacking
+    [HideInInspector] private float AttackTimerEnd = 0.5f;   // How long should the attack volume/animation 
 
-    public void LoseHealth()
+    public void Invincible()
     {
-        if (iFrames > 0)
-            return;
-
-        hud.hp -= 1;
         iFrames = iFrameMax;
     }
 
@@ -80,7 +84,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        if (Jumping == false && GD.Grounded && inputBuffer.Consume("Jump")&&!HT.IsTriggering)
+        if (Jumping == false && GD.Grounded && inputBuffer.Consume("Jump")&&!HT.IsTriggering&&!JumpInput)
         {
             RB.linearVelocity = new Vector2(RB.linearVelocity.x, 0);
             RB.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
@@ -92,13 +96,44 @@ public class PlayerController : MonoBehaviour
             firstJump = true;
             doublejump = true;
             JumpTimer = JumpHoldTime;
-            AudioManager.instance.Play("jump");
+            JumpInput = true;
+            AudioManager.instance.PlaySound("jump");
+            ParticleManager.instance.JumpEffectCall(transform.position);
         }
         else if (Jumping == true)
         {
             JumpHold();
             DoubleJump();
        }
+        if (!inputBuffer.Consume("Jump"))
+        {
+            JumpInput = false;
+        }
+    }
+    // Activates a damage volume in front of the player that will deactivate after a set amount of time
+    public void Attack()
+    {
+        // Check if the volume exists/was set correctly
+        if (attackVol)
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                Attacking = true;
+                attackVol.enabled = true;
+                Debug.Log("Attack!");
+            }
+            if (Attacking)
+            {
+                AttackTimer += Time.deltaTime;
+                if (AttackTimer > AttackTimerEnd)
+                {
+                    Debug.Log("Attack Ended");
+                    Attacking = false;
+                    attackVol.enabled = false;
+                    AttackTimer = 0f;
+                }
+            }
+        }
     }
     // Set/reset functions for modifying JumpForce
     public void SetJumpForce(float NewJumpForce)
@@ -135,6 +170,8 @@ public class PlayerController : MonoBehaviour
             {
                 firstJump = false;
             }
+            AudioManager.instance.PlaySound("jump");
+            ParticleManager.instance.JumpEffectCall(transform.position);
         }
     }
 
@@ -145,8 +182,9 @@ public class PlayerController : MonoBehaviour
             //PM.PlayerModelStats = 1;
             //PM.ChangePlayerModelStats();
             Crouching = true;
+            ParticleManager.instance.RunningEffectDestory();
             cC.size = new Vector2(1, 1);
-            AudioManager.instance.Play("crouch");
+            AudioManager.instance.PlaySound("crouch");
         }
         else if (Jumping == true && inputBuffer.Consume("Crouch"))
         {
@@ -160,6 +198,7 @@ public class PlayerController : MonoBehaviour
             {
                 crouchingTimer = 0;
                 Crouching = false;
+                ParticleManager.instance.RunningEffectCall(transform.position);
                 cC.size = new Vector2(1, 2);
 
                 //PM.PlayerModelStats = 0;
@@ -198,6 +237,9 @@ public class PlayerController : MonoBehaviour
         RB = GetComponent<Rigidbody2D>();
         cC = GetComponent<CapsuleCollider2D>();
 
+        hud.AssignLeftButton(inputBuffer, "Jump", true);
+        hud.AssignRightButton(inputBuffer, "Crouch", false);
+
         //if (flashlight == null)
         //    flashlight = transform.Find("FlashLight").GetComponent<FlashLight>();
 
@@ -211,7 +253,9 @@ public class PlayerController : MonoBehaviour
         }
         Jump();
         Crouch();
+        ParticleManager.instance.SetRunningEffectPosition(transform.position);
         Dash();
+        Attack();
         //flipping flashlight by flip the sprite mask
         //if (inputBuffer.Consume("FlipFlashlight"))
         //    flashlight?.flip();
@@ -231,6 +275,31 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerDeath()
     {
-        
+        RunnerScene[] scenes = FindObjectsByType<RunnerScene>(FindObjectsSortMode.None);
+
+        foreach (var scene in scenes)
+        {
+            scene.StartMovingSpeed = scene.EndMovingSpeed = 0;
+        }
+
+        StartCoroutine(RestartLevel());
     }
+
+    IEnumerator RestartLevel()
+    {
+        float time = 0;
+
+        while (time < 1.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        // Optional
+        ScoreManager.instance?.SaveScore(); // Save high score to PlayerPrefs
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+
 }

@@ -32,6 +32,14 @@ config.php
 /Project0918/[Ll]ogs/
 /Project0918/[Uu]ser[Ss]ettings/
 
+/SpookyRunner/[Ll]ibrary/
+/SpookyRunner/[Tt]emp/
+/SpookyRunner/[Oo]bj/
+/SpookyRunner/[Bb]uild/
+/SpookyRunner/[Bb]uilds/
+/SpookyRunner/[Ll]ogs/
+/SpookyRunner/[Uu]ser[Ss]ettings/
+
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
 *.blend1
 *.blend1.meta
@@ -117,3 +125,4 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+Project0918/Assets/Scenes/MainScenes/AutoRunnerInfinite.unity

@@ -12,9 +12,17 @@ public class GroundDetection : MonoBehaviour
     void Update()
     {
         Grounded = GroundCount > 0;
+        if (Grounded)
+          ParticleManager.instance.RunningEffectCall(transform.position);
+        else
+          ParticleManager.instance.RunningEffectDestory();
+          
         if(PC.Jumping)
         {
             PC.Jumping = !Grounded;
+
+            //if (!PC.Jumping)
+            //    AudioManager.instance.PlaySound("ground_landing");
         }
     }
 
