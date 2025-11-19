@@ -16,9 +16,8 @@ public class KillBox : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Optional
-            ScoreManager.instance?.SaveScore(); // Save high score to PlayerPrefs
-            
+            ScoreManager.instance.SaveScore();
+
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
