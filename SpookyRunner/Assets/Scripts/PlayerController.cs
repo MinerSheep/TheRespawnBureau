@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
@@ -295,6 +296,15 @@ public class PlayerController : MonoBehaviour
         ScoreManager.instance?.SaveScore(); // Save high score to PlayerPrefs
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Break debris if the sword is swinging
+        if (collision.collider.CompareTag("Debris") && Attacking)
+        {
+            Destroy(collision.collider.gameObject);
+        }
     }
 
     void OnDestroy()
