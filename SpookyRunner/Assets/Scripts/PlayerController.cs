@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] private float DashTimer = 0f;
     [HideInInspector] private float DashCDTimer = 0f;
     [HideInInspector] private bool dashing=false;
+    [HideInInspector] private bool isInvincible = false;
     [HideInInspector] private float AttackTimer = 0f;   // Counts up while attacking
     [HideInInspector] private float AttackTimerEnd = 0.5f;   // How long should the attack volume/animation 
 
@@ -147,6 +148,14 @@ public class PlayerController : MonoBehaviour
             RB.AddForce(Vector2.up * DoubleJumpForce, ForceMode2D.Impulse);
             doublejump = false;
             Debug.Log("Doublejump");
+        }
+    }
+
+    public void TakeDamage()
+    {
+        if (!isInvincible)
+        {
+            //do damage
         }
     }
 
