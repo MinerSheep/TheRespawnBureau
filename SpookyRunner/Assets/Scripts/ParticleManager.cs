@@ -15,36 +15,21 @@ public class ParticleManager : MonoBehaviour
 
     [SerializeField] ParticleSystem SpeedEffect;
 
-    // public static ParticleManager Instance
-    // {
-    //     get
-    //     {
-    //         if (_isQuitting) return null; // don't spawn during teardown
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void Bootstrap()
+    {
+        if (instance == null)
+        {
+            var go = new GameObject("[ParticleManager]");
+            instance = go.AddComponent<ParticleManager>();
+        }
+    }
 
-    //         if (instance == null)
-    //         {
-    //             // Try to find the instance in the scene
-    //             instance = FindAnyObjectByType<ParticleManager>(FindObjectsInactive.Exclude);
-    //             if (instance == null)
-    //             {
-    //                 // If still null, log an error
-    //                 //Debug.LogError("Partcile Manager is not initialized. Make sure it's in the scene.");
-
-    //                 // Create one so callers never get null
-    //                 var go = new GameObject("ParticleManager");
-    //                 instance = go.AddComponent<ParticleManager>(); // Awake will run now
-
-    //             }
-    //         }
-    //         return instance;
-    //     }
-    // }
-    // [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    // private static void Bootstrap() => _ = Instance;
 
     void Awake()
     {
-        // Singleton pattern
+        Debug.Log("[ParticleManager] Awake on " + gameObject.scene.name);
+
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
@@ -56,14 +41,11 @@ public class ParticleManager : MonoBehaviour
 
         DyingEffects = new List<GameObject>();
 
-        // Prevent this object from being destroyed when changing scenes
-        transform.parent = null;
-        DontDestroyOnLoad(gameObject);
-
         JumpEffect = Resources.Load<GameObject>("Particle/JumpParticle");
         RunningEffect = Resources.Load<GameObject>("Particle/RunningParticle");
 
     }
+
 
     public void JumpEffectCall(Vector3 position)
     {
