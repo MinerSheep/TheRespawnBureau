@@ -154,7 +154,7 @@ public class LevelGenerator : MonoBehaviour
 
     // ---------------- Helper Methods ----------------
 
-    GameObject FindPlayerChunk()
+    public GameObject FindPlayerChunk()
     {
         // Get all chunks currently active
 

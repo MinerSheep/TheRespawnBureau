@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -21,6 +22,8 @@ public class TelemetryManager : MonoBehaviour
     private static StreamWriter gamedatastream;
     private static StreamWriter inputstream;
 
+    public string DeathReason = "";
+
 
     [Header("Settings")]
     [SerializeField] public bool timeBasedRecording = true;
@@ -31,9 +34,9 @@ public class TelemetryManager : MonoBehaviour
     private float timer = 0;
     private float recordat = float.MaxValue;
 
-    private bool firstDeath = false;
+    private bool firstDeath = true;
 
-    private Dictionary<string, uint> integers =
+    private Dictionary<string, uint> integers = new Dictionary<string, uint>
     {
         { "Jumps", 0 },
         { "Crouches", 0 },
@@ -45,12 +48,17 @@ public class TelemetryManager : MonoBehaviour
 
     public void InputPressed(string inputName)
     {
-        
+        inputstream.WriteLine(overalltimer + "," + inputName + " pressed");
     }
 
-    public void ActionPerformed()
+    public void InputReleased(string inputName)
     {
-        
+        inputstream.WriteLine(overalltimer + "," + inputName + " released");
+    }
+
+    public void ActionPerformed(string actionName)
+    {
+        inputstream.WriteLine("Player " + actionName + "ed");
     }
 
     public void RoundBegin()
@@ -64,9 +72,24 @@ public class TelemetryManager : MonoBehaviour
     }
 
     // Needs location and reason for death
-    public void RoundEnd()
+    public void RoundEnd(bool death)
     {
+        GameObject location = FindAnyObjectByType<LevelGenerator>()?.FindPlayerChunk();
+        DistanceScoreTracker dst = FindAnyObjectByType<DistanceScoreTracker>();
+
+        float distance = dst ? dst.TotalDistance() : -1;
+
         // Dump round data
+        if (death)
+        {
+            gamedatastream.WriteLine("Player died," + (firstDeath ? "FIRST DEATH" : "") + ",Reason: " + DeathReason + ",,Location: " + location?.name + ",,Distance: " + distance);
+            firstDeath = false;
+        }
+        else
+        {
+            gamedatastream.WriteLine("Game ended,,Reason: " + DeathReason + ",,Location: " + location?.name + ",,Distance: " + distance);
+        }
+        
         timer = 0;
         recordat = float.MaxValue;
     }
@@ -83,10 +106,17 @@ public class TelemetryManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
 
-        Directory.CreateDirectory("Telemetry");
+        string now = (string)DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
 
-        gamedatastream = new StreamWriter("Telemetry/gamedata-" + (string)DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".csv");
-        inputstream = new StreamWriter("Telemetry/inputdata-" + (string)DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".csv");
+        Directory.CreateDirectory(Path.Combine("Telemetry", now));
+
+        gamedatastream = new StreamWriter("Telemetry/" + now + "/gamedata-" + now + ".csv");
+        inputstream = new StreamWriter("Telemetry/" + now + "/inputdata-" + now + ".csv");
+    }
+
+    void Start()
+    {
+        inputstream.WriteLine("time,input");
     }
 
     // Update is called once per frame
@@ -95,11 +125,13 @@ public class TelemetryManager : MonoBehaviour
         overalltimer += Time.deltaTime;
         timer += Time.deltaTime;
 
-        if (timer >= recordat)
+        if (timeBasedRecording && timer >= recordat)
         {
+            float frameRate = 1.0f / Time.deltaTime;
+
             // In here would include data that you want to record by second
             // Base it off of gameDataRecordFormat
-            gamedatastream.WriteLine(timer + "," + );
+            gamedatastream.WriteLine(timer + ",");
 
             recordat += 1f;
         }
@@ -108,7 +140,9 @@ public class TelemetryManager : MonoBehaviour
     void OnApplicationQuit()
     {
         gamedatastream.WriteLine("Application Quit,,Total Gameplay Time: " + overalltimer + " seconds");
+        inputstream.WriteLine("Application Quit,,Total Gameplay Time: " + overalltimer + " seconds");
 
         gamedatastream.Close();
+        inputstream.Close();
     }
 }
