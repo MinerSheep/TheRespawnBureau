@@ -96,8 +96,10 @@ public class PlayerController : MonoBehaviour
             firstJump = true;
             doublejump = true;
             JumpTimer = JumpHoldTime;
+
             AudioManager.instance.PlaySound("jump");
             ParticleManager.instance.JumpEffectCall(transform.position);
+            TelemetryManager.instance.ActionPerformed("Jump");
         }
         else if (Jumping == true)
         {
@@ -145,6 +147,8 @@ public class PlayerController : MonoBehaviour
             RB.linearVelocity = new Vector2(RB.linearVelocity.x, 0);
             RB.AddForce(Vector2.up * DoubleJumpForce, ForceMode2D.Impulse);
             doublejump = false;
+
+            TelemetryManager.instance.ActionPerformed("Double Jump");
         }
     }
 
@@ -173,7 +177,9 @@ public class PlayerController : MonoBehaviour
             Crouching = true;
             ParticleManager.instance.RunningEffectDestory();
             cC.size = new Vector2(1, 1);
+
             AudioManager.instance.PlaySound("crouch");
+            TelemetryManager.instance.ActionPerformed("Crouch");
         }
         else if (Jumping == true && inputBuffer.Consume("Crouch"))
         {
@@ -202,6 +208,8 @@ public class PlayerController : MonoBehaviour
             DashCDTimer = DashCD;
             dashing = true;
             DashTimer = DashTime;
+
+            TelemetryManager.instance.ActionPerformed("Dash");
         }
         if (dashing)
         {
@@ -231,6 +239,7 @@ public class PlayerController : MonoBehaviour
         //if (flashlight == null)
         //    flashlight = transform.Find("FlashLight").GetComponent<FlashLight>();
 
+        TelemetryManager.instance.RoundBegin();
         PlayerEvents.OnPlayerDeath += PlayerDeath;
     }
     void Update()
@@ -266,6 +275,8 @@ public class PlayerController : MonoBehaviour
     {
         if (dead) return;
         dead = true;
+
+        TelemetryManager.instance.RoundEnd(true);
 
         RunnerScene[] scenes = FindObjectsByType<RunnerScene>(FindObjectsSortMode.None);
 
@@ -304,6 +315,7 @@ public class PlayerController : MonoBehaviour
 
     void OnDestroy()
     {
+        if (!dead) TelemetryManager.instance.RoundEnd(false);
         PlayerEvents.OnPlayerDeath -= PlayerDeath;
     }
 }
