@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class MissileHazard : MonoBehaviour
 {
+    public HUD staminaHUD;
+
     [SerializeField] private float missileVelocity;
     [SerializeField] private float lifespanTimer;
     [SerializeField] private bool passedPlayer;
@@ -35,7 +37,7 @@ public class MissileHazard : MonoBehaviour
     {
         if (other.CompareTag("Player") && !damagedPlayer)
         {
-            other.gameObject.GetComponent<Health>().TakeDamage(DamageAmount);
+            staminaHUD.ChangeStamina(-DamageAmount);
 
             Debug.Log("Missile hit landed");
             damagedPlayer = true;

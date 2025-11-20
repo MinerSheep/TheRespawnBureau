@@ -2,12 +2,15 @@ using UnityEngine;
 
 public class FallingHazard : MonoBehaviour
 {
+
+
     public int DamageAmount;
     [SerializeField] private bool isFalling;
     [SerializeField] private bool damagedPlayer;
     private Rigidbody2D rb;
 
     PlayerController playerScript;
+    HUD staminaHUD;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,7 +35,7 @@ public class FallingHazard : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && !damagedPlayer)
         {
-            collision.gameObject.GetComponent<Health>().TakeDamage(DamageAmount);
+            staminaHUD.ChangeStamina(-DamageAmount);
 
             Debug.Log("Falling hit landed");
             destroyHazard();
