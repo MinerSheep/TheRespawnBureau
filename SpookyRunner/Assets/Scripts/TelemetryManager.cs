@@ -82,12 +82,12 @@ public class TelemetryManager : MonoBehaviour
         // Dump round data
         if (death)
         {
-            gamedatastream.WriteLine("Player died," + (firstDeath ? "FIRST DEATH" : "") + ",Reason: " + DeathReason + ",,Location: " + location?.name + ",,Distance: " + distance);
+            gamedatastream?.WriteLine("Player died," + (firstDeath ? "FIRST DEATH" : "") + ",Reason: " + DeathReason + ",,Location: " + location?.name + ",,Distance: " + distance);
             firstDeath = false;
         }
         else
         {
-            gamedatastream.WriteLine("Game ended,,Reason: " + DeathReason + ",,Location: " + location?.name + ",,Distance: " + distance);
+            gamedatastream?.WriteLine("Game ended,,Reason: " + DeathReason + ",,Location: " + location?.name + ",,Distance: " + distance);
         }
         
         timer = 0;
@@ -131,7 +131,7 @@ public class TelemetryManager : MonoBehaviour
 
             // In here would include data that you want to record by second
             // Base it off of gameDataRecordFormat
-            gamedatastream.WriteLine(timer + ",");
+            gamedatastream.WriteLine(Mathf.Round(timer) + ",");
 
             recordat += 1f;
         }

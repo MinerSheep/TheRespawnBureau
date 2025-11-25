@@ -327,7 +327,6 @@ public class PlayerController : MonoBehaviour
 
     void OnDestroy()
     {
-        if (!dead) TelemetryManager.instance.RoundEnd(false);
         PlayerEvents.OnPlayerDeath -= PlayerDeath;
     }
 }
