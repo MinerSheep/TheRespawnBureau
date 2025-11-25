@@ -114,7 +114,6 @@ public class HUD : MonoBehaviour
         }
     
     }
-        
 
     public void UpdateHealthAmount()
     {
