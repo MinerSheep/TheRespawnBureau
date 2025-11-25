@@ -227,14 +227,28 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void PrimaryControl()
+    {
+        Jump();
+    }
+
+    public void SecondaryControl()
+    {
+        Crouch();
+    }
+
+    public void ThirdControl()
+    {
+        Dash();
+    }
     void Start()
     {
         inputBuffer = GetComponent<InputBuffer>();
         RB = GetComponent<Rigidbody2D>();
         cC = GetComponent<CapsuleCollider2D>();
 
-        hud.AssignLeftButton(inputBuffer, "Jump", true);
-        hud.AssignRightButton(inputBuffer, "Crouch", false);
+        hud.AssignLeftButton(inputBuffer, "GeneralInput1", true);
+        hud.AssignRightButton(inputBuffer, "GeneralInput2", false);
 
         //if (flashlight == null)
         //    flashlight = transform.Find("FlashLight").GetComponent<FlashLight>();
@@ -248,11 +262,9 @@ public class PlayerController : MonoBehaviour
         {
             Move();
         }
-        Jump();
-        Crouch();
-        ParticleManager.instance.SetRunningEffectPosition(transform.position);
-        Dash();
-        Attack();
+        PrimaryControl();
+        SecondaryControl();
+        ThirdControl();
         //flipping flashlight by flip the sprite mask
         //if (inputBuffer.Consume("FlipFlashlight"))
         //    flashlight?.flip();
