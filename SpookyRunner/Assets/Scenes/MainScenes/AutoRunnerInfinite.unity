@@ -12178,9 +12178,9 @@ MonoBehaviour:
     roomCount: 1
   chunkOverrides: []
   player: {fileID: 662545744}
-  chunksAhead: 10
+  chunksAhead: 5
   chunkDistAhead: 50
-  chunkDistBehind: 100
+  chunkDistBehind: 50
   totalRoomsOverride: 3000
   infiniteGeneration: 1
 --- !u!114 &913051529
