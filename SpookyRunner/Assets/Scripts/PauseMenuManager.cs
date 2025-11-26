@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PauseMenuManager : MonoBehaviour
@@ -10,9 +11,20 @@ public class PauseMenuManager : MonoBehaviour
     {
         if (pauseMenuUI == null)
             pauseMenuUI = GameObject.FindGameObjectWithTag("Pause");
-            
+
         // Start with pause menu disabled
         pauseMenuUI.SetActive(false);
+
+        SetUpButtons();
+    }
+
+    void SetUpButtons()
+    {
+        Transform panel = pauseMenuUI.transform.Find("Panel_PauseMenu");
+
+        panel.Find("Button_Resume").GetComponent<Button>().onClick.AddListener(Resume);
+        panel.Find("Button_MainMenu").GetComponent<Button>().onClick.AddListener(MainMenu);
+        panel.Find("Button_Quit").GetComponent<Button>().onClick.AddListener(QuitGame);
     }
 
     // Update is called once per frame
@@ -52,6 +64,7 @@ public class PauseMenuManager : MonoBehaviour
     // Switches to Main Menu scene
     public void MainMenu()
     {
+        Resume();
         SceneManager.LoadScene("MainMenu_PC");
     }
 
