@@ -38,6 +38,15 @@ public class PlayerController : MonoBehaviour
     public float iFrames;
 
 
+    private float forceDeltaTimeInflation = 40;
+    private float inflatedDeltaTime
+    {
+        get
+        {
+            return Time.deltaTime * forceDeltaTimeInflation;
+        }
+    }
+
     [HideInInspector] private InputBuffer inputBuffer;
     [HideInInspector] public Rigidbody2D RB;
     [HideInInspector] public CapsuleCollider2D cC;
@@ -77,7 +86,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            RB.AddForce(Vector2.right * horizontal * MoveForce);
+            RB.AddForce(Vector2.right * horizontal * MoveForce, ForceMode2D.Force);
             RB.linearVelocity = new Vector2(Mathf.Clamp(RB.linearVelocityX, -MoveSpeed, MoveSpeed), RB.linearVelocity.y);
         }
     }
@@ -162,7 +171,8 @@ public class PlayerController : MonoBehaviour
             JumpTimer-=Time.deltaTime;
             if(inputBuffer.Consume("Jump")&&JumpTimer>0)
             {
-                RB.AddForce(new Vector2(0,JumpHoldForce));
+                // Needs force because it is being applied with DeltaTime
+                RB.AddForce(Vector2.up * JumpHoldForce, ForceMode2D.Force);
                 //Debug.Log("holdjump");
             }
             else
@@ -187,7 +197,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (Jumping == true && inputBuffer.Consume("Crouch"))
         {
-            RB.AddForce(Vector2.down * FallingForce);
+            RB.AddForce(Vector2.down * FallingForce, ForceMode2D.Impulse);
             //Debug.Log("SFA");
         }
         if (Crouching)
@@ -219,7 +229,7 @@ public class PlayerController : MonoBehaviour
         if (dashing)
         {
             DashTimer-= Time.deltaTime;
-            RB.AddForce(Vector2.right*DashSpeed);
+            RB.AddForce(Vector2.right*DashSpeed, ForceMode2D.Impulse);
             if (DashTimer <= 0)
             {
                 dashing = false;
@@ -263,17 +273,6 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-        if (!AutoRunner)
-        {
-            Move();
-        }
-        PrimaryControl();
-        SecondaryControl();
-        ThirdControl();
-        //flipping flashlight by flip the sprite mask
-        //if (inputBuffer.Consume("FlipFlashlight"))
-        //    flashlight?.flip();
-
         // iFrame counter
         if (iFrames > 0)
         {
@@ -285,6 +284,20 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene("MainMenu_PC");
         }
+    }
+
+    void FixedUpdate()
+    {
+        if (!AutoRunner)
+        {
+            Move();
+        }
+        PrimaryControl();
+        SecondaryControl();
+        ThirdControl();
+        //flipping flashlight by flip the sprite mask
+        //if (inputBuffer.Consume("FlipFlashlight"))
+        //    flashlight?.flip();
     }
 
     private bool dead = false;
