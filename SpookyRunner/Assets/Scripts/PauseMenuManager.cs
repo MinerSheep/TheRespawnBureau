@@ -8,6 +8,9 @@ public class PauseMenuManager : MonoBehaviour
 
     private void Start()
     {
+        if (pauseMenuUI == null)
+            pauseMenuUI = GameObject.FindGameObjectWithTag("Pause");
+            
         // Start with pause menu disabled
         pauseMenuUI.SetActive(false);
     }
@@ -17,15 +20,18 @@ public class PauseMenuManager : MonoBehaviour
     {
         // Toggle pause menu and pause state when pressing Escape or P
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
+            Toggle();
+    }
+
+    public void Toggle()
+    {
+        if (isPaused)
         {
-            if (isPaused)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause();
-            }
+            Resume();
+        }
+        else
+        {
+            Pause();
         }
     }
 

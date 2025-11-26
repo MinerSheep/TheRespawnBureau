@@ -11,6 +11,7 @@ TagManager:
   - MobileLayout
   - DesktopAndMobile
   - Debris
+  - Pause
   layers:
   - Default
   - TransparentFX
