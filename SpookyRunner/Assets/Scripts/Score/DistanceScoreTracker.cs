@@ -7,7 +7,13 @@ public class DistanceScoreTracker : MonoBehaviour
     private float cumulativeDistance = 0f;
     private float currentChunkStartX = 0f;
     private float lastPlayerX = 0f;
+    private float totalDistance = 0f;
 
+    public float TotalDistance()
+    {
+        return totalDistance;
+    }
+    
     void Update()
     {
         if (levelGen == null || levelGen.player == null) return;
@@ -15,7 +21,7 @@ public class DistanceScoreTracker : MonoBehaviour
         float playerMovement = currentPlayerX - lastPlayerX;
         bool isWorldMovingLeft = playerMovement < -0.01f;
 
-        GameObject currentChunk = FindPlayerChunk();
+        GameObject currentChunk = FindAnyObjectByType<LevelGenerator>()?.FindPlayerChunk();
         if (currentChunk != null)
         {
             Chunk chunk = currentChunk.GetComponent<Chunk>();
@@ -38,7 +44,7 @@ public class DistanceScoreTracker : MonoBehaviour
             }
 
             float currentChunkProgress = currentChunkStartX - chunk.entryPoint.position.x;
-            float totalDistance = cumulativeDistance + currentChunkProgress;
+            totalDistance = cumulativeDistance + currentChunkProgress;
 
             if (ScoreManager.instance != null)
             {
@@ -46,21 +52,5 @@ public class DistanceScoreTracker : MonoBehaviour
             }
         }
         lastPlayerX = currentPlayerX;
-    }
-
-    GameObject FindPlayerChunk()
-    {
-        if (levelGen.player == null) return null;
-        float playerX = levelGen.player.position.x;
-        Chunk[] allChunks = FindObjectsByType<Chunk>(FindObjectsSortMode.None);
-        foreach (var chunk in allChunks)
-        {
-            if (playerX > chunk.entryPoint.position.x &&
-                playerX < chunk.exitPoint.position.x)
-            {
-                return chunk.gameObject;
-            }
-        }
-        return null;
     }
 }

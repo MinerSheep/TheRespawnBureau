@@ -18,6 +18,9 @@ public class KillBox : MonoBehaviour
         {
             ScoreManager.instance.SaveScore();
 
+            TelemetryManager.instance.DeathReason = "Hit Killbox";
+            TelemetryManager.instance.RoundEnd(true);
+
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }

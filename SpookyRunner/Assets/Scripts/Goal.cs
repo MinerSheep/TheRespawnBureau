@@ -20,6 +20,9 @@ public class Goal : MonoBehaviour
 
             if (transitionTimer < 0)
             {
+                TelemetryManager.instance.DeathReason = "Goal Reached";
+                TelemetryManager.instance.RoundEnd(false);
+
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }

@@ -40,6 +40,8 @@ public class InputBuffer : MonoBehaviour
     public void AddToBuffer(string action)
     {
         buffer.Add(new BufferedInput(action, Time.time));
+
+        TelemetryManager.instance.InputPressed(action);
     }
 
     public void StartHold(string action)
@@ -53,6 +55,8 @@ public class InputBuffer : MonoBehaviour
     public void EndHold(string action)
     {
         heldBuffer[action].held = false;
+
+        TelemetryManager.instance.InputReleased(action);
     }
 
     // Request input of a certain type
