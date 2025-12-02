@@ -47,7 +47,12 @@ public class RunnerScene : MonoBehaviour
         transform.position += new Vector3(-MovingSpeed * Time.deltaTime, 0, 0);
 
         if (Input.GetKeyDown(KeyCode.R))
+        {
+            TelemetryManager.instance.DeathReason = "Restart Triggered";
+            TelemetryManager.instance.RoundEnd(false);
+
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
 
         if (Input.GetKeyDown(KeyCode.L))
             SceneManager.LoadScene("AR02");

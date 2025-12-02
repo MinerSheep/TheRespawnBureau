@@ -110,6 +110,7 @@ public class HUD : MonoBehaviour
         if (StaminaAmount <= 0.0f)
         {
             // TODO: Remove the LoadScene below once we have PlayerDeath implemented
+            TelemetryManager.instance.DeathReason = "Stamina Loss";
             PlayerEvents.OnPlayerDeath?.Invoke();
         }
     

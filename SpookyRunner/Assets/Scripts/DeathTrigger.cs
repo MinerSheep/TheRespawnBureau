@@ -5,6 +5,9 @@ public class DeathTrigger : MonoBehaviour
 {
     public void GameEnd()
     {
+        TelemetryManager.instance.DeathReason = "Death Trigger";
+        TelemetryManager.instance.RoundEnd(true);
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
