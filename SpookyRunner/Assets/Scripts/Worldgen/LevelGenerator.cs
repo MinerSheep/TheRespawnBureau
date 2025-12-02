@@ -34,6 +34,9 @@ public class LevelGenerator : MonoBehaviour
     GameObject currentPlayerChunk;
     GameObject lastPlayerChunk = null;
 
+    [Header("Rendering Settings")]
+    public float renderCullDistance = 80f;
+
     void Start()
     {
         currentExit = transform.Find("Entrance")?.transform;
@@ -54,6 +57,8 @@ public class LevelGenerator : MonoBehaviour
         float playerX = player.position.x;
         var firstChunk = activeChunks[0];
         var lastChunk = activeChunks[activeChunks.Count - 1];
+
+        HandleRenderCulling();
 
         // Debug player progress
         Debug.DrawLine(Vector3.right * playerX, Vector3.right * (playerX + 2f), Color.yellow);
@@ -273,6 +278,21 @@ public class LevelGenerator : MonoBehaviour
         foreach (var segment in difficultySequence)
             total += segment.roomCount;
         return total;
+    }
+
+
+    void HandleRenderCulling()
+    {
+        foreach (var chunkObj in activeChunks)
+        {
+            float dist = Mathf.Abs(chunkObj.transform.position.x - player.position.x);
+
+            bool shouldRender = dist < renderCullDistance;
+
+            // Toggle all renderers
+            foreach (Renderer r in chunkObj.GetComponentsInChildren<Renderer>())
+                r.enabled = shouldRender;
+        }
     }
 }
 
