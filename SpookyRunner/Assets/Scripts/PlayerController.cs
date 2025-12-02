@@ -262,8 +262,8 @@ public class PlayerController : MonoBehaviour
         RB = GetComponent<Rigidbody2D>();
         cC = GetComponent<CapsuleCollider2D>();
 
-        hud.AssignLeftButton(inputBuffer, "GeneralInput1", true);
-        hud.AssignRightButton(inputBuffer, "GeneralInput2", false);
+        hud.AssignLeftButton(inputBuffer, "Jump", true);
+        hud.AssignRightButton(inputBuffer, "Crouch", false);
 
         //if (flashlight == null)
         //    flashlight = transform.Find("FlashLight").GetComponent<FlashLight>();
