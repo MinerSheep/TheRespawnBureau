@@ -1,24 +1,44 @@
 #if UNITY_EDITOR
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
 class AutoLock : UnityEditor.AssetModificationProcessor
 {
+    private const string SavedFilesKey = "";
+
+    public static List<string> Load()
+        => UnityEditor.EditorPrefs.GetString(SavedFilesKey, "").Split('|').Where(s => s.Length > 0).ToList();
+
+    public static void Save(List<string> list)
+        => UnityEditor.EditorPrefs.SetString(SavedFilesKey, string.Join("|", list));
+
+    static AutoLock()
+    {
+        // Reset saved files this session
+        UnityEditor.EditorPrefs.SetString(SavedFilesKey, "");
+    }
+
     // Called when assets are about to be opened for editing
     static string[] OnWillSaveAssets(string[] paths)
     {
         string[] lockExtensions = { ".unity", ".prefab", ".anim", ".controller", ".asset" };
 
+        List<string> savedFiles = Load();
+
         foreach (var path in paths)
         {
-            if (lockExtensions.Contains(Path.GetExtension(path)))
+            if (lockExtensions.Contains(Path.GetExtension(path)) && !savedFiles.Contains(path))
             {
                 LockFile(path);
+                savedFiles.Add(path);
             }
         }
+
+        Save(savedFiles);
 
         return paths;
     }

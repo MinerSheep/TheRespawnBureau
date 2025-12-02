@@ -86,6 +86,9 @@ public class MonsterBehavior : MonoBehaviour
         {
             // Optional save score
             ScoreManager.instance.SaveScore();
+
+            TelemetryManager.instance.DeathReason = "Caught by Monster";
+            TelemetryManager.instance.RoundEnd(true);
             
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }

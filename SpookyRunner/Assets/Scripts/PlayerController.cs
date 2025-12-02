@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
@@ -36,6 +37,15 @@ public class PlayerController : MonoBehaviour
     public HeadTrigger HT;
     public float iFrames;
 
+
+    private float forceDeltaTimeInflation = 40;
+    private float inflatedDeltaTime
+    {
+        get
+        {
+            return Time.deltaTime * forceDeltaTimeInflation;
+        }
+    }
 
     [HideInInspector] private InputBuffer inputBuffer;
     [HideInInspector] public Rigidbody2D RB;
@@ -76,7 +86,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            RB.AddForce(Vector2.right * horizontal * MoveForce);
+            RB.AddForce(Vector2.right * horizontal * MoveForce, ForceMode2D.Force);
             RB.linearVelocity = new Vector2(Mathf.Clamp(RB.linearVelocityX, -MoveSpeed, MoveSpeed), RB.linearVelocity.y);
         }
     }
@@ -95,8 +105,10 @@ public class PlayerController : MonoBehaviour
             firstJump = true;
             doublejump = true;
             JumpTimer = JumpHoldTime;
+
             AudioManager.instance.PlaySound("jump");
             ParticleManager.instance.JumpEffectCall(transform.position);
+            TelemetryManager.instance.ActionPerformed("Jump");
         }
         else if (Jumping == true)
         {
@@ -114,14 +126,14 @@ public class PlayerController : MonoBehaviour
             {
                 Attacking = true;
                 attackVol.enabled = true;
-                Debug.Log("Attack!");
+                //Debug.Log("Attack!");
             }
             if (Attacking)
             {
                 AttackTimer += Time.deltaTime;
                 if (AttackTimer > AttackTimerEnd)
                 {
-                    Debug.Log("Attack Ended");
+                    //Debug.Log("Attack Ended");
                     Attacking = false;
                     attackVol.enabled = false;
                     AttackTimer = 0f;
@@ -146,7 +158,9 @@ public class PlayerController : MonoBehaviour
             RB.linearVelocity = new Vector2(RB.linearVelocity.x, 0);
             RB.AddForce(Vector2.up * DoubleJumpForce, ForceMode2D.Impulse);
             doublejump = false;
-            Debug.Log("Doublejump");
+            //Debug.Log("Doublejump");
+
+            TelemetryManager.instance.ActionPerformed("Double Jump");
         }
     }
 
@@ -157,8 +171,9 @@ public class PlayerController : MonoBehaviour
             JumpTimer-=Time.deltaTime;
             if(inputBuffer.Consume("Jump")&&JumpTimer>0)
             {
-                RB.AddForce(new Vector2(0,JumpHoldForce));
-                Debug.Log("holdjump");
+                // Needs force because it is being applied with DeltaTime
+                RB.AddForce(Vector2.up * JumpHoldForce, ForceMode2D.Force);
+                //Debug.Log("holdjump");
             }
             else
             {
@@ -176,12 +191,14 @@ public class PlayerController : MonoBehaviour
             Crouching = true;
             ParticleManager.instance.RunningEffectDestory();
             cC.size = new Vector2(1, 1);
+
             AudioManager.instance.PlaySound("crouch");
+            TelemetryManager.instance.ActionPerformed("Crouch");
         }
         else if (Jumping == true && inputBuffer.Consume("Crouch"))
         {
-            RB.AddForce(Vector2.down * FallingForce);
-            Debug.Log("SFA");
+            RB.AddForce(Vector2.down * FallingForce, ForceMode2D.Impulse);
+            //Debug.Log("SFA");
         }
         if (Crouching)
         {
@@ -206,11 +223,13 @@ public class PlayerController : MonoBehaviour
             DashCDTimer = DashCD;
             dashing = true;
             DashTimer = DashTime;
+
+            TelemetryManager.instance.ActionPerformed("Dash");
         }
         if (dashing)
         {
             DashTimer-= Time.deltaTime;
-            RB.AddForce(Vector2.right*DashSpeed);
+            RB.AddForce(Vector2.right*DashSpeed, ForceMode2D.Impulse);
             if (DashTimer <= 0)
             {
                 dashing = false;
@@ -219,10 +238,24 @@ public class PlayerController : MonoBehaviour
         else if(DashCDTimer > 0)
         {
             DashCDTimer -= Time.deltaTime;
-            Debug.Log(DashCDTimer);
+            //Debug.Log(DashCDTimer);
         }
     }
 
+    public void PrimaryControl()
+    {
+        Jump();
+    }
+
+    public void SecondaryControl()
+    {
+        Crouch();
+    }
+
+    public void ThirdControl()
+    {
+        Dash();
+    }
     void Start()
     {
         inputBuffer = GetComponent<InputBuffer>();
@@ -235,23 +268,11 @@ public class PlayerController : MonoBehaviour
         //if (flashlight == null)
         //    flashlight = transform.Find("FlashLight").GetComponent<FlashLight>();
 
+        TelemetryManager.instance.RoundBegin();
         PlayerEvents.OnPlayerDeath += PlayerDeath;
     }
     void Update()
     {
-        if (!AutoRunner)
-        {
-            Move();
-        }
-        Jump();
-        Crouch();
-        ParticleManager.instance.SetRunningEffectPosition(transform.position);
-        Dash();
-        Attack();
-        //flipping flashlight by flip the sprite mask
-        //if (inputBuffer.Consume("FlipFlashlight"))
-        //    flashlight?.flip();
-
         // iFrame counter
         if (iFrames > 0)
         {
@@ -265,11 +286,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void FixedUpdate()
+    {
+        if (!AutoRunner)
+        {
+            Move();
+        }
+        PrimaryControl();
+        SecondaryControl();
+        ThirdControl();
+        //flipping flashlight by flip the sprite mask
+        //if (inputBuffer.Consume("FlipFlashlight"))
+        //    flashlight?.flip();
+    }
+
     private bool dead = false;
     private void PlayerDeath()
     {
         if (dead) return;
         dead = true;
+
+        TelemetryManager.instance.RoundEnd(true);
 
         RunnerScene[] scenes = FindObjectsByType<RunnerScene>(FindObjectsSortMode.None);
 
@@ -295,6 +332,15 @@ public class PlayerController : MonoBehaviour
         ScoreManager.instance?.SaveScore(); // Save high score to PlayerPrefs
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Break debris if the sword is swinging
+        if (collision.collider.CompareTag("Debris") && Attacking)
+        {
+            Destroy(collision.collider.gameObject);
+        }
     }
 
     void OnDestroy()

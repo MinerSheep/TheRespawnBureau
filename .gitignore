@@ -38,6 +38,7 @@ config.php
 /SpookyRunner/[Bb]uild/
 /SpookyRunner/[Bb]uilds/
 /SpookyRunner/[Ll]ogs/
+/SpookyRunner/[Tt]elemetry/
 /SpookyRunner/[Uu]ser[Ss]ettings/
 
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.

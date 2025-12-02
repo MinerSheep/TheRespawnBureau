@@ -16,9 +16,11 @@ public class KillBox : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Optional
-            ScoreManager.instance?.SaveScore(); // Save high score to PlayerPrefs
-            
+            ScoreManager.instance.SaveScore();
+
+            TelemetryManager.instance.DeathReason = "Hit Killbox";
+            TelemetryManager.instance.RoundEnd(true);
+
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }

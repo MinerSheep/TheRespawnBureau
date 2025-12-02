@@ -100,6 +100,9 @@ public class MonsterBehavior_Patrol : MonoBehaviour
         // If the monster collides with the player, kill the player (reload level)
         if (objName == "Player_Stand" || objName == "Player_Jump" || objName == "Player_Crouch")
         {
+            TelemetryManager.instance.DeathReason = "Patrol Monster";
+            TelemetryManager.instance.RoundEnd(true);
+
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }

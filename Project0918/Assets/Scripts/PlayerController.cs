@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
@@ -120,14 +121,14 @@ public class PlayerController : MonoBehaviour
             {
                 Attacking = true;
                 attackVol.enabled = true;
-                Debug.Log("Attack!");
+                //Debug.Log("Attack!");
             }
             if (Attacking)
             {
                 AttackTimer += Time.deltaTime;
                 if (AttackTimer > AttackTimerEnd)
                 {
-                    Debug.Log("Attack Ended");
+                    //Debug.Log("Attack Ended");
                     Attacking = false;
                     attackVol.enabled = false;
                     AttackTimer = 0f;
@@ -152,7 +153,7 @@ public class PlayerController : MonoBehaviour
             RB.linearVelocity = new Vector2(RB.linearVelocity.x, 0);
             RB.AddForce(Vector2.up * DoubleJumpForce, ForceMode2D.Impulse);
             doublejump = false;
-            Debug.Log("Doublejump");
+            //Debug.Log("Doublejump");
         }
     }
 
@@ -164,7 +165,7 @@ public class PlayerController : MonoBehaviour
             if(inputBuffer.Consume("Jump")&&JumpTimer>0)
             {
                 RB.AddForce(new Vector2(0,JumpHoldForce));
-                Debug.Log("holdjump");
+                //Debug.Log("holdjump");
             }
             else
             {
@@ -189,7 +190,7 @@ public class PlayerController : MonoBehaviour
         else if (Jumping == true && inputBuffer.Consume("Crouch"))
         {
             RB.AddForce(Vector2.down * FallingForce);
-            Debug.Log("SFA");
+            //Debug.Log("SFA");
         }
         if (Crouching)
         {
@@ -227,7 +228,7 @@ public class PlayerController : MonoBehaviour
         else if(DashCDTimer > 0)
         {
             DashCDTimer -= Time.deltaTime;
-            Debug.Log(DashCDTimer);
+            //Debug.Log(DashCDTimer);
         }
     }
 
@@ -302,4 +303,12 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Break debris if the sword is swinging
+        if (collision.collider.CompareTag("Debris") && Attacking)
+        {
+            Destroy(collision.collider.gameObject);
+        }
+    }
 }

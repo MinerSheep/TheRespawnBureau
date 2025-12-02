@@ -11,8 +11,8 @@ public class ScoreManager : MonoBehaviour
     public int highScore;
 
     [Header("References")]
-    [SerializeField] private TextMeshPro _scoreText;
-    [SerializeField] private TextMeshPro _highScoreText;
+    [SerializeField] private TextMeshProUGUI _scoreText;
+    [SerializeField] private TextMeshProUGUI _highScoreText;
 
     void Start()
     {
@@ -41,9 +41,9 @@ public class ScoreManager : MonoBehaviour
         }
 
         if (_scoreText == null)
-            _scoreText = transform.Find("Score")?.GetComponent<TextMeshPro>();
+            _scoreText = transform.Find("Score")?.GetComponent<TextMeshProUGUI>();
         if (_highScoreText == null)
-            _highScoreText = transform.Find("HighScore")?.GetComponent<TextMeshPro>();
+            _highScoreText = transform.Find("HighScore")?.GetComponent<TextMeshProUGUI>();
         if (_highScoreText != null)
             _highScoreText.text = "High Score: " + highScore;
     }

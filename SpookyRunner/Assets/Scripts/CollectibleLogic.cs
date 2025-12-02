@@ -54,7 +54,6 @@ public class CollectibleLogic : MonoBehaviour
             {
                 if (ScoreManager.instance != null)
                 {
-                    ScoreManager.instance.score += value;
                     HUDEvents.OnCollectCoin?.Invoke();
                 }
 
