@@ -70,6 +70,10 @@ public class PlayerAnimation : MonoBehaviour
         {
             AT.SetInteger("PlayerState", 1);
         }
+        else if(pC.Dying)
+        {
+            AT.SetInteger("PlayerState", 666);
+        }
         else
         {
             AT.SetInteger("PlayerState", 0);

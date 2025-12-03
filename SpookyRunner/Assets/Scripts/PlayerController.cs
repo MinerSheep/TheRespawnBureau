@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool Jumping = false;
     [HideInInspector] public bool Crouching = false;
     [HideInInspector] public bool Attacking = false; // If this is on, the sword is swinging!
+    [HideInInspector] public bool Dying = false; // If this is on, ur ded.
 
     [Header("References")]
     public GroundDetection GD;
@@ -292,9 +293,13 @@ public class PlayerController : MonoBehaviour
         {
             Move();
         }
-        PrimaryControl();
-        SecondaryControl();
-        ThirdControl();
+        // Added a check to avoid updating when the player is dying
+        if(!Dying)
+        {
+            PrimaryControl();
+            SecondaryControl();
+            ThirdControl();
+        }
         //flipping flashlight by flip the sprite mask
         //if (inputBuffer.Consume("FlipFlashlight"))
         //    flashlight?.flip();
@@ -305,6 +310,11 @@ public class PlayerController : MonoBehaviour
     {
         if (dead) return;
         dead = true;
+        Dying = true;
+        // Set any other animations states to false
+        Jumping = false;
+        Crouching = false;
+        Attacking = false;
 
         TelemetryManager.instance.RoundEnd(true);
 
