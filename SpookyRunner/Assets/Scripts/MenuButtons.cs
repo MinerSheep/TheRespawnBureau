@@ -10,6 +10,7 @@ public class MenuButtons : MonoBehaviour
     public GameObject OptionsPanel;
     public GameObject OnlinePanel;
     public GameObject OptionsPanelSliderContent;
+    public GameObject CreditsPanel;
 
 
     private GameObject ActivePanel = null;
@@ -71,6 +72,19 @@ public class MenuButtons : MonoBehaviour
     {
         OnlinePanel.SetActive(true);
         ActivePanel = OnlinePanel;
+    }
+
+    public void ShowCredits()
+    {
+        CreditsPanel.SetActive(true);
+        ActivePanel = CreditsPanel;
+    }
+
+    public void HideCredits()
+    {
+        CreditsPanel.SetActive(false);
+        ActivePanel?.SetActive(false);
+        ActivePanel = null;
     }
 
     public void AutorunnerPlay(string AutoRunnerTester)
