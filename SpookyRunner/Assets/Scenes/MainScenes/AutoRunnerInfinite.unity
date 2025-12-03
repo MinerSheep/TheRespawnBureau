@@ -12183,6 +12183,7 @@ MonoBehaviour:
   chunkDistBehind: 50
   totalRoomsOverride: 3000
   infiniteGeneration: 1
+  renderCullDistance: 0
 --- !u!114 &913051529
 MonoBehaviour:
   m_ObjectHideFlags: 0

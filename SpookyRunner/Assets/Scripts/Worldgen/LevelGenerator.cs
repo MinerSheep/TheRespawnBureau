@@ -283,6 +283,9 @@ public class LevelGenerator : MonoBehaviour
 
     void HandleRenderCulling()
     {
+        if (renderCullDistance == 0)
+            return;
+            
         foreach (var chunkObj in activeChunks)
         {
             float dist = Mathf.Abs(chunkObj.transform.position.x - player.position.x);
