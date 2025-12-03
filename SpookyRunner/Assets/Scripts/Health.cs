@@ -26,6 +26,8 @@ public class Health : MonoBehaviour
                 HPUpdate();
                 PlayerHud.UpdateHealthAmount();
                 Debug.Log(DamageAmount);
+
+                AudioManager.instance.PlaySound("playerdamage");
             }
         }
         else if (!IsPlayer)
