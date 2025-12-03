@@ -7,7 +7,7 @@ public class PlayerModel : MonoBehaviour
     public int PlayerModelStats = 0;//Player Model Stats 0=Standing;1=Crouching; 2=Jumping;
 
     [Header("References")]
-    public GameObject StandModel, CrouchModel, JumpModel, AttackModel;
+    public GameObject StandModel, CrouchModel, JumpModel, AttackModel, DyingModel;
 
     public void ChangePlayerModelStats()
     {
@@ -17,6 +17,7 @@ public class PlayerModel : MonoBehaviour
             CrouchModel.SetActive(false);
             JumpModel.SetActive(false);
             AttackModel.SetActive(false);
+            DyingModel.SetActive(false);
         }
         if (PlayerModelStats == 1)
         {
@@ -24,6 +25,7 @@ public class PlayerModel : MonoBehaviour
             CrouchModel.SetActive(true);
             JumpModel.SetActive(false);
             AttackModel.SetActive(false);
+            DyingModel.SetActive(false);
         }
         if (PlayerModelStats == 2)
         {
@@ -31,6 +33,7 @@ public class PlayerModel : MonoBehaviour
             CrouchModel.SetActive(false);
             JumpModel.SetActive(true);
             AttackModel.SetActive(false);
+            DyingModel.SetActive(false);
         }
         if (PlayerModelStats == 3)
         {
@@ -38,6 +41,15 @@ public class PlayerModel : MonoBehaviour
             CrouchModel.SetActive(false);
             JumpModel.SetActive(false);
             AttackModel.SetActive(true);
+            DyingModel.SetActive(false);
+        }
+        if (PlayerModelStats == 666)
+        {
+            StandModel.SetActive(false);
+            CrouchModel.SetActive(false);
+            JumpModel.SetActive(false);
+            AttackModel.SetActive(false);
+            DyingModel.SetActive(true);
         }
     }
 
@@ -48,5 +60,6 @@ public class PlayerModel : MonoBehaviour
         CrouchModel = transform.GetChild(1).gameObject;
         JumpModel = transform.GetChild(2).gameObject;
         AttackModel = transform.GetChild(3).gameObject;
+        DyingModel = transform.GetChild(666).gameObject;
     }
 }
