@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: -2072682869410355707}
   - component: {fileID: 255306631476807458}
   - component: {fileID: 7689929249219355967}
+  - component: {fileID: 5546038576753126942}
+  - component: {fileID: 247904391075690644}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -59,7 +61,7 @@ MonoBehaviour:
   sounds:
   - name: coin_collect
     clip: {fileID: 8300000, guid: 048eef3ce13c069448c3e901dbee44fa, type: 3}
-    volume: 0.25
+    volume: 0.5
     pitch: 1
     loop: 0
   - name: jump
@@ -222,3 +224,37 @@ MonoBehaviour:
   DeathReason: 
   timeBasedRecording: 1
   gameDataRecordFormat: []
+--- !u!114 &5546038576753126942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6355384965461315502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e820bc14700446b49a9af314a3f911d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serverConfig: {fileID: 11400000, guid: 5f29b9cccf96ada4e90849b257062de2, type: 2}
+  testOnStart: 0
+  testUsername: 
+  testScore: 999
+--- !u!114 &247904391075690644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6355384965461315502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa9841b9ffae02f47886e05c3027b804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serverConfig: {fileID: 11400000, guid: 5f29b9cccf96ada4e90849b257062de2, type: 2}
+  currentSessionId: -1
+  sessionStartTime: 0
+  dashCount: 0
+  deathCount: 0
+  coinsAtStart: 0
