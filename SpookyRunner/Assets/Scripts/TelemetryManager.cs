@@ -66,9 +66,11 @@ public class TelemetryManager : MonoBehaviour
         }
     }
 
+    bool begin = false;
     public void RoundBegin()
     {
         // optional time based recording system
+        begin = true;
         timer = 0;
         recordat = 1;
 
@@ -82,13 +84,14 @@ public class TelemetryManager : MonoBehaviour
     // Needs location and reason for death
     public void RoundEnd(bool death)
     {
+        if (!begin)
+            return;
+        begin = false;
+
         GameObject location = FindAnyObjectByType<LevelGenerator>()?.FindPlayerChunk();
         DistanceScoreTracker dst = FindAnyObjectByType<DistanceScoreTracker>();
 
         float distance = dst ? dst.TotalDistance() : -1;
-
-        if (distance <= 0)
-            return;
 
         // Dump round data
         if (death)
@@ -159,6 +162,9 @@ public class TelemetryManager : MonoBehaviour
     
     void OnApplicationQuit()
     {
+        DeathReason = "App Quit";
+        RoundEnd(false);
+
         gamedatastream.WriteLine("Application Quit,,Total Gameplay Time: " + overalltimer + " seconds");
         inputstream.WriteLine("Application Quit,,Total Gameplay Time: " + overalltimer + " seconds");
 
