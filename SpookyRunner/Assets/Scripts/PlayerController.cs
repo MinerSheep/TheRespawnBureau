@@ -111,6 +111,7 @@ public class PlayerController : MonoBehaviour
             AudioManager.instance.PlaySound("jump");
             ParticleManager.instance.JumpEffectCall(transform.position);
             TelemetryManager.instance.ActionPerformed("Jump");
+            TelemetryManager.instance.IntIncrease("Jumps");
         }
         else if (Jumping == true)
         {
@@ -163,6 +164,7 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("Doublejump");
 
             TelemetryManager.instance.ActionPerformed("Double Jump");
+            TelemetryManager.instance.IntIncrease("Jumps");
         }
     }
 
@@ -196,6 +198,7 @@ public class PlayerController : MonoBehaviour
 
             AudioManager.instance.PlaySound("crouch");
             TelemetryManager.instance.ActionPerformed("Crouch");
+            TelemetryManager.instance.IntIncrease("Crouches");
         }
         else if (Jumping == true && inputBuffer.Consume("Crouch"))
         {
@@ -227,6 +230,7 @@ public class PlayerController : MonoBehaviour
             DashTimer = DashTime;
 
             TelemetryManager.instance.ActionPerformed("Dash");
+            TelemetryManager.instance.IntIncrease("Dashes");
         }
         if (dashing)
         {

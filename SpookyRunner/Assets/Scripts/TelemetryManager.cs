@@ -49,7 +49,7 @@ public class TelemetryManager : MonoBehaviour
         { "StamMisses", 0 },
     };
 
-    public void IntIncrease(string name, uint value)
+    public void IntIncrease(string name, uint value = 1)
     {
         integers[name] += value;
     }
@@ -165,11 +165,11 @@ public class TelemetryManager : MonoBehaviour
 
             // In here would include data that you want to record by second
             // Base it off of gameDataRecordFormat
-            gamedatastream.Write(Mathf.Round(timer));
-            
-            foreach (var inte in integers)
-                gamedatastream.Write(inte.Value + ",");
-            gamedatastream.Write("\n");
+            string writeLine = Mathf.Round(timer).ToString();
+            foreach (var dataName in gameDataRecordFormat)
+                writeLine += (integers.ContainsKey(dataName) ? integers[dataName] : "") + ",";
+
+            gamedatastream.WriteLine(writeLine);
 
             recordat += 1f;
         }
