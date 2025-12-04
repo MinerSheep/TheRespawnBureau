@@ -82,6 +82,9 @@ public class ScoreManager : MonoBehaviour
 
         // Write the current score to PlayerPrefs
         PlayerPrefs.Save();
+
+        string playerName = PlayerPrefs.GetString("PlayerName", "Player_" + SystemInfo.deviceUniqueIdentifier.Substring(0, 6));
+        DatabaseManager.Instance?.SaveScore(playerName, score);
     }
 
     // Resets high score (for test)
