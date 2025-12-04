@@ -59,6 +59,11 @@ public class TelemetryManager : MonoBehaviour
     public void ActionPerformed(string actionName)
     {
         inputstream.WriteLine("Player " + actionName + "ed");
+
+        if (actionName == "Dash")
+        {
+            AnalyticsManager.Instance?.RecordDash();
+        }
     }
 
     public void RoundBegin()
@@ -69,6 +74,9 @@ public class TelemetryManager : MonoBehaviour
 
         // Put game data header
         gamedatastream.WriteLine(string.Join(",", gameDataRecordFormat));
+
+        // Server
+        AnalyticsManager.Instance?.StartSession();
     }
 
     // Needs location and reason for death
@@ -79,17 +87,29 @@ public class TelemetryManager : MonoBehaviour
 
         float distance = dst ? dst.TotalDistance() : -1;
 
+        if (distance <= 0)
+            return;
+
         // Dump round data
         if (death)
         {
             gamedatastream?.WriteLine("Player died," + (firstDeath ? "FIRST DEATH" : "") + ",Reason: " + DeathReason + ",,Location: " + location?.name + ",,Distance: " + distance);
             firstDeath = false;
+
+            // Server
+            Vector2 deathPos = FindAnyObjectByType<PlayerController>()?.transform.position ?? Vector2.zero;
+            string deathType = string.IsNullOrEmpty(DeathReason) ? "other" : DeathReason.ToLower();
+            AnalyticsManager.Instance?.RecordDeath(deathType, deathPos);
         }
         else
         {
             gamedatastream?.WriteLine("Game ended,,Reason: " + DeathReason + ",,Location: " + location?.name + ",,Distance: " + distance);
         }
-        
+
+        // Server
+        int score = ScoreManager.instance?.score ?? 0;
+        AnalyticsManager.Instance?.EndSession(score, Mathf.RoundToInt(distance));
+
         timer = 0;
         recordat = float.MaxValue;
     }
