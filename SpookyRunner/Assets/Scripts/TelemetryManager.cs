@@ -87,6 +87,9 @@ public class TelemetryManager : MonoBehaviour
 
         float distance = dst ? dst.TotalDistance() : -1;
 
+        if (distance <= 0)
+            return;
+
         // Dump round data
         if (death)
         {
