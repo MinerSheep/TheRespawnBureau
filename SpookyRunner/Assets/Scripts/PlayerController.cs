@@ -285,6 +285,9 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene("MainMenu_PC");
         }
+
+        ParticleManager.instance.SetRunningEffectPosition(transform.position);
+
     }
 
     void FixedUpdate()

@@ -67,12 +67,12 @@ public class ParticleManager : MonoBehaviour
 
     public void JumpEffectCall(Vector3 position)
     {
-        Instantiate(JumpEffect,position,Quaternion.identity);
+        Instantiate(JumpEffect, position, Quaternion.identity);
     }
 
     public void RunningEffectCall(Vector3 position)
     {
-        if(!ActivateRunningEffect)
+        if (!ActivateRunningEffect)
         {
             ActivateRunningEffect = RunnningEffectCreate(position);
         }
@@ -81,7 +81,7 @@ public class ParticleManager : MonoBehaviour
             return;
         }
     }
-    
+
     public void RunningEffectDestory()
     {
         if (ActivateRunningEffect != null)
@@ -128,7 +128,7 @@ public class ParticleManager : MonoBehaviour
 
     public void SetRunningEffectPosition(Vector3 position)
     {
-        if(ActivateRunningEffect)
+        if (ActivateRunningEffect)
         {
             ActivateRunningEffect.transform.position = new Vector3(position.x, position.y - 0.7f);
         }
