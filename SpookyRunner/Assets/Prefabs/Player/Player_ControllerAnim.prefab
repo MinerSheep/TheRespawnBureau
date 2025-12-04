@@ -333,19 +333,20 @@ MonoBehaviour:
   HasStamina: 1
   MoveSpeed: 6
   MoveForce: 6
-  JumpForce: 18
-  JumpHoldForce: 10
+  JumpForce: 18.5
+  JumpHoldForce: 4
   JumpHoldTime: 1
   DoubleJumpForce: 10
   CrouchingTime: 1
   FallingForce: 30
   iFrameMax: 0.2
-  DashSpeed: 120
-  DashTime: 0.2
+  DashSpeed: 50
+  DashTime: 0.15
   DashCD: 4
   StaminaDrainRate: -0.1
   HT: {fileID: 1160335174298123821}
   iFrames: 0
+  MaxYSpeed: 20
   RB: {fileID: 0}
   cC: {fileID: 0}
   Jumping: 0
@@ -425,7 +426,7 @@ Rigidbody2D:
   m_LinearDamping: 0.88
   m_AngularDamping: 0.05
   m_GravityScale: 4.01
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 93ded5150c2ccc747bddd71614fca517, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

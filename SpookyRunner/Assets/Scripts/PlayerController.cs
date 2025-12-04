@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public float StaminaDrainRate = -0.1f;   // Amount removed from stamina per update
     public HeadTrigger HT;
     public float iFrames;
+    public float MaxYSpeed=20f;
 
 
     private float forceDeltaTimeInflation = 40;
@@ -257,6 +258,11 @@ public class PlayerController : MonoBehaviour
     {
         Dash();
     }
+
+    public void SpeedLimit()
+    {
+        RB.linearVelocityY = Mathf.Clamp(RB.linearVelocityY,-MaxYSpeed,MaxYSpeed);
+    }
     void Start()
     {
         inputBuffer = GetComponent<InputBuffer>();
@@ -302,6 +308,7 @@ public class PlayerController : MonoBehaviour
             PrimaryControl();
             SecondaryControl();
             ThirdControl();
+            SpeedLimit();
         }
         //flipping flashlight by flip the sprite mask
         //if (inputBuffer.Consume("FlipFlashlight"))

@@ -22,7 +22,10 @@ public class GroundDetection : MonoBehaviour
         {
             PC.Jumping = !Grounded;
 
-            //if (!PC.Jumping)
+            if (!PC.Jumping)
+            {
+                PC.RB.linearVelocityY = 0f;
+            }
             //    AudioManager.instance.PlaySound("ground_landing");
         }
     }
