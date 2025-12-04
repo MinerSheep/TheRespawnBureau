@@ -27,7 +27,8 @@ public class TelemetryManager : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] public bool timeBasedRecording = true;
-    [SerializeField] public List<string> gameDataRecordFormat;
+    private List<string> gameDataRecordFormat = new List<string>{ "Time", "Jumps", "Crouches", "Dashes", "WallHits", 
+    "CoinCollects", "CoinMisses", "StamCollects", "StamMisses" };
 
     private float overalltimer = 0;
 
@@ -40,11 +41,18 @@ public class TelemetryManager : MonoBehaviour
     {
         { "Jumps", 0 },
         { "Crouches", 0 },
+        { "Dashes", 0 },
+        { "WallHits", 0 },
         { "CoinCollects", 0 },
         { "CoinMisses", 0 },
         { "StamCollects", 0 },
         { "StamMisses", 0 },
     };
+
+    public void IntIncrease(string name, uint value)
+    {
+        integers[name] += value;
+    }
 
     public void InputPressed(string inputName)
     {
@@ -76,6 +84,9 @@ public class TelemetryManager : MonoBehaviour
 
         // Put game data header
         gamedatastream.WriteLine(string.Join(",", gameDataRecordFormat));
+
+        foreach (var inte in integers)
+            integers[inte.Key] = 0;
 
         // Server
         AnalyticsManager.Instance?.StartSession();
@@ -154,7 +165,11 @@ public class TelemetryManager : MonoBehaviour
 
             // In here would include data that you want to record by second
             // Base it off of gameDataRecordFormat
-            gamedatastream.WriteLine(Mathf.Round(timer) + ",");
+            gamedatastream.Write(Mathf.Round(timer));
+            
+            foreach (var inte in integers)
+                gamedatastream.Write(inte.Value + ",");
+            gamedatastream.Write("\n");
 
             recordat += 1f;
         }
