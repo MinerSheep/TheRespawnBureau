@@ -41,7 +41,7 @@ public class PlayerAnimation : MonoBehaviour
         {
             AT.SetBool("AutoRunning", true);
 
-            PlayerEvents.OnFlipFlashlight += FlipDirection;
+            //PlayerEvents.OnFlipFlashlight += FlipDirection;
         }
     }
     
@@ -70,6 +70,10 @@ public class PlayerAnimation : MonoBehaviour
         {
             AT.SetInteger("PlayerState", 1);
         }
+        else if(pC.Dying)
+        {
+            AT.SetInteger("PlayerState", 666);
+        }
         else
         {
             AT.SetInteger("PlayerState", 0);
@@ -85,9 +89,9 @@ public class PlayerAnimation : MonoBehaviour
 
     void OnDestroy()
     {
-        if (pC.AutoRunner)
-        {
-            PlayerEvents.OnFlipFlashlight -= FlipDirection;
-        }
+        // if (pC.AutoRunner)
+        // {
+        //     PlayerEvents.OnFlipFlashlight -= FlipDirection;
+        // }
     }
 }

@@ -12183,6 +12183,7 @@ MonoBehaviour:
   chunkDistBehind: 50
   totalRoomsOverride: 3000
   infiniteGeneration: 1
+  renderCullDistance: 0
 --- !u!114 &913051529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12687,14 +12688,6 @@ PrefabInstance:
       propertyPath: levelGen
       value: 
       objectReference: {fileID: 913051528}
-    - target: {fileID: 1319770428272295374, guid: 4f5cfa6ebdc33e04dbec05f29bbf99d8, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 11.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1319770428272295374, guid: 4f5cfa6ebdc33e04dbec05f29bbf99d8, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.66999996
-      objectReference: {fileID: 0}
     - target: {fileID: 3541909880929865307, guid: 4f5cfa6ebdc33e04dbec05f29bbf99d8, type: 3}
       propertyPath: PlayerHud
       value: 
@@ -12703,6 +12696,14 @@ PrefabInstance:
       propertyPath: hud
       value: 
       objectReference: {fileID: 639387027}
+    - target: {fileID: 3611146934780794932, guid: 4f5cfa6ebdc33e04dbec05f29bbf99d8, type: 3}
+      propertyPath: DashTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3611146934780794932, guid: 4f5cfa6ebdc33e04dbec05f29bbf99d8, type: 3}
+      propertyPath: DashSpeed
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public float StaminaDrainRate = -0.1f;   // Amount removed from stamina per update
     public HeadTrigger HT;
     public float iFrames;
+    public float MaxYSpeed=20f;
 
 
     private float forceDeltaTimeInflation = 40;
@@ -53,6 +54,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool Jumping = false;
     [HideInInspector] public bool Crouching = false;
     [HideInInspector] public bool Attacking = false; // If this is on, the sword is swinging!
+    [HideInInspector] public bool Dying = false; // If this is on, ur ded.
 
     [Header("References")]
     public GroundDetection GD;
@@ -109,6 +111,7 @@ public class PlayerController : MonoBehaviour
             AudioManager.instance.PlaySound("jump");
             ParticleManager.instance.JumpEffectCall(transform.position);
             TelemetryManager.instance.ActionPerformed("Jump");
+            TelemetryManager.instance.IntIncrease("Jumps");
         }
         else if (Jumping == true)
         {
@@ -161,6 +164,7 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("Doublejump");
 
             TelemetryManager.instance.ActionPerformed("Double Jump");
+            TelemetryManager.instance.IntIncrease("Jumps");
         }
     }
 
@@ -194,6 +198,7 @@ public class PlayerController : MonoBehaviour
 
             AudioManager.instance.PlaySound("crouch");
             TelemetryManager.instance.ActionPerformed("Crouch");
+            TelemetryManager.instance.IntIncrease("Crouches");
         }
         else if (Jumping == true && inputBuffer.Consume("Crouch"))
         {
@@ -225,6 +230,7 @@ public class PlayerController : MonoBehaviour
             DashTimer = DashTime;
 
             TelemetryManager.instance.ActionPerformed("Dash");
+            TelemetryManager.instance.IntIncrease("Dashes");
         }
         if (dashing)
         {
@@ -256,14 +262,19 @@ public class PlayerController : MonoBehaviour
     {
         Dash();
     }
+
+    public void SpeedLimit()
+    {
+        RB.linearVelocityY = Mathf.Clamp(RB.linearVelocityY,-MaxYSpeed,MaxYSpeed);
+    }
     void Start()
     {
         inputBuffer = GetComponent<InputBuffer>();
         RB = GetComponent<Rigidbody2D>();
         cC = GetComponent<CapsuleCollider2D>();
 
-        hud.AssignLeftButton(inputBuffer, "GeneralInput1", true);
-        hud.AssignRightButton(inputBuffer, "GeneralInput2", false);
+        hud.AssignLeftButton(inputBuffer, "Jump", true);
+        hud.AssignRightButton(inputBuffer, "Crouch", false);
 
         //if (flashlight == null)
         //    flashlight = transform.Find("FlashLight").GetComponent<FlashLight>();
@@ -284,6 +295,9 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene("MainMenu_PC");
         }
+
+        ParticleManager.instance.SetRunningEffectPosition(transform.position);
+
     }
 
     void FixedUpdate()
@@ -292,9 +306,14 @@ public class PlayerController : MonoBehaviour
         {
             Move();
         }
-        PrimaryControl();
-        SecondaryControl();
-        ThirdControl();
+        // Added a check to avoid updating when the player is dying
+        if(!Dying)
+        {
+            PrimaryControl();
+            SecondaryControl();
+            ThirdControl();
+            SpeedLimit();
+        }
         //flipping flashlight by flip the sprite mask
         //if (inputBuffer.Consume("FlipFlashlight"))
         //    flashlight?.flip();
@@ -305,6 +324,11 @@ public class PlayerController : MonoBehaviour
     {
         if (dead) return;
         dead = true;
+        Dying = true;
+        // Set any other animations states to false
+        Jumping = false;
+        Crouching = false;
+        Attacking = false;
 
         TelemetryManager.instance.RoundEnd(true);
 

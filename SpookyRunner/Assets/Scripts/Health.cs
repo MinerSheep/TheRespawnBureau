@@ -26,6 +26,8 @@ public class Health : MonoBehaviour
                 HPUpdate();
                 PlayerHud.UpdateHealthAmount();
                 Debug.Log(DamageAmount);
+
+                AudioManager.instance.PlaySound("playerdamage");
             }
         }
         else if (!IsPlayer)
@@ -47,5 +49,11 @@ public class Health : MonoBehaviour
     private void HPUpdate()
     {
         //This is the placeholder for update on a small HP bar or animation
+
+        // Check if the player has run out of health and kill them
+        if(CurrentHP <= 0)
+        {
+            PlayerEvents.OnPlayerDeath?.Invoke();
+        }
     }
 }

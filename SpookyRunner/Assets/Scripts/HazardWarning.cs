@@ -11,10 +11,10 @@ public class HazardWarning : MonoBehaviour
     public float flashDuration = 3f;
     public float flashSpeed = 5f;
     
-
+    private RectTransform rectTransform;
     private Image image;
 
-    void Update()
+    void FixedUpdate()
     {
         // Convert world position to screen position
         Vector3 screenPos = HazardManager.instance.mainCamera.WorldToScreenPoint(hazard.transform.position);
@@ -50,7 +50,7 @@ public class HazardWarning : MonoBehaviour
             spawnScreenPos = new Vector3(screenPos.x, HazardManager.instance.warningUIOffsetFromEdge, screenPos.z);
 
         // Convert back to world space
-        transform.position = HazardManager.instance.mainCamera.ScreenToWorldPoint(spawnScreenPos);
+        rectTransform.position = spawnScreenPos;
 
         if (spawnXDistance != 0) CheckDistance();
     }
@@ -65,8 +65,8 @@ public class HazardWarning : MonoBehaviour
 
     void OnEnable()
     {
+        rectTransform = GetComponent<RectTransform>();
         image = GetComponent<Image>();
-
         StartCoroutine(FlashAndDestroy());
     }
 

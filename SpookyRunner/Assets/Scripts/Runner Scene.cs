@@ -40,7 +40,7 @@ public class RunnerScene : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         AutoRunnerTimer += Time.deltaTime;
         MovingSpeed = Mathf.Lerp(StartMovingSpeed, EndMovingSpeed, AutoRunnerTimer / ChangeTime);
@@ -60,6 +60,10 @@ public class RunnerScene : MonoBehaviour
 
     void OnDestroy()
     {
+        // This only fires if RoundEnd is not called beforehand
+        TelemetryManager.instance.DeathReason = "Game Quit";
+        TelemetryManager.instance.RoundEnd(false);
+        
         AudioManager.instance.StopMusic();
     }
 }

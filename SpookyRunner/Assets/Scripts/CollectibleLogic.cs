@@ -52,6 +52,8 @@ public class CollectibleLogic : MonoBehaviour
             // then adds the value of this collectible to the player's score
             if (type == CollectibleType.Coin && value > 0)
             {
+                TelemetryManager.instance.IntIncrease("CoinCollects");
+                
                 if (ScoreManager.instance != null)
                 {
                     HUDEvents.OnCollectCoin?.Invoke();
@@ -72,6 +74,8 @@ public class CollectibleLogic : MonoBehaviour
             // Add stamina
             if(type == CollectibleType.Stamina && value > 0)
             {
+                TelemetryManager.instance.IntIncrease("StamCollects");
+
                 playerController.hud.ChangeStamina(value);
             }
 

@@ -27,7 +27,8 @@ public class TelemetryManager : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] public bool timeBasedRecording = true;
-    [SerializeField] public List<string> gameDataRecordFormat;
+    private List<string> gameDataRecordFormat = new List<string>{ "Time", "Jumps", "Crouches", "Dashes", "WallHits", 
+    "CoinCollects", "CoinMisses", "StamCollects", "StamMisses" };
 
     private float overalltimer = 0;
 
@@ -40,11 +41,18 @@ public class TelemetryManager : MonoBehaviour
     {
         { "Jumps", 0 },
         { "Crouches", 0 },
+        { "Dashes", 0 },
+        { "WallHits", 0 },
         { "CoinCollects", 0 },
         { "CoinMisses", 0 },
         { "StamCollects", 0 },
         { "StamMisses", 0 },
     };
+
+    public void IntIncrease(string name, uint value = 1)
+    {
+        integers[name] += value;
+    }
 
     public void InputPressed(string inputName)
     {
@@ -59,21 +67,38 @@ public class TelemetryManager : MonoBehaviour
     public void ActionPerformed(string actionName)
     {
         inputstream.WriteLine("Player " + actionName + "ed");
+
+        if (actionName == "Dash")
+        {
+            AnalyticsManager.Instance?.RecordDash();
+        }
     }
 
+    bool begin = false;
     public void RoundBegin()
     {
         // optional time based recording system
+        begin = true;
         timer = 0;
         recordat = 1;
 
         // Put game data header
         gamedatastream.WriteLine(string.Join(",", gameDataRecordFormat));
+
+        foreach (var inte in integers)
+            integers[inte.Key] = 0;
+
+        // Server
+        AnalyticsManager.Instance?.StartSession();
     }
 
     // Needs location and reason for death
     public void RoundEnd(bool death)
     {
+        if (!begin)
+            return;
+        begin = false;
+
         GameObject location = FindAnyObjectByType<LevelGenerator>()?.FindPlayerChunk();
         DistanceScoreTracker dst = FindAnyObjectByType<DistanceScoreTracker>();
 
@@ -84,12 +109,21 @@ public class TelemetryManager : MonoBehaviour
         {
             gamedatastream?.WriteLine("Player died," + (firstDeath ? "FIRST DEATH" : "") + ",Reason: " + DeathReason + ",,Location: " + location?.name + ",,Distance: " + distance);
             firstDeath = false;
+
+            // Server
+            Vector2 deathPos = FindAnyObjectByType<PlayerController>()?.transform.position ?? Vector2.zero;
+            string deathType = string.IsNullOrEmpty(DeathReason) ? "other" : DeathReason.ToLower();
+            AnalyticsManager.Instance?.RecordDeath(deathType, deathPos);
         }
         else
         {
             gamedatastream?.WriteLine("Game ended,,Reason: " + DeathReason + ",,Location: " + location?.name + ",,Distance: " + distance);
         }
-        
+
+        // Server
+        int score = ScoreManager.instance?.score ?? 0;
+        AnalyticsManager.Instance?.EndSession(score, Mathf.RoundToInt(distance));
+
         timer = 0;
         recordat = float.MaxValue;
     }
@@ -131,7 +165,11 @@ public class TelemetryManager : MonoBehaviour
 
             // In here would include data that you want to record by second
             // Base it off of gameDataRecordFormat
-            gamedatastream.WriteLine(Mathf.Round(timer) + ",");
+            string writeLine = Mathf.Round(timer).ToString();
+            foreach (var dataName in gameDataRecordFormat)
+                writeLine += (integers.ContainsKey(dataName) ? integers[dataName] : "") + ",";
+
+            gamedatastream.WriteLine(writeLine);
 
             recordat += 1f;
         }
@@ -139,6 +177,9 @@ public class TelemetryManager : MonoBehaviour
     
     void OnApplicationQuit()
     {
+        DeathReason = "App Quit";
+        RoundEnd(false);
+
         gamedatastream.WriteLine("Application Quit,,Total Gameplay Time: " + overalltimer + " seconds");
         inputstream.WriteLine("Application Quit,,Total Gameplay Time: " + overalltimer + " seconds");
 
