@@ -54,7 +54,7 @@ public class RunnerScene : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L) && SceneManager.GetSceneByName("AR02") != null)
             SceneManager.LoadScene("AR02");
     }
 

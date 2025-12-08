@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
 // Things to capture for Data:
@@ -85,8 +86,9 @@ public class TelemetryManager : MonoBehaviour
         // Put game data header
         gamedatastream.WriteLine(string.Join(",", gameDataRecordFormat));
 
-        foreach (var inte in integers)
-            integers[inte.Key] = 0;
+        List<string> keys = new List<string>(integers.Keys);
+        foreach (var key in keys)
+            integers[key] = 0;
 
         // Server
         AnalyticsManager.Instance?.StartSession();
