@@ -228,7 +228,7 @@ public class PlayerController : MonoBehaviour
 
     public void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) /*&& DashCDTimer <= 0*/ && !dashing)
+        if (inputBuffer.Consume("Dash") /*Input.GetKeyDown(KeyCode.LeftShift) && DashCDTimer <= 0*/ && !dashing)
         {
             DashCDTimer = DashCD;
             dashing = true;
