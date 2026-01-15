@@ -17,10 +17,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/OldLevels/Platformer.unity
     guid: 5658915d422024f409211e2ba19cdf52
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainScenes/AutoRunner.unity
     guid: 946327127d82856438286e95c1c4cbe1
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/OldPlatformer/PlatformerNewController.unity
     guid: 9e4a81bb6d7cd104f96cc2a7ff308caa
   - enabled: 1
