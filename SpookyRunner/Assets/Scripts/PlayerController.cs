@@ -228,7 +228,8 @@ public class PlayerController : MonoBehaviour
 
     public void Dash()
     {
-        if (inputBuffer.Consume("Dash") /*Input.GetKeyDown(KeyCode.LeftShift) && DashCDTimer <= 0*/ && !dashing)
+        /*inputBuffer.Consume("Dash")*/
+        if (Input.GetKeyDown(KeyCode.LeftShift) /*&& DashCDTimer <= 0*/ && !dashing)
         {
             DashCDTimer = DashCD;
             dashing = true;
@@ -333,6 +334,8 @@ public class PlayerController : MonoBehaviour
         //if (inputBuffer.Consume("FlipFlashlight"))
         //    flashlight?.flip();
     }
+
+    public InputBuffer GetInputBuffer() { return inputBuffer; }
 
     private bool dead = false;
     private void PlayerDeath()

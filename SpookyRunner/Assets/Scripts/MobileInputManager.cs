@@ -54,6 +54,11 @@ public class MobileInputManager : MonoBehaviour
         if (direction.x > 0.8f && Mathf.Abs(direction.x) < maxVerticalDeviation)
         {
             // dash
+            PlayerController pc = FindAnyObjectByType<PlayerController>();
+            if (pc != null)
+            {
+                pc.GetInputBuffer().AddToBuffer("Dash");
+            }
         }
     }
 }
