@@ -340,8 +340,8 @@ MonoBehaviour:
   CrouchingTime: 1
   FallingForce: 30
   iFrameMax: 0.2
-  DashSpeed: 50
-  DashTime: 0.15
+  DashSpeed: 75
+  DashTime: 0.3
   DashCD: 4
   StaminaDrainRate: -0.1
   HT: {fileID: 1160335174298123821}
@@ -352,6 +352,7 @@ MonoBehaviour:
   Jumping: 0
   Crouching: 0
   Attacking: 0
+  Dying: 0
   GD: {fileID: 4977086744153824393}
   hud: {fileID: 0}
   flashlight: {fileID: 4619140904230655540}

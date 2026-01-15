@@ -22,17 +22,22 @@ public class PlayerController : MonoBehaviour
     public bool HasStamina = true;
     public float MoveSpeed = 5f;
     public float MoveForce = 1f;
+
     public float JumpForce = 18f;
     private float DefaultJumpForce = 18f;   // Used to reset jump to normal after leaving a "sticky" platform
     public float JumpHoldForce = 3f;
     public float JumpHoldTime = 1f;
+
     public float DoubleJumpForce = 12f;
     public float CrouchingTime = 2f;
     public float FallingForce = 3f;
+
     public float iFrameMax = 0.2f;
+
     public float DashSpeed = 8f;
     public float DashTime = 1f;
     public float DashCD = 4f;
+
     public float StaminaDrainRate = -0.1f;   // Amount removed from stamina per update
     public HeadTrigger HT;
     public float iFrames;
@@ -223,29 +228,37 @@ public class PlayerController : MonoBehaviour
 
     public void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && DashCDTimer <= 0)
+        if (Input.GetKeyDown(KeyCode.LeftShift) /*&& DashCDTimer <= 0*/ && !dashing)
         {
             DashCDTimer = DashCD;
             dashing = true;
             DashTimer = DashTime;
 
+            RB.AddForce(Vector2.right * DashSpeed, ForceMode2D.Impulse);
+
             TelemetryManager.instance.ActionPerformed("Dash");
             TelemetryManager.instance.IntIncrease("Dashes");
+
+            if(DashCDTimer > 0)
+            {
+                DashCDTimer -= Time.deltaTime;
+            }
         }
         if (dashing)
         {
-            DashTimer-= Time.deltaTime;
-            RB.AddForce(Vector2.right*DashSpeed, ForceMode2D.Impulse);
+            DashTimer -= Time.deltaTime; 
+            //RB.AddForce(Vector2.right * DashSpeed, ForceMode2D.Force);
             if (DashTimer <= 0)
             {
                 dashing = false;
             }
+            
         }
-        else if(DashCDTimer > 0)
-        {
-            DashCDTimer -= Time.deltaTime;
-            //Debug.Log(DashCDTimer);
-        }
+        //else if(DashCDTimer > 0)
+        //{
+        //    DashCDTimer -= Time.deltaTime;
+        //    //Debug.Log(DashCDTimer);
+        //}
     }
 
     public void PrimaryControl()
@@ -313,6 +326,8 @@ public class PlayerController : MonoBehaviour
             SecondaryControl();
             ThirdControl();
             SpeedLimit();
+
+            Debug.Log("Dash cooldown is " + DashCDTimer);
         }
         //flipping flashlight by flip the sprite mask
         //if (inputBuffer.Consume("FlipFlashlight"))
