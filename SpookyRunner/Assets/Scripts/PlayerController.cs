@@ -231,40 +231,43 @@ public class PlayerController : MonoBehaviour
         /*inputBuffer.Consume("Dash")*/
         if (Input.GetKeyDown(KeyCode.LeftShift) /*&& DashCDTimer <= 0*/ && !dashing)
         {
-            DashCDTimer = DashCD;
-            dashing = true;
-            DashTimer = DashTime;
+            DashCDTimer = DashCD; //set cooldown amount
+            dashing = true; //we are dashing
+            DashTimer = DashTime; //set duration of dash amount
 
-            RB.AddForce(Vector2.right * DashSpeed, ForceMode2D.Impulse);
+            RB.AddForce(Vector2.right * DashSpeed, ForceMode2D.Impulse); //launch that sucker
 
             TelemetryManager.instance.ActionPerformed("Dash");
             TelemetryManager.instance.IntIncrease("Dashes");
-
-            if(DashCDTimer > 0)
+            
+            if(DashCDTimer > 0) //if cooldown is still cooling down
             {
-                DashCDTimer -= Time.deltaTime;
+                DashCDTimer -= Time.deltaTime; //subtract at a rate of 1 per second
+
             }
         }
-        if (dashing)
+        if (dashing) //during a dash
         {
-            DashTimer -= Time.deltaTime; 
-            //RB.AddForce(Vector2.right * DashSpeed, ForceMode2D.Force);
-            if (DashTimer <= 0)
+            DashTimer -= Time.deltaTime; //count down duration of dash
+            
+            
+            if (DashTimer <= 0) //if it ends
             {
-                dashing = false;
+                dashing = false; //stop the dash
             }
             
         }
-        //else if(DashCDTimer > 0)
-        //{
-        //    DashCDTimer -= Time.deltaTime;
-        //    //Debug.Log(DashCDTimer);
-        //}
+        else if(DashCDTimer > 0)
+        {
+            DashCDTimer -= Time.deltaTime;
+            //Debug.Log(DashCDTimer);
+        }
     }
 
     public void PrimaryControl()
     {
-        Jump();
+        Dash();
+        
     }
 
     public void SecondaryControl()
@@ -274,7 +277,7 @@ public class PlayerController : MonoBehaviour
 
     public void ThirdControl()
     {
-        Dash();
+        Jump();
     }
 
     public void SpeedLimit()
