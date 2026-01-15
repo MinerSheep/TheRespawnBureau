@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7689929249219355967}
   - component: {fileID: 5546038576753126942}
   - component: {fileID: 247904391075690644}
+  - component: {fileID: -5685071336679736274}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -223,7 +224,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DeathReason: 
   timeBasedRecording: 1
-  gameDataRecordFormat: []
 --- !u!114 &5546038576753126942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,3 +258,15 @@ MonoBehaviour:
   dashCount: 0
   deathCount: 0
   coinsAtStart: 0
+--- !u!114 &-5685071336679736274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6355384965461315502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 751892ba7db771c4ba67228fe66931c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
