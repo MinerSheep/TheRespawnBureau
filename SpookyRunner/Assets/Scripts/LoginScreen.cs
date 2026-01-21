@@ -5,7 +5,7 @@ using UnityEngine;
 public class LoginScreen : MonoBehaviour
 {
     Transform welcomeText;
-    Transform loginText;
+    Transform loadingText;
     Transform passwwordInput;
 
     private string deviceId;
@@ -13,7 +13,7 @@ public class LoginScreen : MonoBehaviour
     void Start()
     {
         welcomeText = transform.Find("WelcomeText");
-        loginText = transform.Find("LoginText");
+        loadingText = transform.Find("LoadingText");
         passwwordInput = transform.Find("PasswordInput");
 
         // Set up password detection
