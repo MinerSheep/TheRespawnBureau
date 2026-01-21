@@ -17,7 +17,7 @@ MonoBehaviour:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
-  m_BuildRemoteCatalog: 0
+  m_BuildRemoteCatalog: 1
   m_CatalogRequestsTimeout: 0
   m_DisableCatalogUpdateOnStart: 0
   m_InternalIdNamingMode: 0
@@ -70,7 +70,7 @@ MonoBehaviour:
       m_ProfileName: Default
       m_Values:
       - m_Id: 30b3cb4310d2fa34ea99361d443488ab
-        m_Value: https://minersheep.github.io/KnightmareDash-addressables/
+        m_Value: 'https://minersheep.github.io/KnightmareDash-addressables/v1.0.1/ServerData/[BuildTarget]'
       - m_Id: 47826aa1fb2fedb49ad8f2df4ef65ff9
         m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
       - m_Id: 5656967657eb2eb4c992c14fd94592b5

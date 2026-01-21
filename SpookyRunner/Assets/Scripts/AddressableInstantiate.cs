@@ -29,7 +29,7 @@ public class AddressableInstantiate : MonoBehaviour
     void OnAddressableLoaded(AsyncOperationHandle<GameObject> handle)
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
-            Instantiate(handle.Result);
+            Instantiate(handle.Result, transform);
         else
             Debug.LogError("Loading asset failed");
     }
