@@ -15,10 +15,65 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 9b1e4adeb570ad542bdbeafb44375a8f
   m_SerializeEntries:
+  - m_GUID: 01c3fecd732447841989d5772e9b6332
+    m_Address: Assets/Data/Chunks/ZackChunks/Chunk 4.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 22ccf889fa1c9e246a0c0dc45f7b96f1
+    m_Address: Assets/Data/Chunks/ZackChunks/Chunk 2.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 24db198c87238e242b9e1e344ef2a6df
+    m_Address: Assets/Data/Chunks/ZackChunks/Chunk 7.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2e3849d88a436764cab74ee7e5ee383c
+    m_Address: Assets/Data/Chunks/ZackChunks/Chunk 3.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 519b78a2e83942e449d242a72e0331d6
+    m_Address: Assets/Data/Chunks/ZackChunks/Chunk 1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6e111e76b49d6074a94f31120df5409b
     m_Address: Assets/Prefabs/Image.prefab
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 82f58f53e4378f249a42f05598845f69
+    m_Address: Assets/Data/Chunks/ZackChunks/Chunk 5.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c760bc45835c0b040aa9179ff6b08e72
+    m_Address: Assets/Data/Chunks/ZackChunks/Chunk 6.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e7954300fe069194198b880e7da18637
+    m_Address: Assets/Data/Chunks/ZackChunks/Chunk 8.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e9e85b81dc84baa43859dc89ae720de9
+    m_Address: Assets/Data/Chunks/ZackChunks/Chunk 9.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 71b7198e321988441b504fabd3af4a3a, type: 2}

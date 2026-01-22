@@ -36,16 +36,6 @@ public class UpdateProcedure : MonoBehaviour
 
     private IEnumerator BootstrapRoutine()
     {
-        // Obtain addressables handle
-        var initHandle = Addressables.InitializeAsync();
-        yield return initHandle;
-
-        if (initHandle.Status != AsyncOperationStatus.Succeeded)
-        {
-            OnFailed?.Invoke("Failed to obtain addressables handle");
-            yield break;
-        }
-
         // Check for catalog updates
         var checkHandle = Addressables.CheckForCatalogUpdates(false);
         yield return checkHandle;
@@ -95,6 +85,12 @@ public class UpdateProcedure : MonoBehaviour
             totalDownloadSize += sizeHandle.Result;            
         }
 
+        if (totalDownloadSize == 0)
+        {
+            OnProgress?.Invoke(1f);
+            yield break;
+        }
+
         long downloadedSize = 0;
 
         // Perform the download and update download counters
@@ -112,14 +108,14 @@ public class UpdateProcedure : MonoBehaviour
                 yield return null;
             }
 
-            if (downloadHandle.Status != AsyncOperationStatus.Succeeded)
-            {
-                OnFailed?.Invoke($"Failed downloading dependencies for label '{label}'");
-                yield break;
-            }
+            //if (downloadHandle.Status != AsyncOperationStatus.Succeeded)
+            //{
+            //    OnFailed?.Invoke($"Failed downloading dependencies for label '{label}'");
+            //    yield break;
+            //}
 
             downloadedSize += totalDownloadSize;
-            Addressables.Release(downloadHandle);
+            //Addressables.Release(downloadHandle);
         }
 
         OnProgress?.Invoke(1f);
