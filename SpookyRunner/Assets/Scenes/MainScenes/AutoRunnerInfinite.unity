@@ -11789,6 +11789,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 871112459320846995, guid: 4952b515fcdb2e847a1db67e88e57ec2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 871112459320846995, guid: 4952b515fcdb2e847a1db67e88e57ec2, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
@@ -11837,6 +11841,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4565953621504990552, guid: 4952b515fcdb2e847a1db67e88e57ec2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4565953621504990552, guid: 4952b515fcdb2e847a1db67e88e57ec2, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
@@ -11861,6 +11869,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5506257889771073900, guid: 4952b515fcdb2e847a1db67e88e57ec2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5506257889771073900, guid: 4952b515fcdb2e847a1db67e88e57ec2, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
@@ -11878,6 +11890,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5560962056520222537, guid: 4952b515fcdb2e847a1db67e88e57ec2, type: 3}
       propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560962056520222537, guid: 4952b515fcdb2e847a1db67e88e57ec2, type: 3}
+      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5560962056520222537, guid: 4952b515fcdb2e847a1db67e88e57ec2, type: 3}
@@ -12688,6 +12704,10 @@ PrefabInstance:
       propertyPath: levelGen
       value: 
       objectReference: {fileID: 913051528}
+    - target: {fileID: 2689441014144506818, guid: 4f5cfa6ebdc33e04dbec05f29bbf99d8, type: 3}
+      propertyPath: m_LinearDamping
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3541909880929865307, guid: 4f5cfa6ebdc33e04dbec05f29bbf99d8, type: 3}
       propertyPath: PlayerHud
       value: 

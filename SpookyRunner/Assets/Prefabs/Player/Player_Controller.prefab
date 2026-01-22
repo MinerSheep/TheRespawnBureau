@@ -394,6 +394,8 @@ MonoBehaviour:
   StandModel: {fileID: 6565204822170242947}
   CrouchModel: {fileID: 8391932181125714591}
   JumpModel: {fileID: 4844247067851034484}
+  AttackModel: {fileID: 0}
+  DyingModel: {fileID: 0}
 --- !u!1 &8391932181125714591
 GameObject:
   m_ObjectHideFlags: 0
@@ -693,6 +695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AutoRunner: 0
+  HasStamina: 1
   MoveSpeed: 6
   MoveForce: 6
   JumpForce: 20
@@ -704,18 +707,21 @@ MonoBehaviour:
   iFrameMax: 0.2
   DashSpeed: 8
   DashTime: 1
-  DashCD: 4
-  Stamina: 1000
-  StaminaMax: 1000
+  DashCD: 0
   StaminaDrainRate: 0.1
   HT: {fileID: 0}
+  iFrames: 0
+  MaxYSpeed: 20
   RB: {fileID: 0}
   cC: {fileID: 0}
   Jumping: 0
   Crouching: 0
+  Attacking: 0
+  Dying: 0
   GD: {fileID: 8829983403503924569}
   hud: {fileID: 0}
   flashlight: {fileID: 0}
+  attackVol: {fileID: 0}
   pointValue: 0
 --- !u!114 &3869149035208277866
 MonoBehaviour:
