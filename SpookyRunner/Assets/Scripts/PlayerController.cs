@@ -36,11 +36,11 @@ public class PlayerController : MonoBehaviour
 
     public float iFrameMax = 0.2f;
 
-    public float DashSpeed = 8f;
+    public float DashForce = 10f;
     public float DashTime = 1f;
     public float DashCD = 4f;
-
-    public float StaminaDrainRate = -0.1f;   // Amount removed from stamina per update
+    public float StaminaDrainRate = -0.1f; // Amount removed from stamina per update
+    public float StaminaDrainMultiplier = 3f; 
     public HeadTrigger HT;
     public float iFrames;
 
@@ -231,56 +231,11 @@ public class PlayerController : MonoBehaviour
 
     public void Dash()
     {
-        /*inputBuffer.Consume("Dash")*/
-        if (Input.GetKeyDown(KeyCode.LeftShift) /*&& DashCDTimer <= 0*/ && !dashing)
+        if (Input.GetKeyDown(KeyCode.D))
         {
-            DashCDTimer = DashCD; //set cooldown amount
-            dashing = true; //we are dashing
-            DashTimer = DashTime; //set duration of dash amount
-
-            RB.AddForce(Vector2.right * DashSpeed, ForceMode2D.Impulse); //launch that sucker
-
-            TelemetryManager.instance.ActionPerformed("Dash");
-            TelemetryManager.instance.IntIncrease("Dashes");
-            
-            if(DashCDTimer > 0) //if cooldown is still cooling down
-            {
-                DashCDTimer -= Time.deltaTime; //subtract at a rate of 1 per second
-
-            }
+            RB.AddForce(Vector2.right * DashForce, ForceMode2D.Impulse);
+            hud.StaminaAmount -= 15f;
         }
-        if (dashing) //during a dash
-        {
-            DashTimer -= Time.deltaTime; //count down duration of dash
-            
-            
-            if (DashTimer <= 0) //if it ends
-            {
-                dashing = false; //stop the dash
-            }
-            
-        }
-        else if(DashCDTimer > 0)
-        {
-            DashCDTimer -= Time.deltaTime;
-            //Debug.Log(DashCDTimer);
-        }
-    }
-
-    public void PrimaryControl()
-    {
-        Dash();
-        
-    }
-
-    public void SecondaryControl()
-    {
-        Crouch();
-    }
-
-    public void ThirdControl()
-    {
-        Jump();
     }
 
     public void SpeedLimit()
