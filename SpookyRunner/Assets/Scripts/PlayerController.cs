@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public bool AutoRunner = false;
     public bool HasStamina = true;
     public float MoveSpeed = 5f;
+    public float DashMoveSpeed = 7f;
     public float MoveForce = 1f;
 
     public float JumpForce = 18f;
@@ -29,6 +30,7 @@ public class PlayerController : MonoBehaviour
     public float JumpHoldTime = 1f;
 
     public float DoubleJumpForce = 12f;
+
     public float CrouchingTime = 2f;
     public float FallingForce = 3f;
 
@@ -41,6 +43,7 @@ public class PlayerController : MonoBehaviour
     public float StaminaDrainRate = -0.1f;   // Amount removed from stamina per update
     public HeadTrigger HT;
     public float iFrames;
+
     public float MaxYSpeed=20f;
 
 
@@ -75,7 +78,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] private bool doublejump = false;
     [HideInInspector] private float DashTimer = 0f;
     [HideInInspector] private float DashCDTimer = 0f;
-    [HideInInspector] private bool dashing=false;
+    [HideInInspector] private bool dashing = false;
     [HideInInspector] private float AttackTimer = 0f;   // Counts up while attacking
     [HideInInspector] private float AttackTimerEnd = 0.5f;   // How long should the attack volume/animation 
 
@@ -282,7 +285,7 @@ public class PlayerController : MonoBehaviour
 
     public void SpeedLimit()
     {
-        RB.linearVelocityY = Mathf.Clamp(RB.linearVelocityY,-MaxYSpeed,MaxYSpeed);
+        RB.linearVelocityY = Mathf.Clamp(RB.linearVelocityY,-MaxYSpeed,MaxYSpeed); //don't go too fast up and down
     }
     void Start()
     {
@@ -315,6 +318,7 @@ public class PlayerController : MonoBehaviour
 
         ParticleManager.instance.SetRunningEffectPosition(transform.position);
 
+        Dash();
     }
 
     void FixedUpdate()
@@ -326,9 +330,9 @@ public class PlayerController : MonoBehaviour
         // Added a check to avoid updating when the player is dying
         if(!Dying)
         {
-            PrimaryControl();
-            SecondaryControl();
-            ThirdControl();
+            Jump();
+            Crouch();
+            
             SpeedLimit();
 
             Debug.Log("Dash cooldown is " + DashCDTimer);
