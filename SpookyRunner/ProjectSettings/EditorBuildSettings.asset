@@ -27,5 +27,6 @@ EditorBuildSettings:
     path: Assets/Scenes/MainScenes/AutoRunnerInfinite.unity
     guid: a85e9afd8243e654c9bc2603474b3130
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 81510f311d99a6c47bc10c8a79b11777, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
