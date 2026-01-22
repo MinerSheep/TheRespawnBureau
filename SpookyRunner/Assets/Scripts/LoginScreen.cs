@@ -51,6 +51,7 @@ public class LoginScreen : MonoBehaviour
     void DisplayLogin()
     {
         passwordInput.gameObject.SetActive(true);
+        loadingText.gameObject.SetActive(false);
     }
 
     void DisplayError(string failReason)
