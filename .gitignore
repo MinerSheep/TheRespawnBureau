@@ -14,6 +14,7 @@ config.php
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
+/[Ss]erver[Dd]ata/
 *.log
 
 /PrimaPrototype/[Ll]ibrary/
@@ -40,6 +41,7 @@ config.php
 /SpookyRunner/[Ll]ogs/
 /SpookyRunner/[Tt]elemetry/
 /SpookyRunner/[Uu]ser[Ss]ettings/
+/SpookyRunner/[Ss]erver[Dd]ata/
 
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
 *.blend1
