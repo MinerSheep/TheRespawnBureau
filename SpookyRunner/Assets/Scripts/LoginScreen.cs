@@ -1,12 +1,13 @@
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 // Login screen is responsible for device id, password, and starting off the update procedure attached to manager
 public class LoginScreen : MonoBehaviour
 {
     Transform welcomeText;
     Transform loadingText;
-    Transform passwwordInput;
+    Transform passwordInput;
 
     private string deviceId;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -14,10 +15,12 @@ public class LoginScreen : MonoBehaviour
     {
         welcomeText = transform.Find("WelcomeText");
         loadingText = transform.Find("LoadingText");
-        passwwordInput = transform.Find("PasswordInput");
+        passwordInput = transform.Find("PasswordInput");
+
+        passwordInput.gameObject.SetActive(false);
 
         // Set up password detection
-        TMP_InputField ifield = passwwordInput.GetComponent<TMP_InputField>();
+        TMP_InputField ifield = passwordInput.GetComponent<TMP_InputField>();
         ifield.onValueChanged.AddListener(OnPasswordChange);
         ifield.onEndEdit.AddListener(OnPasswordEntered);
         ifield.characterLimit = 10;
@@ -27,7 +30,7 @@ public class LoginScreen : MonoBehaviour
         welcomeText.GetComponent<TextMeshProUGUI>().text = "Welcome, user " + deviceId;
 
         // Begin bootstrapping and assign loading bar progress to OnProgress
-        //UpdateProcedure.instance.BeginBootstrap();
+        UpdateProcedure.instance.BeginBootstrap();
 
         UpdateProcedure.instance.OnProgress += UpdateLoadingBar;
         UpdateProcedure.instance.OnCompleted += DisplayLogin;
@@ -42,12 +45,12 @@ public class LoginScreen : MonoBehaviour
 
     void UpdateLoadingBar(float progress)
     {
-
+        loadingText.Find("LoadingProgress").GetComponent<Image>().fillAmount = progress;
     }
 
     void DisplayLogin()
     {
-
+        passwordInput.gameObject.SetActive(true);
     }
 
     void DisplayError(string failReason)
@@ -64,12 +67,12 @@ public class LoginScreen : MonoBehaviour
             errstring += "Password cannot be longer than 10 characters.\n";
         }
 
-        passwwordInput.Find("ErrorText").GetComponent<TextMeshProUGUI>().text = errstring;
+        passwordInput.Find("ErrorText").GetComponent<TextMeshProUGUI>().text = errstring;
     }
 
     void OnPasswordEntered(string password)
     {
-        passwwordInput.Find("ErrorText").GetComponent<TextMeshProUGUI>().text = "Password was entered!";
+        passwordInput.Find("ErrorText").GetComponent<TextMeshProUGUI>().text = "Password was entered!";
     }
 
     private void OnDestroy()
