@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.InputSystem.Composites;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
+using UnityEngine.AddressableAssets;
 
 public class MenuButtons : MonoBehaviour
 {
@@ -87,16 +89,31 @@ public class MenuButtons : MonoBehaviour
         ActivePanel = null;
     }
 
-    public void AutorunnerPlay(string AutoRunnerTester)
+    public void AutorunnerPlay()
     {
+        string AutoRunnerInfinite = "AutoRunnerInfinite";
         AudioManager.instance.PlaySound("transition");
-        SceneManager.LoadScene(AutoRunnerTester);
+        StartCoroutine(LoadSceneAsync(AutoRunnerInfinite));
+        //SceneManager.LoadScene(AutoRunnerTester);
     }
 
     public void PlatformerPlay(string Platformer)
     {
         AudioManager.instance.PlaySound("transition");
         SceneManager.LoadScene(Platformer);
+    }
+    private IEnumerator LoadSceneAsync(string AutoRunnerTester)
+    {
+        var handle = Addressables.DownloadDependenciesAsync("default");
+        while (!handle.IsDone)
+        {
+            float percentCompleted = handle.PercentComplete;
+            Debug.Log(percentCompleted);
+
+            yield return null;
+        }
+        // Load scene from server
+        Addressables.LoadSceneAsync(AutoRunnerTester);
     }
 
     public void QuitGame()

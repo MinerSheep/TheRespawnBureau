@@ -271,4 +271,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   requiredLabels:
-  - core
+  - prefabs
+  - scenes

@@ -9282,8 +9282,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2091381274}
         m_TargetAssemblyTypeName: MenuButtons, Assembly-CSharp
-        m_MethodName: PlatformerPlay
-        m_Mode: 5
+        m_MethodName: AutorunnerPlay
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -10785,6 +10785,7 @@ GameObject:
   - component: {fileID: 2091381271}
   - component: {fileID: 2091381270}
   - component: {fileID: 2091381274}
+  - component: {fileID: 2091381275}
   m_Layer: 5
   m_Name: MainMenuCanvas
   m_TagString: Untagged
@@ -10894,6 +10895,24 @@ MonoBehaviour:
   OnlinePanel: {fileID: 925953730}
   OptionsPanelSliderContent: {fileID: 274846847}
   CreditsPanel: {fileID: 1015889967}
+--- !u!114 &2091381275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091381269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ff71edbde74e624ca0f4c536b06575e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instantiatethis:
+    m_AssetGUID: 6e111e76b49d6074a94f31120df5409b
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
 --- !u!1001 &3253330551801622904
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11000,8 +11019,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 369288608963524724, guid: 039192e20d8dac14b8892be7c73e5371, type: 3}
+      propertyPath: requiredLabels.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 369288608963524724, guid: 039192e20d8dac14b8892be7c73e5371, type: 3}
       propertyPath: 'requiredLabels.Array.data[0]'
-      value: default
+      value: prefabs
+      objectReference: {fileID: 0}
+    - target: {fileID: 369288608963524724, guid: 039192e20d8dac14b8892be7c73e5371, type: 3}
+      propertyPath: 'requiredLabels.Array.data[1]'
+      value: scenes
       objectReference: {fileID: 0}
     - target: {fileID: 1460610904080629567, guid: 039192e20d8dac14b8892be7c73e5371, type: 3}
       propertyPath: m_LocalPosition.x
