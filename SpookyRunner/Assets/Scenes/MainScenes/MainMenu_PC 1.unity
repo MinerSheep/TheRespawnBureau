@@ -11018,18 +11018,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 369288608963524724, guid: 039192e20d8dac14b8892be7c73e5371, type: 3}
-      propertyPath: requiredLabels.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 369288608963524724, guid: 039192e20d8dac14b8892be7c73e5371, type: 3}
-      propertyPath: 'requiredLabels.Array.data[0]'
-      value: prefabs
-      objectReference: {fileID: 0}
-    - target: {fileID: 369288608963524724, guid: 039192e20d8dac14b8892be7c73e5371, type: 3}
-      propertyPath: 'requiredLabels.Array.data[1]'
-      value: scenes
-      objectReference: {fileID: 0}
     - target: {fileID: 1460610904080629567, guid: 039192e20d8dac14b8892be7c73e5371, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.051694572
