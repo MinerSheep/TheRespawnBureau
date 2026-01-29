@@ -12140,8 +12140,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartMovingSpeed: 10
   EndMovingSpeed: 11
+  DashSpeed: 20
   ChangeTime: 9000
   AutoRunnerTimer: 0
+  dashDuration: 1
+  dashSpeedMultiplier: 2
+  hud: {fileID: 639387027}
   MovingSpeed: 0
 --- !u!4 &913051527
 Transform:
@@ -12175,16 +12179,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   easyChunks:
   - {fileID: 11400000, guid: 519b78a2e83942e449d242a72e0331d6, type: 2}
+  - {fileID: 11400000, guid: 22ccf889fa1c9e246a0c0dc45f7b96f1, type: 2}
   - {fileID: 11400000, guid: 2e3849d88a436764cab74ee7e5ee383c, type: 2}
-  - {fileID: 11400000, guid: 24db198c87238e242b9e1e344ef2a6df, type: 2}
-  - {fileID: 11400000, guid: e7954300fe069194198b880e7da18637, type: 2}
   mediumChunks:
+  - {fileID: 11400000, guid: 01c3fecd732447841989d5772e9b6332, type: 2}
   - {fileID: 11400000, guid: 82f58f53e4378f249a42f05598845f69, type: 2}
   - {fileID: 11400000, guid: c760bc45835c0b040aa9179ff6b08e72, type: 2}
+  - {fileID: 11400000, guid: 24db198c87238e242b9e1e344ef2a6df, type: 2}
+  - {fileID: 11400000, guid: e7954300fe069194198b880e7da18637, type: 2}
   - {fileID: 11400000, guid: e9e85b81dc84baa43859dc89ae720de9, type: 2}
   hardChunks:
-  - {fileID: 11400000, guid: 22ccf889fa1c9e246a0c0dc45f7b96f1, type: 2}
-  - {fileID: 11400000, guid: 01c3fecd732447841989d5772e9b6332, type: 2}
+  - {fileID: 11400000, guid: ea1df0fcc940a8c40abb1e1d7e5607bf, type: 2}
+  - {fileID: 11400000, guid: 25c6bf4a6bac82f4a9485548b93112fe, type: 2}
   difficultySequence:
   - difficulty: 0
     roomCount: 1

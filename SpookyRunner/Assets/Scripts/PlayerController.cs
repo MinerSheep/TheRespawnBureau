@@ -231,11 +231,11 @@ public class PlayerController : MonoBehaviour
 
     public void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            RB.AddForce(Vector2.right * DashForce, ForceMode2D.Impulse);
-            hud.StaminaAmount -= 15f;
-        }
+        //if (Input.GetKeyDown(KeyCode.D))
+        //{
+        //    RB.AddForce(Vector2.right * DashForce, ForceMode2D.Impulse);
+        //    hud.StaminaAmount -= 15f;
+        //}
     }
 
     public void SpeedLimit()
@@ -273,7 +273,7 @@ public class PlayerController : MonoBehaviour
 
         ParticleManager.instance.SetRunningEffectPosition(transform.position);
 
-        Dash();
+        //Dash();
     }
 
     void FixedUpdate()

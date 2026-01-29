@@ -7,8 +7,16 @@ public class RunnerScene : MonoBehaviour
     [Header("Settings")]
     public float StartMovingSpeed = 6f;
     public float EndMovingSpeed = 10f;
+    public float DashSpeed = 20f;
     public float ChangeTime = 9000f;
     public float AutoRunnerTimer = 0f;
+
+    public float MinimumMovingSpeed = 6f;
+    private bool canDash = true;
+    public float dashDuration = 1f;
+    private float dashTimer = 0f;
+
+    public HUD hud;
 
     // Private variables
     [HideInInspector] public float MovingSpeed;
@@ -42,8 +50,13 @@ public class RunnerScene : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (canDash)
+        {
+            MovingSpeed = Mathf.Lerp(StartMovingSpeed, EndMovingSpeed, AutoRunnerTimer / ChangeTime);
+        }
+
         AutoRunnerTimer += Time.deltaTime;
-        MovingSpeed = Mathf.Lerp(StartMovingSpeed, EndMovingSpeed, AutoRunnerTimer / ChangeTime);
+        
         transform.position += new Vector3(-MovingSpeed * Time.deltaTime, 0, 0);
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -56,6 +69,31 @@ public class RunnerScene : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.L) && SceneManager.GetSceneByName("AR02") != null)
             SceneManager.LoadScene("AR02");
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.D) && canDash)
+        {
+            canDash = false;
+            MovingSpeed = DashSpeed;
+            dashTimer = dashDuration;
+            hud.StaminaAmount -= 15f;
+        }
+        
+        dashTimer -= Time.deltaTime;
+
+        if(dashTimer < 0)
+        {
+            dashTimer = 0;
+            canDash = true;
+            MovingSpeed = StartMovingSpeed;
+        }
+        
+        if(MovingSpeed < MinimumMovingSpeed)
+        {
+            MovingSpeed = MinimumMovingSpeed;
+        }
     }
 
     void OnDestroy()
