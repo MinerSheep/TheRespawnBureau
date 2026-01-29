@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class GroundDetection : MonoBehaviour
 {
@@ -11,14 +12,21 @@ public class GroundDetection : MonoBehaviour
 
     void Update()
     {
-        Grounded = GroundCount > 0;
 
-        if (Grounded)
+        if (Grounded && GroundCount == 0)
+        {
+            CameraEvents.TriggerGrounded(false);
             ParticleManager.instance.RunningEffectCall(transform.position);
-        else
+            Grounded = false;
+        }
+        else if (!Grounded && GroundCount > 0)
+        {
+            CameraEvents.TriggerGrounded(true);
             ParticleManager.instance.RunningEffectDestory();
-          
-        if(PC.Jumping)
+            Grounded = true;
+        }
+
+        if (PC.Jumping)
         {
             PC.Jumping = !Grounded;
 

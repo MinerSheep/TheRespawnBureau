@@ -108,7 +108,7 @@ public class HazardManager : MonoBehaviour
             HazardWarning hw = Instantiate(prefabToSpawn, player.hud.transform).GetComponent<HazardWarning>();
             hw.hazard = target;
             hw.timed = spawnXDistance == 0;
-            hw.spawnXDistance = spawnXDistance;
+            hw.spawnXDistance = spawnXDistance + Random.Range(-1f, 1f);
         }
     }
 
