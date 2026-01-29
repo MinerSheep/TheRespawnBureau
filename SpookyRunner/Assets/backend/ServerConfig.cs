@@ -1,5 +1,8 @@
 using UnityEngine;
 
+// THIS HOLDS THE DATA FOR THE SERVERCONFIG OBJECT THAT ANALYTICS AND DATABASE REFERENCE
+// CHANGE THIS IF MORE SERVER INFORMATION IS NEEDED
+
 [CreateAssetMenu(fileName = "ServerConfig", menuName = "Game/Server Config")]
 public class ServerConfig : ScriptableObject
 {

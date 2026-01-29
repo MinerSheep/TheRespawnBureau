@@ -21,22 +21,20 @@ public class TelemetryManager : MonoBehaviour
 {
     static public TelemetryManager instance { get; private set; }
     private static StreamWriter gamedatastream;
-    private static StreamWriter inputstream;
-
-    public string DeathReason = "";
-
+    private static StreamWriter inputstream;    // this one is mostly irrelevant
 
     [Header("Settings")]
     [SerializeField] public bool timeBasedRecording = true;
+
+    // PRIVATE variables
     private List<string> gameDataRecordFormat = new List<string>{ "Time", "Jumps", "Crouches", "Dashes", "WallHits", 
     "CoinCollects", "CoinMisses", "StamCollects", "StamMisses" };
-
     private float overalltimer = 0;
-
     private float timer = 0;
-    private float recordat = float.MaxValue;
+    private float record_time = float.MaxValue;
+    private bool first_death = true;
 
-    private bool firstDeath = true;
+    public string DeathReason = "";
 
     private Dictionary<string, uint> integers = new Dictionary<string, uint>
     {
@@ -81,7 +79,7 @@ public class TelemetryManager : MonoBehaviour
         // optional time based recording system
         begin = true;
         timer = 0;
-        recordat = 1;
+        record_time = 1;
 
         // Put game data header
         gamedatastream.WriteLine(string.Join(",", gameDataRecordFormat));
@@ -109,8 +107,8 @@ public class TelemetryManager : MonoBehaviour
         // Dump round data
         if (death)
         {
-            gamedatastream?.WriteLine("Player died," + (firstDeath ? "FIRST DEATH" : "") + ",Reason: " + DeathReason + ",,Location: " + location?.name + ",,Distance: " + distance);
-            firstDeath = false;
+            gamedatastream?.WriteLine("Player died," + (first_death ? "FIRST DEATH" : "") + ",Reason: " + DeathReason + ",,Location: " + location?.name + ",,Distance: " + distance);
+            first_death = false;
 
             // Server
             Vector2 deathPos = FindAnyObjectByType<PlayerController>()?.transform.position ?? Vector2.zero;
@@ -127,7 +125,7 @@ public class TelemetryManager : MonoBehaviour
         AnalyticsManager.Instance?.EndSession(score, Mathf.RoundToInt(distance));
 
         timer = 0;
-        recordat = float.MaxValue;
+        record_time = float.MaxValue;
     }
 
     void Awake()
@@ -161,7 +159,7 @@ public class TelemetryManager : MonoBehaviour
         overalltimer += Time.deltaTime;
         timer += Time.deltaTime;
 
-        if (timeBasedRecording && timer >= recordat)
+        if (timeBasedRecording && timer >= record_time)
         {
             float frameRate = 1.0f / Time.deltaTime;
 
@@ -173,7 +171,7 @@ public class TelemetryManager : MonoBehaviour
 
             gamedatastream.WriteLine(writeLine);
 
-            recordat += 1f;
+            record_time += 1f;
         }
     }
     
