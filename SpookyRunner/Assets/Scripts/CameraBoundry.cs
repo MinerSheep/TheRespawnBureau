@@ -2,13 +2,6 @@ using System;
 using UnityEngine;
 using Unity.Cinemachine;
 
-public class CameraEvents
-{
-    public static event Action<bool> OnGrounded;
-
-    public static void TriggerGrounded(bool flag) { OnGrounded?.Invoke(flag); }
-}
-
 public class CameraBoundry : MonoBehaviour
 {
     public bool upDownMovement = true;
