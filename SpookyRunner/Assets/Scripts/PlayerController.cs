@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour
     }
 
     [HideInInspector] private InputBuffer inputBuffer;
+    [HideInInspector] private RunnerScene runnerScene;
     [HideInInspector] public Rigidbody2D RB;
     [HideInInspector] public CapsuleCollider2D cC;
     [HideInInspector] public bool Jumping = false;
@@ -231,11 +232,8 @@ public class PlayerController : MonoBehaviour
 
     public void Dash()
     {
-        //if (Input.GetKeyDown(KeyCode.D))
-        //{
-        //    RB.AddForce(Vector2.right * DashForce, ForceMode2D.Impulse);
-        //    hud.StaminaAmount -= 15f;
-        //}
+        if (inputBuffer.Consume("Dash"))
+            runnerScene.DashInLevel();
     }
 
     public void SpeedLimit()
@@ -245,6 +243,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         inputBuffer = GetComponent<InputBuffer>();
+        runnerScene = FindAnyObjectByType<RunnerScene>();
         RB = GetComponent<Rigidbody2D>();
         cC = GetComponent<CapsuleCollider2D>();
 
@@ -272,8 +271,6 @@ public class PlayerController : MonoBehaviour
         }
 
         ParticleManager.instance.SetRunningEffectPosition(transform.position);
-
-        //Dash();
     }
 
     void FixedUpdate()
@@ -287,6 +284,7 @@ public class PlayerController : MonoBehaviour
         {
             Jump();
             Crouch();
+            Dash();
             
             SpeedLimit();
 

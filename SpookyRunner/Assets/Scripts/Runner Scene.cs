@@ -21,6 +21,17 @@ public class RunnerScene : MonoBehaviour
     // Private variables
     [HideInInspector] public float MovingSpeed;
 
+    public void DashInLevel()
+    {
+        if (canDash)
+        {
+            canDash = false;
+            MovingSpeed = DashSpeed;
+            dashTimer = dashDuration;
+            hud.StaminaAmount -= 15f;
+        }
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -72,15 +83,7 @@ public class RunnerScene : MonoBehaviour
     }
 
     private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.D) && canDash)
-        {
-            canDash = false;
-            MovingSpeed = DashSpeed;
-            dashTimer = dashDuration;
-            hud.StaminaAmount -= 15f;
-        }
-        
+    {        
         dashTimer -= Time.deltaTime;
 
         if(dashTimer < 0)
