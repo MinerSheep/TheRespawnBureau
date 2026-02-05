@@ -9,11 +9,14 @@ public class DistanceScoreTracker : MonoBehaviour
     private float lastPlayerX = 0f;
     private float totalDistance = 0f;
 
+    public float scoreMultiplier = 5f;
+    private float elapsedTime;
+
     public float TotalDistance()
     {
         return totalDistance;
     }
-    
+
     void Update()
     {
         if (levelGen == null || levelGen.player == null) return;
@@ -32,7 +35,7 @@ public class DistanceScoreTracker : MonoBehaviour
                     Chunk lastChunk = lastTrackedChunk.GetComponent<Chunk>();
                     float lastChunkDistance = currentChunkStartX - lastChunk.entryPoint.position.x;
                     cumulativeDistance += lastChunkDistance;
-                    Debug.Log($"Chunk Changed! Previous Chunk: {lastChunkDistance}, Cumulative Chunk: {cumulativeDistance}");
+                    //Debug.Log($"Chunk Changed! Previous Chunk: {lastChunkDistance}, Cumulative Chunk: {cumulativeDistance}");
                 }
                 currentChunkStartX = chunk.entryPoint.position.x;
                 lastTrackedChunk = currentChunk;
@@ -46,11 +49,20 @@ public class DistanceScoreTracker : MonoBehaviour
             float currentChunkProgress = currentChunkStartX - chunk.entryPoint.position.x;
             totalDistance = cumulativeDistance + currentChunkProgress;
 
-            if (ScoreManager.instance != null)
-            {
-                ScoreManager.instance.score = Mathf.FloorToInt(Mathf.Max(0, totalDistance));
-            }
+            //if (ScoreManager.instance != null)
+            //{
+            //    ScoreManager.instance.score = Mathf.FloorToInt(Mathf.Max(0, totalDistance));
+            //}
         }
         lastPlayerX = currentPlayerX;
+
+        // NEW SCORING METHOD
+
+        elapsedTime += Time.deltaTime;
+
+        int score = Mathf.FloorToInt(elapsedTime * scoreMultiplier * 10);
+
+        if (ScoreManager.instance != null)
+            ScoreManager.instance.score = score;
     }
 }

@@ -21,21 +21,29 @@ public class PlayerController : MonoBehaviour
     public bool AutoRunner = false;
     public bool HasStamina = true;
     public float MoveSpeed = 5f;
+    public float DashMoveSpeed = 7f;
     public float MoveForce = 1f;
+
     public float JumpForce = 18f;
     private float DefaultJumpForce = 18f;   // Used to reset jump to normal after leaving a "sticky" platform
     public float JumpHoldForce = 3f;
     public float JumpHoldTime = 1f;
+
     public float DoubleJumpForce = 12f;
+
     public float CrouchingTime = 2f;
     public float FallingForce = 3f;
+
     public float iFrameMax = 0.2f;
-    public float DashSpeed = 8f;
+
+    public float DashForce = 10f;
     public float DashTime = 1f;
     public float DashCD = 4f;
-    public float StaminaDrainRate = -0.1f;   // Amount removed from stamina per update
+    public float StaminaDrainRate = -0.1f; // Amount removed from stamina per update
+    public float StaminaDrainMultiplier = 3f; 
     public HeadTrigger HT;
     public float iFrames;
+
     public float MaxYSpeed=20f;
 
 
@@ -49,6 +57,7 @@ public class PlayerController : MonoBehaviour
     }
 
     [HideInInspector] private InputBuffer inputBuffer;
+    [HideInInspector] private RunnerScene runnerScene;
     [HideInInspector] public Rigidbody2D RB;
     [HideInInspector] public CapsuleCollider2D cC;
     [HideInInspector] public bool Jumping = false;
@@ -70,7 +79,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] private bool doublejump = false;
     [HideInInspector] private float DashTimer = 0f;
     [HideInInspector] private float DashCDTimer = 0f;
-    [HideInInspector] private bool dashing=false;
+    [HideInInspector] private bool dashing = false;
     [HideInInspector] private float AttackTimer = 0f;   // Counts up while attacking
     [HideInInspector] private float AttackTimerEnd = 0.5f;   // How long should the attack volume/animation 
 
@@ -223,53 +232,18 @@ public class PlayerController : MonoBehaviour
 
     public void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && DashCDTimer <= 0)
-        {
-            DashCDTimer = DashCD;
-            dashing = true;
-            DashTimer = DashTime;
-
-            TelemetryManager.instance.ActionPerformed("Dash");
-            TelemetryManager.instance.IntIncrease("Dashes");
-        }
-        if (dashing)
-        {
-            DashTimer-= Time.deltaTime;
-            RB.AddForce(Vector2.right*DashSpeed, ForceMode2D.Impulse);
-            if (DashTimer <= 0)
-            {
-                dashing = false;
-            }
-        }
-        else if(DashCDTimer > 0)
-        {
-            DashCDTimer -= Time.deltaTime;
-            //Debug.Log(DashCDTimer);
-        }
-    }
-
-    public void PrimaryControl()
-    {
-        Jump();
-    }
-
-    public void SecondaryControl()
-    {
-        Crouch();
-    }
-
-    public void ThirdControl()
-    {
-        Dash();
+        if (inputBuffer.Consume("Dash"))
+            runnerScene.DashInLevel();
     }
 
     public void SpeedLimit()
     {
-        RB.linearVelocityY = Mathf.Clamp(RB.linearVelocityY,-MaxYSpeed,MaxYSpeed);
+        RB.linearVelocityY = Mathf.Clamp(RB.linearVelocityY,-MaxYSpeed,MaxYSpeed); //don't go too fast up and down
     }
     void Start()
     {
         inputBuffer = GetComponent<InputBuffer>();
+        runnerScene = FindAnyObjectByType<RunnerScene>();
         RB = GetComponent<Rigidbody2D>();
         cC = GetComponent<CapsuleCollider2D>();
 
@@ -297,7 +271,6 @@ public class PlayerController : MonoBehaviour
         }
 
         ParticleManager.instance.SetRunningEffectPosition(transform.position);
-
     }
 
     void FixedUpdate()
@@ -309,15 +282,20 @@ public class PlayerController : MonoBehaviour
         // Added a check to avoid updating when the player is dying
         if(!Dying)
         {
-            PrimaryControl();
-            SecondaryControl();
-            ThirdControl();
+            Jump();
+            Crouch();
+            Dash();
+            
             SpeedLimit();
+
+            Debug.Log("Dash cooldown is " + DashCDTimer);
         }
         //flipping flashlight by flip the sprite mask
         //if (inputBuffer.Consume("FlipFlashlight"))
         //    flashlight?.flip();
     }
+
+    public InputBuffer GetInputBuffer() { return inputBuffer; }
 
     private bool dead = false;
     private void PlayerDeath()
