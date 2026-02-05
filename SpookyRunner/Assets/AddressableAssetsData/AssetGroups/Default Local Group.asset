@@ -21,6 +21,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - prefabs
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 358791dbcd22a8541b4fff685b14b671
+    m_Address: Assets/UI/Font/Antic-Regular.ttf
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6e111e76b49d6074a94f31120df5409b
     m_Address: Assets/Prefabs/Image.prefab
     m_ReadOnly: 0
