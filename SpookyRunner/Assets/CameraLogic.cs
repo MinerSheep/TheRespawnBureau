@@ -14,9 +14,10 @@ public class CameraLogic : MonoBehaviour
 {
     public GameObject followTarget;
 
-    float xoffset;
-    float yoffset;
-    float lerpTime = 1.0f;
+    public float xoffset;
+    public float yoffset;
+    public float ymax = -1;
+    public float lerpTime = 1.0f;
 
     private void Start()
     {
@@ -26,7 +27,7 @@ public class CameraLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector2(followTarget.transform.position.x + xoffset, transform.position.y);
+        transform.position = new Vector3(followTarget.transform.position.x + xoffset, transform.position.y, -10);
     }
 
     private bool lerping = false;
@@ -39,7 +40,7 @@ public class CameraLogic : MonoBehaviour
 
         float yoffsetcurr = transform.position.y - followTarget.transform.position.y;
 
-        if (yoffsetcurr < yoffset || yoffset < yoffsetcurr)
+        if (followTarget.transform.position.y + yoffset < ymax && yoffsetcurr < yoffset - 0.5f || yoffset + 0.5f < yoffsetcurr)
             StartCoroutine(LerpY());
     }
 
@@ -47,6 +48,7 @@ public class CameraLogic : MonoBehaviour
     {
         float time = 0.0f;
         float starty = transform.position.y;
+        float endy = followTarget.transform.position.y + yoffset;
 
         lerping = true;
 
@@ -54,7 +56,7 @@ public class CameraLogic : MonoBehaviour
         {
             time += Time.deltaTime;
 
-            transform.position = new Vector2(transform.position.x, Mathf.Lerp(starty, followTarget.transform.position.y + yoffset, time));
+            transform.position = new Vector3(transform.position.x, Mathf.Lerp(starty, endy, time), -10);
             
             yield return null;
         }
