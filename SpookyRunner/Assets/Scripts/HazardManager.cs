@@ -66,11 +66,11 @@ public class HazardManager : MonoBehaviour
             {
                 case 0:
                     GameObject boulder = SpawnPrefab(boulderPrefab,
-                    playerTransform.position.x + boulderOffset + (boulderMethod == SpawnMethod.WorldSpace ? hazardSpawnOffset : 0),
+                    playerTransform.position.x + (boulderOffset + Random.Range(-5, 5)) + (boulderMethod == SpawnMethod.WorldSpace ? hazardSpawnOffset : 0),
                     boulderPrefab.transform.position.y,
                     boulderMethod == SpawnMethod.WorldSpace ? transform : null);
 
-                    Warning(boulder, boulderMethod == SpawnMethod.WorldSpace ? boulderOffset : 0);
+                    Warning(boulder, boulderMethod == SpawnMethod.WorldSpace ? (boulderOffset + Random.Range(-5,5)) : 0);
                     break;
                 case 1:
                     GameObject missle = SpawnPrefab(missilePrefab, missilePrefab.transform.position.x, Random.Range(groundTrigger.position.y, headTrigger.position.y));
