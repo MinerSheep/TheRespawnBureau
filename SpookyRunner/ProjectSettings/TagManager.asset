@@ -12,6 +12,7 @@ TagManager:
   - DesktopAndMobile
   - Debris
   - Pause
+  - Desktop
   layers:
   - Default
   - TransparentFX
