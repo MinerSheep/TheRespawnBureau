@@ -5,17 +5,19 @@ using TMPro;
 // Login screen is responsible for device id, password, and starting off the update procedure attached to manager
 public class LoginScreen : MonoBehaviour
 {
-    Transform welcomeText;
+    Transform loadingProgress;
     Transform loadingText;
     Transform passwordInput;
+    Transform uidText;
 
     private string deviceId;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        welcomeText = transform.Find("WelcomeText");
+        loadingProgress = transform.Find("LoadingProgress");
         loadingText = transform.Find("LoadingText");
         passwordInput = transform.Find("PasswordInput");
+        uidText = transform.Find("UID");
 
         passwordInput.gameObject.SetActive(false);
 
@@ -27,7 +29,7 @@ public class LoginScreen : MonoBehaviour
 
         // Retrieve and display device id
         deviceId = SystemInfo.deviceUniqueIdentifier;
-        welcomeText.GetComponent<TextMeshProUGUI>().text = "Welcome, user " + deviceId;
+        uidText.GetComponent<TextMeshProUGUI>().text = "UID: " + deviceId;
 
         // Begin bootstrapping and assign loading bar progress to OnProgress
         UpdateProcedure.instance.BeginBootstrap();
@@ -45,18 +47,22 @@ public class LoginScreen : MonoBehaviour
 
     void UpdateLoadingBar(float progress)
     {
-        loadingText.Find("LoadingProgress").GetComponent<Image>().fillAmount = progress;
+        loadingProgress.GetComponent<Image>().fillAmount = progress;
     }
 
     void DisplayLogin()
     {
         passwordInput.gameObject.SetActive(true);
+        loadingProgress.gameObject.SetActive(false);
         loadingText.gameObject.SetActive(false);
     }
 
     void DisplayError(string failReason)
     {
+        loadingText.GetComponent<TextMeshProUGUI>().text = "FAILED: " + failReason;
 
+        // After 3 secs unlock
+        Invoke(nameof(DisplayLogin), 3f);
     }
     
     void OnPasswordChange(string password)
