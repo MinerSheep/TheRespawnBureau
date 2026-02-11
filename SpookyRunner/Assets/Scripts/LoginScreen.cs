@@ -52,6 +52,8 @@ public class LoginScreen : MonoBehaviour
 
     void DisplayLogin()
     {
+        transform.Find("LoadingProgressBG").gameObject.SetActive(false);
+        
         passwordInput.gameObject.SetActive(true);
         loadingProgress.gameObject.SetActive(false);
         loadingText.gameObject.SetActive(false);
@@ -80,6 +82,8 @@ public class LoginScreen : MonoBehaviour
     void OnPasswordEntered(string password)
     {
         passwordInput.Find("ErrorText").GetComponent<TextMeshProUGUI>().text = "Password was entered!";
+
+        gameObject.SetActive(false);
     }
 
     private void OnDestroy()
