@@ -17,12 +17,14 @@ public class RunnerScene : MonoBehaviour
     private float dashTimer = 0f;
 
     public HUD hud;
+    public GameObject Speedlines;
 
     // Private variables
     [HideInInspector] public float MovingSpeed;
 
     public void DashInLevel()
     {
+        Speedlines.SetActive(true);
         if (canDash)
         {
             canDash = false;
@@ -91,11 +93,13 @@ public class RunnerScene : MonoBehaviour
             dashTimer = 0;
             canDash = true;
             MovingSpeed = StartMovingSpeed;
+            Speedlines.SetActive(false);
         }
         
         if(MovingSpeed < MinimumMovingSpeed)
         {
             MovingSpeed = MinimumMovingSpeed;
+            
         }
     }
 
