@@ -18,6 +18,8 @@ public class RunnerScene : MonoBehaviour
 
     public HUD hud;
 
+    public ParticleSystem Speedlines;
+
     // Private variables
     [HideInInspector] public float MovingSpeed;
 
@@ -29,6 +31,7 @@ public class RunnerScene : MonoBehaviour
             MovingSpeed = DashSpeed;
             dashTimer = dashDuration;
             hud.StaminaAmount -= 15f;
+            Speedlines.gameObject.SetActive(true);
         }
     }
 
@@ -91,6 +94,7 @@ public class RunnerScene : MonoBehaviour
             dashTimer = 0;
             canDash = true;
             MovingSpeed = StartMovingSpeed;
+            Speedlines.gameObject.SetActive(false);
         }
         
         if(MovingSpeed < MinimumMovingSpeed)
