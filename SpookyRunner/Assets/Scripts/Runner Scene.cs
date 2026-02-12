@@ -85,19 +85,27 @@ public class RunnerScene : MonoBehaviour
             SceneManager.LoadScene("AR02");
     }
 
+
     private void Update()
-    {        
+    {
+        if (Input.GetKeyDown(KeyCode.D) && canDash)
+        {
+            canDash = false;
+            MovingSpeed = DashSpeed;
+            dashTimer = dashDuration;
+            hud.StaminaAmount -= 15f;
+        }
+
         dashTimer -= Time.deltaTime;
 
-        if(dashTimer < 0)
+        if (dashTimer < 0)
         {
             dashTimer = 0;
             canDash = true;
             MovingSpeed = StartMovingSpeed;
-            Speedlines.gameObject.SetActive(false);
         }
-        
-        if(MovingSpeed < MinimumMovingSpeed)
+
+        if (MovingSpeed < MinimumMovingSpeed)
         {
             MovingSpeed = MinimumMovingSpeed;
         }
