@@ -31,6 +31,7 @@ public class RunnerScene : MonoBehaviour
             MovingSpeed = DashSpeed;
             dashTimer = dashDuration;
             hud.StaminaAmount -= 15f;
+            Speedlines.gameObject.SetActive(true);
         }
     }
 
