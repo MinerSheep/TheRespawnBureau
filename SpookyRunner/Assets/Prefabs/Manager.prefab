@@ -222,8 +222,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73a8d19d8acdd0e4a9c00b5ae19f6df5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DeathReason: 
   timeBasedRecording: 1
+  DeathReason: 
 --- !u!114 &5546038576753126942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,3 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751892ba7db771c4ba67228fe66931c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minSwipeDistance: 80
+  maxVerticalDeviation: 0.5
+  prefab: {fileID: 2529637029018022353, guid: 8c31eeb1aca9b2547956f0c87699b81f, type: 3}
+  canvas: {fileID: 0}
