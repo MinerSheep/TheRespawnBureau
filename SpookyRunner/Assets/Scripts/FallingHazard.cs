@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class FallingHazard : MonoBehaviour
 {
@@ -19,7 +20,6 @@ public class FallingHazard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up);
         
         if(hit.collider.gameObject.CompareTag("Player"))
