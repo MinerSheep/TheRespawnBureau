@@ -271,6 +271,12 @@ public class PlayerController : MonoBehaviour
         }
 
         ParticleManager.instance.SetRunningEffectPosition(transform.position);
+
+        if (RB.linearVelocity.x < 0)
+        {
+            RB.linearVelocity = new Vector2(0, RB.linearVelocity.y);
+        }
+
     }
 
     void FixedUpdate()
