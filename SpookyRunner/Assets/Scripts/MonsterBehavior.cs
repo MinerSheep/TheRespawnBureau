@@ -18,6 +18,7 @@ public class MonsterBehavior : MonoBehaviour
     [HideInInspector] public float currentSpeed;
     [HideInInspector] float distance = 10f;
 
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -36,7 +37,6 @@ public class MonsterBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (isflashed)
         {
             currentSpeed = flashedSpeed;
@@ -63,6 +63,8 @@ public class MonsterBehavior : MonoBehaviour
             case MonsterState.AutoRunner:
                 if (Target != null)
                 {
+
+
                     transform.position = new Vector3(transform.position.x, Target.transform.position.y);
 
                     if (Vector3.Distance(Target.transform.position, transform.position) < distance)
