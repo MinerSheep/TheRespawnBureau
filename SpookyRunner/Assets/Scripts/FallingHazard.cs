@@ -7,6 +7,7 @@ public class FallingHazard : MonoBehaviour
     [SerializeField] private bool isFalling;
     [SerializeField] private bool damagedPlayer;
     private Rigidbody2D rb;
+    public GameObject CrumblingRocks;
 
     PlayerController playerScript;
 
@@ -40,11 +41,13 @@ public class FallingHazard : MonoBehaviour
         else if (collision.gameObject.CompareTag("Ground"))
         {
             destroyHazard();
+            
         }
     }
 
     private void destroyHazard()
     {
+        Instantiate(CrumblingRocks, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }
