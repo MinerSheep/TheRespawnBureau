@@ -29,7 +29,7 @@ public class MissileHazard : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        if (passedPlayer)
+        if (passedPlayer && gameObject.activeSelf)
         {
             StartCoroutine(WaitThreeSeconds());
         }
