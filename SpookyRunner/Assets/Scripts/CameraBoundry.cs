@@ -1,22 +1,32 @@
+using System;
 using UnityEngine;
+using Unity.Cinemachine;
 
 public class CameraBoundry : MonoBehaviour
 {
-    public float LowerBoundry = 2;
-    public bool CheckLower = true;
-    public float UpperBoundry = 5;
-    public bool CheckUpper = false;
+    public bool upDownMovement = true;
 
-    // Update is called once per frame
-    void Update()
+    CinemachinePositionComposer composer;
+
+    private void Start()
     {
-        if(CheckLower&&transform.position.y < LowerBoundry)
-        {
-            transform.position=new Vector2(transform.position.x,LowerBoundry);
-        }
-        if(CheckUpper&&transform.position.y > UpperBoundry)
-        {
-            transform.position = new Vector2(transform.position.x, UpperBoundry);
-        }
+        CameraEvents.OnGrounded += SetCheckUpper;
+
+        composer = GetComponent<CinemachinePositionComposer>();
+    }
+
+    public void SetCheckUpper(bool flag)
+    {
+        if (!upDownMovement)
+            return;
+
+        var comp = composer.Composition;
+        comp.DeadZone.Size.y = flag ? 0.3f : 0.6f;
+        composer.Composition = comp;
+    }
+
+    private void OnDestroy()
+    {
+        CameraEvents.OnGrounded -= SetCheckUpper;
     }
 }
