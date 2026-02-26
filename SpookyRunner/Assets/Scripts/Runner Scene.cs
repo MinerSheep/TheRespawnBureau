@@ -12,9 +12,11 @@ public class RunnerScene : MonoBehaviour
     public float AutoRunnerTimer = 0f;
 
     public float MinimumMovingSpeed = 6f;
-    private bool canDash = true;
+    public bool canDash = true;
     public float dashDuration = 1f;
     private float dashTimer = 0f;
+
+    public MonsterBehavior MB;
 
     public HUD hud;
     public GameObject Speedlines;
@@ -32,6 +34,8 @@ public class RunnerScene : MonoBehaviour
             dashTimer = dashDuration;
             hud.StaminaAmount -= 15f;
             Speedlines.SetActive(true);
+
+            
         }
     }
 
@@ -104,6 +108,7 @@ public class RunnerScene : MonoBehaviour
             canDash = true;
             MovingSpeed = StartMovingSpeed;
             Speedlines.SetActive(false);
+
         }
 
         if (MovingSpeed < MinimumMovingSpeed)

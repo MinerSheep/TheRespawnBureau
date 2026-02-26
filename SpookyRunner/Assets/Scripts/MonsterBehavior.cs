@@ -6,9 +6,10 @@ public class MonsterBehavior : MonoBehaviour
 {
     [Header("Settings")]
     public MonsterState state;
-    [SerializeField] float speed = 0.1f;
+    [SerializeField] public float speed = 0.1f;
     public float flashedSpeed = 0f;
     public float speedUpRate = 0.1f;
+    public float speedWhilePlayerIsDashing = 3f;
 
     [Header("References")]
     [SerializeField] GameObject Target;
@@ -17,6 +18,8 @@ public class MonsterBehavior : MonoBehaviour
     [HideInInspector] float buildUpSpeed = 0.5f;  // Percent of speed build up (0 -> 1) after being flashed
     [HideInInspector] public float currentSpeed;
     [HideInInspector] float distance = 10f;
+
+    public RunnerScene RS;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,7 +31,7 @@ public class MonsterBehavior : MonoBehaviour
             Target = GameObject.FindWithTag("Player");
             if (!Target)
             {
-                Debug.Log("Best part of the moment: you forget to set the player target");
+                Debug.Log("you forget to set the player target");
             }
         }
     }
@@ -65,10 +68,17 @@ public class MonsterBehavior : MonoBehaviour
                 {
                     transform.position = new Vector3(transform.position.x, Target.transform.position.y);
 
-                    if (Vector3.Distance(Target.transform.position, transform.position) < distance)
+                    if (RS.canDash == false)
                     {
-                        Vector3 targetPos = Target.transform.position - (Target.transform.position - transform.position).normalized * distance;
-                        transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
+                        if (Vector3.Distance(Target.transform.position, transform.position) < distance)
+                        {
+                            Vector3 targetPos = Target.transform.position - (Target.transform.position - transform.position).normalized * distance;
+                            transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
+                        }
+                    }
+                    else
+                    {
+                        speed = speedWhilePlayerIsDashing;
                     }
 
                 }
