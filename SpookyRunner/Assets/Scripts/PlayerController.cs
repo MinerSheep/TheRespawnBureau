@@ -267,7 +267,8 @@ public class PlayerController : MonoBehaviour
         // Return to main menu
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            SceneManager.LoadScene("MainMenu_PC");
+            // main menu scene
+            SceneManager.LoadScene(0);
         }
 
         ParticleManager.instance.SetRunningEffectPosition(transform.position);
