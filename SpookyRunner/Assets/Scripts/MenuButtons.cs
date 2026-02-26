@@ -13,6 +13,7 @@ public class MenuButtons : MonoBehaviour
     public GameObject OnlinePanel;
     public GameObject OptionsPanelSliderContent;
     public GameObject CreditsPanel;
+    public GameObject QuitPanel;
 
 
     private GameObject ActivePanel = null;
@@ -82,6 +83,19 @@ public class MenuButtons : MonoBehaviour
         ActivePanel = CreditsPanel;
     }
 
+    public void ShowQuits()
+    {
+        QuitPanel.SetActive(true);
+        ActivePanel = QuitPanel;
+    }
+
+    public void HideQuits()
+    {
+        QuitPanel.SetActive(false);
+        ActivePanel?.SetActive(false);
+        ActivePanel = null;
+    }
+
     public void HideCredits()
     {
         CreditsPanel.SetActive(false);
@@ -118,6 +132,8 @@ public class MenuButtons : MonoBehaviour
 
     public void QuitGame()
     {
+        Debug.Log("quitting");
         Application.Quit();
+
     }
 }
