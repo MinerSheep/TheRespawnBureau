@@ -339,7 +339,8 @@ public class PlayerController : MonoBehaviour
         // Optional
         ScoreManager.instance?.SaveScore(); // Save high score to PlayerPrefs
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        _ = Game.Utilities.SceneLoader.ReloadSceneAsync();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
