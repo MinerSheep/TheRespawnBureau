@@ -92,10 +92,18 @@ public class RunnerScene : MonoBehaviour
 
     private void Update()
     {
+        float movingSpeedBeforeDash = MovingSpeed;
+        
+
         if (Input.GetKeyDown(KeyCode.D) && canDash)
         {
+            
+            float speedToGo = MovingSpeed * 2f;
+            
+
             canDash = false;
-            MovingSpeed = DashSpeed;
+
+            MovingSpeed = speedToGo;
             dashTimer = dashDuration;
             hud.StaminaAmount -= 15f;
         }
@@ -106,7 +114,7 @@ public class RunnerScene : MonoBehaviour
         {
             dashTimer = 0;
             canDash = true;
-            MovingSpeed = StartMovingSpeed;
+            MovingSpeed = movingSpeedBeforeDash;
             Speedlines.SetActive(false);
 
         }
