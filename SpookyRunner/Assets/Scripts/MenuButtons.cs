@@ -134,6 +134,5 @@ public class MenuButtons : MonoBehaviour
     {
         Debug.Log("quitting");
         Application.Quit();
-
     }
 }
