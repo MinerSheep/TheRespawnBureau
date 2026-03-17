@@ -12090,6 +12090,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ea1df0fcc940a8c40abb1e1d7e5607bf, type: 2}
   - {fileID: 11400000, guid: 25c6bf4a6bac82f4a9485548b93112fe, type: 2}
   - {fileID: 11400000, guid: 623f5e7113a215e4a96573e090c108ef, type: 2}
+  - {fileID: 11400000, guid: e4a5a948a8e7637468c13272fcc46c1c, type: 2}
+  - {fileID: 11400000, guid: f000c217cc9b05d4394ff3cf362f48b0, type: 2}
+  - {fileID: 11400000, guid: 37ce1947d7b669b4c9e3511ac9a81518, type: 2}
+  - {fileID: 11400000, guid: 4c9647beb15c3e54198245c6cb75bc2e, type: 2}
+  - {fileID: 11400000, guid: 17ec8dcc52e634e41988d9c37e72a20c, type: 2}
+  - {fileID: 11400000, guid: 39383a1dcfe0479449c44ccf04ceba51, type: 2}
+  - {fileID: 11400000, guid: 36121b6041af9a34492121d02a69103b, type: 2}
+  - {fileID: 11400000, guid: 112c5cd456fa0bf44ad8726636ce87d7, type: 2}
+  - {fileID: 11400000, guid: 9babdb448a8c2b4478f4ffd9111a6df8, type: 2}
+  - {fileID: 11400000, guid: 92f717cfd350ef240901bda8af43ebba, type: 2}
+  - {fileID: 11400000, guid: c0341a4d9c03189479c247fc6223355f, type: 2}
   difficultySequence:
   - difficulty: 0
     roomCount: 1
