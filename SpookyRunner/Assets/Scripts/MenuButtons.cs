@@ -14,6 +14,7 @@ public class MenuButtons : MonoBehaviour
     public GameObject OptionsPanelSliderContent;
     public GameObject CreditsPanel;
     public GameObject QuitPanel;
+    public GameObject MenuPanel;
 
 
     private GameObject ActivePanel = null;
@@ -103,6 +104,18 @@ public class MenuButtons : MonoBehaviour
         ActivePanel = null;
     }
 
+    public void ShowMenu()
+    {
+        QuitPanel.SetActive(true);
+        ActivePanel = MenuPanel;
+    }
+
+    public void HideMenu()
+    {
+        MenuPanel.SetActive(false);
+        ActivePanel?.SetActive(false);
+        ActivePanel = null;
+    }
     public void AutorunnerPlay()
     {
         string AutoRunnerInfinite = "AutoRunnerInfinite";
