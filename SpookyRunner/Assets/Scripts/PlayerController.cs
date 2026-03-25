@@ -285,11 +285,6 @@ public class PlayerController : MonoBehaviour
             RB.linearVelocity = new Vector2(0, RB.linearVelocity.y);
         }
 
-        if (RB.linearVelocity.x < 0)
-        {
-            RB.linearVelocity = new Vector2(0, RB.linearVelocity.y);
-        }
-
     }
 
     void FixedUpdate()
