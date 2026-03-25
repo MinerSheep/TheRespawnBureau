@@ -70,6 +70,9 @@ public class PlayerController : MonoBehaviour
     public HUD hud;
     public FlashLight flashlight;
     public Volume attackVol;  // The "damage zone" used when attacking
+    private AudioManager am;
+    private ParticleManager pm;
+    private TelemetryManager tm;
 
     // Private Variables
     [HideInInspector] public int pointValue;
@@ -117,10 +120,10 @@ public class PlayerController : MonoBehaviour
             doublejump = true;
             JumpTimer = JumpHoldTime;
 
-            AudioManager.instance.PlaySound("jump");
-            ParticleManager.instance.JumpEffectCall(transform.position);
-            TelemetryManager.instance.ActionPerformed("Jump");
-            TelemetryManager.instance.IntIncrease("Jumps");
+            am.PlaySound("jump");
+            pm.JumpEffectCall(transform.position);
+            tm.ActionPerformed("Jump");
+            tm.IntIncrease("Jumps");
         }
         else if (Jumping == true)
         {
@@ -172,8 +175,8 @@ public class PlayerController : MonoBehaviour
             doublejump = false;
             //Debug.Log("Doublejump");
 
-            TelemetryManager.instance.ActionPerformed("Double Jump");
-            TelemetryManager.instance.IntIncrease("Jumps");
+            tm.ActionPerformed("Double Jump");
+            tm.IntIncrease("Jumps");
         }
     }
 
@@ -202,12 +205,12 @@ public class PlayerController : MonoBehaviour
             //PM.PlayerModelStats = 1;
             //PM.ChangePlayerModelStats();
             Crouching = true;
-            ParticleManager.instance.RunningEffectDestory();
+            pm.RunningEffectDestory();
             cC.size = new Vector2(1, 1);
 
-            AudioManager.instance.PlaySound("crouch");
-            TelemetryManager.instance.ActionPerformed("Crouch");
-            TelemetryManager.instance.IntIncrease("Crouches");
+            am.PlaySound("crouch");
+            tm.ActionPerformed("Crouch");
+            tm.IntIncrease("Crouches");
         }
         else if (Jumping == true && inputBuffer.Consume("Crouch"))
         {
@@ -221,7 +224,7 @@ public class PlayerController : MonoBehaviour
             {
                 crouchingTimer = 0;
                 Crouching = false;
-                ParticleManager.instance.RunningEffectCall(transform.position);
+                pm.RunningEffectCall(transform.position);
                 cC.size = new Vector2(1, 2);
 
                 //PM.PlayerModelStats = 0;
@@ -247,13 +250,17 @@ public class PlayerController : MonoBehaviour
         RB = GetComponent<Rigidbody2D>();
         cC = GetComponent<CapsuleCollider2D>();
 
+        am = AudioManager.instance;
+        pm = ParticleManager.instance;
+        tm = TelemetryManager.instance;
+
         hud.AssignLeftButton(inputBuffer, "Jump", true);
         hud.AssignRightButton(inputBuffer, "Crouch", false);
 
         //if (flashlight == null)
         //    flashlight = transform.Find("FlashLight").GetComponent<FlashLight>();
 
-        TelemetryManager.instance.RoundBegin();
+        tm.RoundBegin();
         PlayerEvents.OnPlayerDeath += PlayerDeath;
     }
     void Update()
@@ -271,7 +278,12 @@ public class PlayerController : MonoBehaviour
             SceneManager.LoadScene(0);
         }
 
-        ParticleManager.instance.SetRunningEffectPosition(transform.position);
+        pm.SetRunningEffectPosition(transform.position);
+
+        if (RB.linearVelocity.x < 0)
+        {
+            RB.linearVelocity = new Vector2(0, RB.linearVelocity.y);
+        }
 
         if (RB.linearVelocity.x < 0)
         {
@@ -295,7 +307,7 @@ public class PlayerController : MonoBehaviour
             
             SpeedLimit();
 
-            Debug.Log("Dash cooldown is " + DashCDTimer);
+            // Debug.Log("Dash cooldown is " + DashCDTimer);
         }
         //flipping flashlight by flip the sprite mask
         //if (inputBuffer.Consume("FlipFlashlight"))
@@ -315,7 +327,7 @@ public class PlayerController : MonoBehaviour
         Crouching = false;
         Attacking = false;
 
-        TelemetryManager.instance.RoundEnd(true);
+        tm.RoundEnd(true);
 
         RunnerScene[] scenes = FindObjectsByType<RunnerScene>(FindObjectsSortMode.None);
 
