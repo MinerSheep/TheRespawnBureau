@@ -21,6 +21,8 @@ public class RunnerScene : MonoBehaviour
     public HUD hud;
     public GameObject Speedlines;
 
+    public PlayerController PC;
+
     // Private variables
     [HideInInspector] public float MovingSpeed;
 
@@ -45,6 +47,8 @@ public class RunnerScene : MonoBehaviour
         MovingSpeed = StartMovingSpeed;
 
         AudioManager.instance.PlayMusic("infinite_runner");
+
+        PC = FindAnyObjectByType<PlayerController>();
 
         //SetMaskOnTransform(transform);
     }
@@ -97,10 +101,8 @@ public class RunnerScene : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.D) && canDash)
         {
-            
             float speedToGo = MovingSpeed * 2f;
             
-
             canDash = false;
 
             MovingSpeed = speedToGo;

@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     public HeadTrigger HT;
     public float iFrames;
 
-    public float MaxYSpeed=20f;
+    public float MaxYSpeed = 20f;
 
 
     private float forceDeltaTimeInflation = 40;
@@ -93,7 +93,8 @@ public class PlayerController : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         if (horizontal > -0.05 && horizontal <= 0.05)
         {
-            RB.linearVelocityX = Mathf.Lerp(RB.linearVelocityX, 0, 0.9f);
+            
+            RB.linearVelocityX = MoveSpeed;
         }
         else
         {
@@ -199,6 +200,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Jumping == false && Crouching == false && inputBuffer.Consume("Crouch"))
         {
+
             //PM.PlayerModelStats = 1;
             //PM.ChangePlayerModelStats();
             Crouching = true;
@@ -216,6 +218,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Crouching)
         {
+            
             crouchingTimer += Time.deltaTime;
             if (crouchingTimer > CrouchingTime&&!HT.IsTriggering)
             {
@@ -246,6 +249,7 @@ public class PlayerController : MonoBehaviour
         runnerScene = FindAnyObjectByType<RunnerScene>();
         RB = GetComponent<Rigidbody2D>();
         cC = GetComponent<CapsuleCollider2D>();
+
 
         hud.AssignLeftButton(inputBuffer, "Jump", true);
         hud.AssignRightButton(inputBuffer, "Crouch", false);
