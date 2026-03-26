@@ -46,7 +46,7 @@ public class HUD : MonoBehaviour
         if (DeviceDetector.IsDesktop)
         {
             //desktop hud
-            AddRemoveHudElements("Desktop", "Mobile");
+            AddRemoveHudElements("Desktop", "MobileLayout");
 
         }
         else if (DeviceDetector.IsMobile)

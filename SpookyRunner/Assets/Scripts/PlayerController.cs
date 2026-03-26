@@ -274,7 +274,8 @@ public class PlayerController : MonoBehaviour
         // Return to main menu
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            SceneManager.LoadScene("MainMenu_PC");
+            // main menu scene
+            SceneManager.LoadScene(0);
         }
 
         pm.SetRunningEffectPosition(transform.position);
@@ -346,7 +347,8 @@ public class PlayerController : MonoBehaviour
         // Optional
         ScoreManager.instance?.SaveScore(); // Save high score to PlayerPrefs
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        _ = Game.Utilities.SceneLoader.ReloadSceneAsync();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
