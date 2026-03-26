@@ -106,7 +106,7 @@ public class MenuButtons : MonoBehaviour
 
     public void ShowMenu()
     {
-        QuitPanel.SetActive(true);
+        MenuPanel.SetActive(true);
         ActivePanel = MenuPanel;
     }
 
