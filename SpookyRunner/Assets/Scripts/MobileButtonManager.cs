@@ -6,6 +6,16 @@ public class MobileButtonManager : MonoBehaviour
     public Button JumpButton;
     public Button SlideButton;
     public Button DashButton;
+
+    void Start()
+    {
+        if (JumpButton == null)
+            JumpButton = transform.Find("Button_Jump")?.GetComponent<Button>();
+        if (SlideButton == null)
+            SlideButton = transform.Find("Button_Slide")?.GetComponent<Button>();
+        if (DashButton == null)
+            DashButton = transform.Find("Button_Dash")?.GetComponent<Button>();
+    }
     
     public void AssignButton(InputBuffer buffer, string action, bool hold)
     {

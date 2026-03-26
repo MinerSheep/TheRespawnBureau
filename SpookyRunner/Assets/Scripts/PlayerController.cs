@@ -255,6 +255,7 @@ public class PlayerController : MonoBehaviour
         pm = ParticleManager.instance;
         tm = TelemetryManager.instance;
 
+        if (mobilehud == null) mobilehud = hud.mobileButtonManager;
         mobilehud.AssignButton(inputBuffer, "Jump", true);
         mobilehud.AssignButton(inputBuffer, "Crouch", false);
         mobilehud.AssignButton(inputBuffer, "Dash", false);
