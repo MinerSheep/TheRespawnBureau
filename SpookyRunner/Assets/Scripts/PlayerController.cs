@@ -1,19 +1,9 @@
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-
-public static class PlayerEvents
-{
-    public delegate void PlayerIntEvent(int direction);
-    public static PlayerIntEvent OnFlipFlashlight;
-
-    // Currently unused
-    public delegate void PlayerDefaultEvent();
-    public static PlayerDefaultEvent OnPlayerDeath;
-    public static PlayerDefaultEvent OnPlayerLightOut;
-}
 
 public class PlayerController : MonoBehaviour
 {
@@ -68,6 +58,7 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     public GroundDetection GD;
     public HUD hud;
+    public MobileButtonManager mobilehud;
     public FlashLight flashlight;
     public Volume attackVol;  // The "damage zone" used when attacking
     private AudioManager am;
@@ -254,14 +245,15 @@ public class PlayerController : MonoBehaviour
         pm = ParticleManager.instance;
         tm = TelemetryManager.instance;
 
-        hud.AssignLeftButton(inputBuffer, "Jump", true);
-        hud.AssignRightButton(inputBuffer, "Crouch", false);
+        if (mobilehud == null) mobilehud = hud.mobileButtonManager;
+        mobilehud.AssignButton(inputBuffer, "Jump", true);
+        mobilehud.AssignButton(inputBuffer, "Crouch", false);
+        mobilehud.AssignButton(inputBuffer, "Dash", false);
 
         //if (flashlight == null)
         //    flashlight = transform.Find("FlashLight").GetComponent<FlashLight>();
 
         tm.RoundBegin();
-        PlayerEvents.OnPlayerDeath += PlayerDeath;
     }
     void Update()
     {
@@ -312,7 +304,7 @@ public class PlayerController : MonoBehaviour
     public InputBuffer GetInputBuffer() { return inputBuffer; }
 
     private bool dead = false;
-    private void PlayerDeath()
+    public void PlayerDeath()
     {
         if (dead) return;
         dead = true;
@@ -358,10 +350,5 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(collision.collider.gameObject);
         }
-    }
-
-    void OnDestroy()
-    {
-        PlayerEvents.OnPlayerDeath -= PlayerDeath;
     }
 }

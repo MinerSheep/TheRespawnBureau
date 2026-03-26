@@ -54,9 +54,10 @@ public class CollectibleLogic : MonoBehaviour
             {
                 TelemetryManager.instance.IntIncrease("CoinCollects");
                 
+                collision.GetComponent<PlayerController>().hud.AddCoin();
+                
                 if (ScoreManager.instance != null)
                 {
-                    HUDEvents.OnCollectCoin?.Invoke();
                 }
 
                 if (playerController != null)

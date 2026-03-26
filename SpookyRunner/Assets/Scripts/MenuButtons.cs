@@ -131,7 +131,7 @@ public class MenuButtons : MonoBehaviour
     }
     private IEnumerator LoadSceneAsync(string AutoRunnerTester)
     {
-        var handle = Addressables.DownloadDependenciesAsync("default");
+        var handle = Addressables.DownloadDependenciesAsync("scenes");
         while (!handle.IsDone)
         {
             float percentCompleted = handle.PercentComplete;

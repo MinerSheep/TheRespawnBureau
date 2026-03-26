@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5546038576753126942}
   - component: {fileID: 247904391075690644}
   - component: {fileID: -5685071336679736274}
+  - component: {fileID: 5278424043486166834}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -274,3 +275,18 @@ MonoBehaviour:
   maxVerticalDeviation: 0.5
   prefab: {fileID: 2529637029018022353, guid: 8c31eeb1aca9b2547956f0c87699b81f, type: 3}
   canvas: {fileID: 0}
+--- !u!114 &5278424043486166834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6355384965461315502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45ce69a6ed5a9244f965ebf7bd7c76ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredLabels:
+  - scenes
+  - prefabs
