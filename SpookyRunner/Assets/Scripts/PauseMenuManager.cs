@@ -23,7 +23,7 @@ public class PauseMenuManager : MonoBehaviour
         Transform panel = pauseMenuUI.transform.Find("PauseBG").Find("Panel_PauseMenu");
 
         panel.Find("Button_Setting").GetComponent<Button>().onClick.AddListener(MainMenu);
-        panel.Find("Button_MainMenu").GetComponent<Button>().onClick.AddListener(MainMenu);
+        panel.Find("Button_Menu").GetComponent<Button>().onClick.AddListener(MainMenu);
         panel.Find("Button_Resume").GetComponent<Button>().onClick.AddListener(Resume);
     }
 
