@@ -11654,6 +11654,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 913051527}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &211960632 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2436148342981239470, guid: f6b13e08bd6b51f489d3282ee3e6dd0a, type: 3}
+  m_PrefabInstance: {fileID: 775281697}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &215641004 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2806756838474288149, guid: 4f5cfa6ebdc33e04dbec05f29bbf99d8, type: 3}
@@ -11730,6 +11735,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4210157123753652, guid: 4f5cfa6ebdc33e04dbec05f29bbf99d8, type: 3}
   m_PrefabInstance: {fileID: 1844140758}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &662545748 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3541909880929865307, guid: 4f5cfa6ebdc33e04dbec05f29bbf99d8, type: 3}
+  m_PrefabInstance: {fileID: 1844140758}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662545743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9399d9f20911ca4393c49ed9f18ef0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &748208524
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11980,6 +11996,22 @@ PrefabInstance:
       propertyPath: pauseMenuUI
       value: 
       objectReference: {fileID: 775281700}
+    - target: {fileID: 5638212371158134496, guid: f6b13e08bd6b51f489d3282ee3e6dd0a, type: 3}
+      propertyPath: PlayerHP
+      value: 
+      objectReference: {fileID: 662545748}
+    - target: {fileID: 5638212371158134496, guid: f6b13e08bd6b51f489d3282ee3e6dd0a, type: 3}
+      propertyPath: FullHeart
+      value: 
+      objectReference: {fileID: -8623567100073076750, guid: 9ff018602ac7fbf49aca2e315f2eee53, type: 3}
+    - target: {fileID: 5638212371158134496, guid: f6b13e08bd6b51f489d3282ee3e6dd0a, type: 3}
+      propertyPath: UI_Hearts
+      value: 
+      objectReference: {fileID: 211960632}
+    - target: {fileID: 5638212371158134496, guid: f6b13e08bd6b51f489d3282ee3e6dd0a, type: 3}
+      propertyPath: EmptyHeart
+      value: 
+      objectReference: {fileID: -3417766873102700158, guid: f8cec9aef9e9b434e8bb14061c0b74eb, type: 3}
     - target: {fileID: 5674171789005319419, guid: f6b13e08bd6b51f489d3282ee3e6dd0a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -12443,9 +12475,17 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3541909880929865307, guid: 4f5cfa6ebdc33e04dbec05f29bbf99d8, type: 3}
+      propertyPath: MaxHP
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541909880929865307, guid: 4f5cfa6ebdc33e04dbec05f29bbf99d8, type: 3}
+      propertyPath: CurrentHP
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541909880929865307, guid: 4f5cfa6ebdc33e04dbec05f29bbf99d8, type: 3}
       propertyPath: PlayerHud
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 775281698}
     - target: {fileID: 3611146934780794932, guid: 4f5cfa6ebdc33e04dbec05f29bbf99d8, type: 3}
       propertyPath: hud
       value: 

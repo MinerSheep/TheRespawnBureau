@@ -27,8 +27,10 @@ public class HUD : MonoBehaviour
     public Image StaminaBarImage;
 
     [Header("Health")]
-    public TextMeshProUGUI healthText;
+    public Transform UI_Hearts;
     public Health PlayerHP;
+    public Sprite FullHeart;
+    public Sprite EmptyHeart;
 
     [Header("Coins")]
     public TextMeshProUGUI coinsText;
@@ -54,6 +56,10 @@ public class HUD : MonoBehaviour
             //mobile hud
             AddRemoveHudElements("MobileLayout", "Desktop");
         }
+
+        if (PlayerHP == null)
+            PlayerHP = FindAnyObjectByType<PlayerController>()?.GetComponent<Health>();
+
         UpdateHealthAmount();
     }
     
@@ -119,7 +125,19 @@ public class HUD : MonoBehaviour
 
     public void UpdateHealthAmount()
     {
-        healthText.text = PlayerHP.CurrentHP.ToString();
+        int hp = PlayerHP.CurrentHP;
+
+        UI_Hearts.Find("UI_HeartAmount").GetComponent<TextMeshProUGUI>().text = hp.ToString();
+
+        int i = 0;
+        Transform heartsList = UI_Hearts.Find("List");
+        foreach (Transform child in heartsList)
+        {
+            if (i++ < hp)
+                child.GetComponent<Image>().sprite = FullHeart;
+            else
+                child.GetComponent<Image>().sprite = EmptyHeart;
+        }
     }
 
     public void UpdateCoinsAmount()
