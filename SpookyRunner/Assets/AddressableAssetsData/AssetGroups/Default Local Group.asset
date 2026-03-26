@@ -15,10 +15,22 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 9b1e4adeb570ad542bdbeafb44375a8f
   m_SerializeEntries:
+  - m_GUID: 190d8c332f9cd0345bc8faa414c035e8
+    m_Address: Assets/Prefabs
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - prefabs
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6e111e76b49d6074a94f31120df5409b
     m_Address: Assets/Prefabs/Image.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a85e9afd8243e654c9bc2603474b3130
+    m_Address: AutoRunnerInfinite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - scenes
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 71b7198e321988441b504fabd3af4a3a, type: 2}
