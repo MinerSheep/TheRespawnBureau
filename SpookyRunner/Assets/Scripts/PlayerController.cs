@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     public GroundDetection GD;
     public HUD hud;
+    public MobileButtonManager mobilehud;
     public FlashLight flashlight;
     public Volume attackVol;  // The "damage zone" used when attacking
     private AudioManager am;
@@ -254,8 +255,9 @@ public class PlayerController : MonoBehaviour
         pm = ParticleManager.instance;
         tm = TelemetryManager.instance;
 
-        hud.AssignLeftButton(inputBuffer, "Jump", true);
-        hud.AssignRightButton(inputBuffer, "Crouch", false);
+        mobilehud.AssignButton(inputBuffer, "Jump", true);
+        mobilehud.AssignButton(inputBuffer, "Crouch", false);
+        mobilehud.AssignButton(inputBuffer, "Dash", false);
 
         //if (flashlight == null)
         //    flashlight = transform.Find("FlashLight").GetComponent<FlashLight>();

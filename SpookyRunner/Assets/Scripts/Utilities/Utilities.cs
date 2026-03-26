@@ -18,7 +18,7 @@ namespace Game.Utilities
         }
         public static async Task LoadSceneAsync(string addressKey)
         {
-            var handle = Addressables.DownloadDependenciesAsync("default");
+            var handle = Addressables.DownloadDependenciesAsync("scenes");
             while (!handle.IsDone)
             {
                 float percentCompleted = handle.PercentComplete;

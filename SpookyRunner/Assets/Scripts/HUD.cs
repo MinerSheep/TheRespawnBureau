@@ -135,47 +135,6 @@ public class HUD : MonoBehaviour
     //     }
     // }
 
-    public void AssignLeftButton(InputBuffer buffer, string action, bool hold)
-    {
-        if (mobileButtonManager == null)
-        {
-            Debug.LogWarning("No mobile button manager");
-            return;
-        }
-
-        mobileButtonManager.LButton.GetComponent<MobileButton>().holdable = hold;
-        mobileButtonManager.LButton.GetComponent<MobileButton>().onClick = null;
-        mobileButtonManager.LButton.GetComponent<MobileButton>().onRelease = null;
-
-        if (hold)
-        {
-            mobileButtonManager.LButton.GetComponent<MobileButton>().onClick += () => buffer.StartHold(action);
-            mobileButtonManager.LButton.GetComponent<MobileButton>().onRelease += () => buffer.EndHold(action);
-        }
-
-        mobileButtonManager.LButton.GetComponent<MobileButton>().onClick += () => buffer.AddToBuffer(action);
-    }
-    public void AssignRightButton(InputBuffer buffer, string action, bool hold)
-    {
-        if (mobileButtonManager == null)
-        {
-            Debug.LogWarning("No mobile button manager");
-            return;
-        }
-
-        mobileButtonManager.RButton.GetComponent<MobileButton>().holdable = hold;
-        mobileButtonManager.RButton.GetComponent<MobileButton>().onClick = null;
-        mobileButtonManager.RButton.GetComponent<MobileButton>().onRelease = null;
-
-        if (hold)
-        {
-            mobileButtonManager.RButton.GetComponent<MobileButton>().onClick += () => buffer.StartHold(action);
-            mobileButtonManager.RButton.GetComponent<MobileButton>().onRelease += () => buffer.EndHold(action);
-        }
-
-        mobileButtonManager.RButton.GetComponent<MobileButton>().onClick += () => buffer.AddToBuffer(action);
-    }
-
     void OnDestroy()
     {
         HUDEvents.OnCollectCoin -= AddCoin;
