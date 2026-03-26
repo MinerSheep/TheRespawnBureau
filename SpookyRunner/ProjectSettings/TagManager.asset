@@ -12,7 +12,6 @@ TagManager:
   - DesktopAndMobile
   - Debris
   - Pause
-  - Desktop
   layers:
   - Default
   - TransparentFX
@@ -55,9 +54,6 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2763881045
-    locked: 0
-  - name: UI
-    uniqueID: 839614593
     locked: 0
   m_RenderingLayers:
   - Default

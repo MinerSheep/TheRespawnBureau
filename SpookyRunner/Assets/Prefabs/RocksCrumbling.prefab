@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3815807535777196718}
   - component: {fileID: 8741011470016656316}
   - component: {fileID: 2905821656574903704}
+  - component: {fileID: -3219256044300170437}
   m_Layer: 0
   m_Name: RocksCrumbling
   m_TagString: Untagged
@@ -41,7 +42,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 368220422854489749}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -4891,3 +4892,15 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &-3219256044300170437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368220422854489749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba45d5655a701ab47adebc10a51ab350, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
