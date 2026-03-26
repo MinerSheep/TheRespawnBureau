@@ -1,19 +1,9 @@
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-
-public static class PlayerEvents
-{
-    public delegate void PlayerIntEvent(int direction);
-    public static PlayerIntEvent OnFlipFlashlight;
-
-    // Currently unused
-    public delegate void PlayerDefaultEvent();
-    public static PlayerDefaultEvent OnPlayerDeath;
-    public static PlayerDefaultEvent OnPlayerLightOut;
-}
 
 public class PlayerController : MonoBehaviour
 {
@@ -264,7 +254,6 @@ public class PlayerController : MonoBehaviour
         //    flashlight = transform.Find("FlashLight").GetComponent<FlashLight>();
 
         tm.RoundBegin();
-        PlayerEvents.OnPlayerDeath += PlayerDeath;
     }
     void Update()
     {
@@ -315,7 +304,7 @@ public class PlayerController : MonoBehaviour
     public InputBuffer GetInputBuffer() { return inputBuffer; }
 
     private bool dead = false;
-    private void PlayerDeath()
+    public void PlayerDeath()
     {
         if (dead) return;
         dead = true;
@@ -361,10 +350,5 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(collision.collider.gameObject);
         }
-    }
-
-    void OnDestroy()
-    {
-        PlayerEvents.OnPlayerDeath -= PlayerDeath;
     }
 }

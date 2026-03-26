@@ -100,7 +100,8 @@ public class HazardWarning : MonoBehaviour
         if (hazard != null)
         {
             hazard.SetActive(true);
-            hazard.transform.parent = hm?.transform;
+            if (!hm.IsDestroyed())
+                hazard.transform.parent = hm.transform;
         }
     }
 }
