@@ -29,7 +29,7 @@ public class MissileHazard : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        if (passedPlayer && gameObject.activeSelf)
+        if (passedPlayer && isActiveAndEnabled)
         {
             StartCoroutine(WaitThreeSeconds());
         }
@@ -43,13 +43,16 @@ public class MissileHazard : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !damagedPlayer)
+        Debug.Log($"{other.tag}");
+        if (other.tag == "Player" && !damagedPlayer)
         {
             other.gameObject.GetComponent<Health>().TakeDamage(DamageAmount);
 
-            Vector2 hitLocation = new Vector2(tf.position.x, tf.position.y);
+            Vector2 hitLocation = new Vector2(transform.position.x, transform.position.y);
 
             GameObject explosion = Instantiate(ExplosionPSPrefab, hitLocation, Quaternion.identity);
+
+            explosion.GetComponent<ParticleSystem>().Play();
 
             Debug.Log("Missile hit landed");
             damagedPlayer = true;

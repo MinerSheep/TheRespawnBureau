@@ -12,18 +12,24 @@ public class RunnerScene : MonoBehaviour
     public float AutoRunnerTimer = 0f;
 
     public float MinimumMovingSpeed = 6f;
-    private bool canDash = true;
+    public bool canDash = true;
     public float dashDuration = 1f;
     private float dashTimer = 0f;
 
+    public MonsterBehavior MB;
+
     public HUD hud;
     public GameObject Speedlines;
+
+    public PlayerController PC;
 
     // Private variables
     [HideInInspector] public float MovingSpeed;
 
     public void DashInLevel()
     {
+        Speedlines.SetActive(true);
+        
         if (canDash)
         {
             canDash = false;
@@ -31,6 +37,8 @@ public class RunnerScene : MonoBehaviour
             dashTimer = dashDuration;
             hud.StaminaAmount -= 15f;
             Speedlines.SetActive(true);
+
+            
         }
     }
 
@@ -40,6 +48,8 @@ public class RunnerScene : MonoBehaviour
         MovingSpeed = StartMovingSpeed;
 
         AudioManager.instance.PlayMusic("infinite_runner");
+
+        PC = FindAnyObjectByType<PlayerController>();
 
         //SetMaskOnTransform(transform);
     }
@@ -88,10 +98,16 @@ public class RunnerScene : MonoBehaviour
 
     private void Update()
     {
+        float movingSpeedBeforeDash = MovingSpeed;
+        
+
         if (Input.GetKeyDown(KeyCode.D) && canDash)
         {
+            float speedToGo = MovingSpeed * 2f;
+            
             canDash = false;
-            MovingSpeed = DashSpeed;
+
+            MovingSpeed = speedToGo;
             dashTimer = dashDuration;
             hud.StaminaAmount -= 15f;
         }
@@ -102,8 +118,9 @@ public class RunnerScene : MonoBehaviour
         {
             dashTimer = 0;
             canDash = true;
-            MovingSpeed = StartMovingSpeed;
+            MovingSpeed = movingSpeedBeforeDash;
             Speedlines.SetActive(false);
+
         }
 
         if (MovingSpeed < MinimumMovingSpeed)
