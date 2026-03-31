@@ -12427,6 +12427,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1922304987}
     - target: {fileID: 3541909880929865307, guid: 4f5cfa6ebdc33e04dbec05f29bbf99d8, type: 3}
+      propertyPath: MaxHP
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541909880929865307, guid: 4f5cfa6ebdc33e04dbec05f29bbf99d8, type: 3}
       propertyPath: CurrentHP
       value: 5
       objectReference: {fileID: 0}

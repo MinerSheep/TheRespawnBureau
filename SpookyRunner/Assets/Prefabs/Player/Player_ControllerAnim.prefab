@@ -340,7 +340,7 @@ MonoBehaviour:
   FallingForce: 30
   iFrameMax: 0.2
   DashForce: 10
-  DashTime: 0.3
+  DashTime: 0.2
   DashCD: 4
   StaminaDrainRate: -0.1
   StaminaDrainMultiplier: 3
@@ -355,6 +355,7 @@ MonoBehaviour:
   Dying: 0
   GD: {fileID: 4977086744153824393}
   hud: {fileID: 0}
+  mobilehud: {fileID: 0}
   flashlight: {fileID: 0}
   attackVol: {fileID: 2379198720856961855}
   pointValue: 0
@@ -424,7 +425,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 0.88
+  m_LinearDamping: 0.5
   m_AngularDamping: 0.05
   m_GravityScale: 4.01
   m_Material: {fileID: 6200000, guid: 93ded5150c2ccc747bddd71614fca517, type: 2}
@@ -450,9 +451,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9399d9f20911ca4393c49ed9f18ef0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHP: 3
+  MaxHP: 5
   MinHP: 0
-  CurrentHP: 3
+  CurrentHP: 5
   IsPlayer: 1
   PlayerHud: {fileID: 0}
   DV: {fileID: 0}
