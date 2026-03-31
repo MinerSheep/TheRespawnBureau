@@ -100,7 +100,8 @@ public class MonsterBehavior : MonoBehaviour
             TelemetryManager.instance.DeathReason = "Caught by Monster";
             TelemetryManager.instance.RoundEnd(true);
             
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            _ = Game.Utilities.SceneLoader.ReloadSceneAsync();
         }
 
         if (objName == "LightBlock")

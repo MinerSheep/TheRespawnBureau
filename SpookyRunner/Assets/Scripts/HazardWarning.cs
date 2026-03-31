@@ -14,10 +14,19 @@ public class HazardWarning : MonoBehaviour
     private RectTransform rectTransform;
     private Image image;
 
-    void FixedUpdate()
+    private Transform playerTransform;
+    private HazardManager hm;
+
+    void Start()
+    {
+        playerTransform = FindAnyObjectByType<PlayerController>().transform;
+        hm = HazardManager.instance;
+    }
+
+    void Update()
     {
         // Convert world position to screen position
-        Vector3 screenPos = HazardManager.instance.mainCamera.WorldToScreenPoint(hazard.transform.position);
+        Vector3 screenPos = hm.mainCamera.WorldToScreenPoint(hazard.transform.position);
 
         // Early-out if target is behind the camera
         if (screenPos.z < 0)
@@ -26,7 +35,6 @@ public class HazardWarning : MonoBehaviour
             return;
         }
 
-        // Screen dimensions
         float screenWidth = Screen.width;
         float screenHeight = Screen.height;
 
@@ -41,13 +49,13 @@ public class HazardWarning : MonoBehaviour
         Vector3 spawnScreenPos = screenPos;
 
         if (minDist == distLeft)
-            spawnScreenPos = new Vector3(HazardManager.instance.warningUIOffsetFromEdge, screenPos.y, screenPos.z);
+            spawnScreenPos = new Vector3(hm.warningUIOffsetFromEdge, screenPos.y, screenPos.z);
         else if (minDist == distRight)
-            spawnScreenPos = new Vector3(screenWidth - HazardManager.instance.warningUIOffsetFromEdge, screenPos.y, screenPos.z);
+            spawnScreenPos = new Vector3(screenWidth - hm.warningUIOffsetFromEdge, screenPos.y, screenPos.z);
         else if (minDist == distTop)
-            spawnScreenPos = new Vector3(screenPos.x, screenHeight - HazardManager.instance.warningUIOffsetFromEdge, screenPos.z);
+            spawnScreenPos = new Vector3(screenPos.x, screenHeight - hm.warningUIOffsetFromEdge, screenPos.z);
         else // bottom
-            spawnScreenPos = new Vector3(screenPos.x, HazardManager.instance.warningUIOffsetFromEdge, screenPos.z);
+            spawnScreenPos = new Vector3(screenPos.x, hm.warningUIOffsetFromEdge, screenPos.z);
 
         // Convert back to world space
         rectTransform.position = spawnScreenPos;
@@ -57,8 +65,8 @@ public class HazardWarning : MonoBehaviour
 
     void CheckDistance()
     {
-        Transform playerTransform = FindAnyObjectByType<PlayerController>().transform;
-
+        if (playerTransform == null)
+            return;
         if (Mathf.Abs(hazard.transform.position.x - playerTransform.position.x) <= spawnXDistance)
             Destroy(gameObject);
     }
@@ -92,7 +100,8 @@ public class HazardWarning : MonoBehaviour
         if (hazard != null)
         {
             hazard.SetActive(true);
-            hazard.transform.parent = HazardManager.instance?.transform;
+            if (!hm.IsDestroyed())
+                hazard.transform.parent = hm.transform;
         }
     }
 }

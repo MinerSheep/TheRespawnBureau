@@ -4,6 +4,7 @@ public class CreditsMan : MonoBehaviour
 {
     [Header("Settings")]
     public float Playerscale = 1.5f;
+    public bool autorun = true;
     
     [Header("References")]
     public Animator AT;
@@ -21,7 +22,7 @@ public class CreditsMan : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        AT.SetInteger("PlayerState", 0);
     }
 
     void SimJump()
@@ -71,17 +72,14 @@ public class CreditsMan : MonoBehaviour
         {
             AT.SetInteger("PlayerState", 4);
         }
-        else if (result == 0 || result == 1)
+        else if (autorun)
         {
-            AT.SetInteger("PlayerState", 1);
-        }
-        else
-        {
-            AT.SetInteger("PlayerState", 0);
+            AT.SetInteger("PlayerState", autorun ? 1 : 0);
         }
 
         // a timer runs, if no action is performed, a random action will be performed
-        timer -= Time.deltaTime;
+        if (autorun)
+            timer -= Time.deltaTime;
         if (timer < 0)
         {
             switch (Random.Range(0, 3))

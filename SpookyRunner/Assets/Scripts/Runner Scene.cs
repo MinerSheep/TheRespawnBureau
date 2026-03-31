@@ -28,7 +28,6 @@ public class RunnerScene : MonoBehaviour
 
     public void DashInLevel()
     {
-        Speedlines.SetActive(true);
         if (canDash)
         {
             canDash = false;
@@ -86,7 +85,8 @@ public class RunnerScene : MonoBehaviour
             TelemetryManager.instance.DeathReason = "Restart Triggered";
             TelemetryManager.instance.RoundEnd(false);
 
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            _ = Game.Utilities.SceneLoader.ReloadSceneAsync();
         }
 
         if (Input.GetKeyDown(KeyCode.L) && SceneManager.GetSceneByName("AR02") != null)

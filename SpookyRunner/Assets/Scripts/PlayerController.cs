@@ -1,19 +1,9 @@
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-
-public static class PlayerEvents
-{
-    public delegate void PlayerIntEvent(int direction);
-    public static PlayerIntEvent OnFlipFlashlight;
-
-    // Currently unused
-    public delegate void PlayerDefaultEvent();
-    public static PlayerDefaultEvent OnPlayerDeath;
-    public static PlayerDefaultEvent OnPlayerLightOut;
-}
 
 public class PlayerController : MonoBehaviour
 {
@@ -68,8 +58,12 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     public GroundDetection GD;
     public HUD hud;
+    public MobileButtonManager mobilehud;
     public FlashLight flashlight;
     public Volume attackVol;  // The "damage zone" used when attacking
+    private AudioManager am;
+    private ParticleManager pm;
+    private TelemetryManager tm;
 
     // Private Variables
     [HideInInspector] public int pointValue;
@@ -118,10 +112,10 @@ public class PlayerController : MonoBehaviour
             doublejump = true;
             JumpTimer = JumpHoldTime;
 
-            AudioManager.instance.PlaySound("jump");
-            ParticleManager.instance.JumpEffectCall(transform.position);
-            TelemetryManager.instance.ActionPerformed("Jump");
-            TelemetryManager.instance.IntIncrease("Jumps");
+            am.PlaySound("jump");
+            pm.JumpEffectCall(transform.position);
+            tm.ActionPerformed("Jump");
+            tm.IntIncrease("Jumps");
         }
         else if (Jumping == true)
         {
@@ -173,8 +167,8 @@ public class PlayerController : MonoBehaviour
             doublejump = false;
             //Debug.Log("Doublejump");
 
-            TelemetryManager.instance.ActionPerformed("Double Jump");
-            TelemetryManager.instance.IntIncrease("Jumps");
+            tm.ActionPerformed("Double Jump");
+            tm.IntIncrease("Jumps");
         }
     }
 
@@ -204,12 +198,12 @@ public class PlayerController : MonoBehaviour
             //PM.PlayerModelStats = 1;
             //PM.ChangePlayerModelStats();
             Crouching = true;
-            ParticleManager.instance.RunningEffectDestory();
+            pm.RunningEffectDestory();
             cC.size = new Vector2(1, 1);
 
-            AudioManager.instance.PlaySound("crouch");
-            TelemetryManager.instance.ActionPerformed("Crouch");
-            TelemetryManager.instance.IntIncrease("Crouches");
+            am.PlaySound("crouch");
+            tm.ActionPerformed("Crouch");
+            tm.IntIncrease("Crouches");
         }
         else if (Jumping == true && inputBuffer.Consume("Crouch"))
         {
@@ -224,7 +218,7 @@ public class PlayerController : MonoBehaviour
             {
                 crouchingTimer = 0;
                 Crouching = false;
-                ParticleManager.instance.RunningEffectCall(transform.position);
+                pm.RunningEffectCall(transform.position);
                 cC.size = new Vector2(1, 2);
 
                 //PM.PlayerModelStats = 0;
@@ -250,15 +244,19 @@ public class PlayerController : MonoBehaviour
         RB = GetComponent<Rigidbody2D>();
         cC = GetComponent<CapsuleCollider2D>();
 
+        am = AudioManager.instance;
+        pm = ParticleManager.instance;
+        tm = TelemetryManager.instance;
 
-        hud.AssignLeftButton(inputBuffer, "Jump", true);
-        hud.AssignRightButton(inputBuffer, "Crouch", false);
+        if (mobilehud == null) mobilehud = hud.mobileButtonManager;
+        mobilehud.AssignButton(inputBuffer, "Jump", true);
+        mobilehud.AssignButton(inputBuffer, "Crouch", false);
+        mobilehud.AssignButton(inputBuffer, "Dash", false);
 
         //if (flashlight == null)
         //    flashlight = transform.Find("FlashLight").GetComponent<FlashLight>();
 
-        TelemetryManager.instance.RoundBegin();
-        PlayerEvents.OnPlayerDeath += PlayerDeath;
+        tm.RoundBegin();
     }
     void Update()
     {
@@ -271,10 +269,17 @@ public class PlayerController : MonoBehaviour
         // Return to main menu
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            SceneManager.LoadScene("MainMenu_PC");
+            // main menu scene
+            SceneManager.LoadScene(0);
         }
 
-        ParticleManager.instance.SetRunningEffectPosition(transform.position);
+        pm.SetRunningEffectPosition(transform.position);
+
+        if (RB.linearVelocity.x < 0)
+        {
+            RB.linearVelocity = new Vector2(0, RB.linearVelocity.y);
+        }
+
     }
 
     void FixedUpdate()
@@ -292,7 +297,7 @@ public class PlayerController : MonoBehaviour
             
             SpeedLimit();
 
-            Debug.Log("Dash cooldown is " + DashCDTimer);
+            // Debug.Log("Dash cooldown is " + DashCDTimer);
         }
         //flipping flashlight by flip the sprite mask
         //if (inputBuffer.Consume("FlipFlashlight"))
@@ -302,7 +307,7 @@ public class PlayerController : MonoBehaviour
     public InputBuffer GetInputBuffer() { return inputBuffer; }
 
     private bool dead = false;
-    private void PlayerDeath()
+    public void PlayerDeath()
     {
         if (dead) return;
         dead = true;
@@ -312,7 +317,7 @@ public class PlayerController : MonoBehaviour
         Crouching = false;
         Attacking = false;
 
-        TelemetryManager.instance.RoundEnd(true);
+        tm.RoundEnd(true);
 
         RunnerScene[] scenes = FindObjectsByType<RunnerScene>(FindObjectsSortMode.None);
 
@@ -337,7 +342,8 @@ public class PlayerController : MonoBehaviour
         // Optional
         ScoreManager.instance?.SaveScore(); // Save high score to PlayerPrefs
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        _ = Game.Utilities.SceneLoader.ReloadSceneAsync();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -347,10 +353,5 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(collision.collider.gameObject);
         }
-    }
-
-    void OnDestroy()
-    {
-        PlayerEvents.OnPlayerDeath -= PlayerDeath;
     }
 }

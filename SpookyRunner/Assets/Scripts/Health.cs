@@ -16,6 +16,12 @@ public class Health : MonoBehaviour
         pC = GetComponent<PlayerController>();
         IsPlayer = pC != null;
     }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
+            TakeDamage(1);
+    }
     public void TakeDamage(int DamageAmount)
     {
         if (IsPlayer)
@@ -56,7 +62,7 @@ public class Health : MonoBehaviour
         // Check if the player has run out of health and kill them
         if(CurrentHP <= 0)
         {
-            PlayerEvents.OnPlayerDeath?.Invoke();
+            GetComponent<PlayerController>().PlayerDeath();
         }
     }
 }
