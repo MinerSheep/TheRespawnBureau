@@ -28,6 +28,8 @@ public class RunnerScene : MonoBehaviour
 
     public void DashInLevel()
     {
+        Speedlines.SetActive(true);
+        
         if (canDash)
         {
             canDash = false;
