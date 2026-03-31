@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff75de6fe8060a948af3983d348b9962, type: 3}
-  m_Name: Chunk13_Data
+  m_Name: Chunk24_Data
   m_EditorClassIdentifier: 
-  tagName: Platforms
-  difficulty: 1
+  tagName: 
+  difficulty: 2
   weight: 1
-  prefab: {fileID: 6450506616759428110, guid: f2ca2ad9662c603428ad8e7c9d80bdae, type: 3}
+  prefab: {fileID: 6544343229575224198, guid: c77eccd7ec8f47147ae22afe88fadf3b, type: 3}
   allowedNextTags: []

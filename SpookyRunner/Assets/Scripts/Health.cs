@@ -8,6 +8,8 @@ public class Health : MonoBehaviour
     public bool IsPlayer = true;
     public HUD PlayerHud;
     private PlayerController pC;
+
+    public DamageVignette DV;
     // Start is called once before the first execution of Update after the MonoBehaviour is createdk
     void Start()
     {
@@ -41,6 +43,7 @@ public class Health : MonoBehaviour
             CurrentHP = Mathf.Clamp(CurrentHP - DamageAmount, MinHP, MaxHP);
             HPUpdate();
         }
+        DV.PlayDamageVignette();
     }
 
     public void Heal(int HealAmount)
