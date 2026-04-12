@@ -21,7 +21,8 @@ public class KillBox : MonoBehaviour
             TelemetryManager.instance.DeathReason = "Hit Killbox";
             TelemetryManager.instance.RoundEnd(true);
 
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            _ = Game.Utilities.SceneLoader.ReloadSceneAsync();
         }
     }
 }

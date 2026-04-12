@@ -7,11 +7,40 @@ public class RunnerScene : MonoBehaviour
     [Header("Settings")]
     public float StartMovingSpeed = 6f;
     public float EndMovingSpeed = 10f;
+    public float DashSpeed = 20f;
     public float ChangeTime = 9000f;
     public float AutoRunnerTimer = 0f;
 
+    public float MinimumMovingSpeed = 6f;
+    public bool canDash = true;
+    public float dashDuration = 1f;
+    private float dashTimer = 0f;
+
+    public MonsterBehavior MB;
+
+    public HUD hud;
+    public GameObject Speedlines;
+
+    public PlayerController PC;
+
     // Private variables
     [HideInInspector] public float MovingSpeed;
+
+    public void DashInLevel()
+    {
+        Speedlines.SetActive(true);
+        
+        if (canDash)
+        {
+            canDash = false;
+            MovingSpeed = DashSpeed;
+            dashTimer = dashDuration;
+            hud.StaminaAmount -= 15f;
+            Speedlines.SetActive(true);
+
+            
+        }
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -19,6 +48,8 @@ public class RunnerScene : MonoBehaviour
         MovingSpeed = StartMovingSpeed;
 
         AudioManager.instance.PlayMusic("infinite_runner");
+
+        PC = FindAnyObjectByType<PlayerController>();
 
         //SetMaskOnTransform(transform);
     }
@@ -42,8 +73,13 @@ public class RunnerScene : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (canDash)
+        {
+            MovingSpeed = Mathf.Lerp(StartMovingSpeed, EndMovingSpeed, AutoRunnerTimer / ChangeTime);
+        }
+
         AutoRunnerTimer += Time.deltaTime;
-        MovingSpeed = Mathf.Lerp(StartMovingSpeed, EndMovingSpeed, AutoRunnerTimer / ChangeTime);
+        
         transform.position += new Vector3(-MovingSpeed * Time.deltaTime, 0, 0);
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -51,11 +87,47 @@ public class RunnerScene : MonoBehaviour
             TelemetryManager.instance.DeathReason = "Restart Triggered";
             TelemetryManager.instance.RoundEnd(false);
 
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            _ = Game.Utilities.SceneLoader.ReloadSceneAsync();
         }
 
         if (Input.GetKeyDown(KeyCode.L) && SceneManager.GetSceneByName("AR02") != null)
             SceneManager.LoadScene("AR02");
+    }
+
+
+    private void Update()
+    {
+        float movingSpeedBeforeDash = MovingSpeed;
+        
+
+        if (Input.GetKeyDown(KeyCode.D) && canDash)
+        {
+            float speedToGo = MovingSpeed * 2f;
+            
+            canDash = false;
+
+            MovingSpeed = speedToGo;
+            dashTimer = dashDuration;
+            hud.StaminaAmount -= 15f;
+        }
+
+        dashTimer -= Time.deltaTime;
+
+        if (dashTimer < 0)
+        {
+            dashTimer = 0;
+            canDash = true;
+            MovingSpeed = movingSpeedBeforeDash;
+            Speedlines.SetActive(false);
+
+        }
+
+        if (MovingSpeed < MinimumMovingSpeed)
+        {
+            MovingSpeed = MinimumMovingSpeed;
+            
+        }
     }
 
     void OnDestroy()

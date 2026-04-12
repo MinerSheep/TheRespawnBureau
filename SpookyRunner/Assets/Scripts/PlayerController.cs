@@ -1,19 +1,9 @@
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-
-public static class PlayerEvents
-{
-    public delegate void PlayerIntEvent(int direction);
-    public static PlayerIntEvent OnFlipFlashlight;
-
-    // Currently unused
-    public delegate void PlayerDefaultEvent();
-    public static PlayerDefaultEvent OnPlayerDeath;
-    public static PlayerDefaultEvent OnPlayerLightOut;
-}
 
 public class PlayerController : MonoBehaviour
 {
@@ -21,22 +11,30 @@ public class PlayerController : MonoBehaviour
     public bool AutoRunner = false;
     public bool HasStamina = true;
     public float MoveSpeed = 5f;
+    public float DashMoveSpeed = 7f;
     public float MoveForce = 1f;
+
     public float JumpForce = 18f;
     private float DefaultJumpForce = 18f;   // Used to reset jump to normal after leaving a "sticky" platform
     public float JumpHoldForce = 3f;
     public float JumpHoldTime = 1f;
+
     public float DoubleJumpForce = 12f;
+
     public float CrouchingTime = 2f;
     public float FallingForce = 3f;
+
     public float iFrameMax = 0.2f;
-    public float DashSpeed = 8f;
+
+    public float DashForce = 10f;
     public float DashTime = 1f;
     public float DashCD = 4f;
-    public float StaminaDrainRate = -0.1f;   // Amount removed from stamina per update
+    public float StaminaDrainRate = -0.1f; // Amount removed from stamina per update
+    public float StaminaDrainMultiplier = 3f; 
     public HeadTrigger HT;
     public float iFrames;
-    public float MaxYSpeed=20f;
+
+    public float MaxYSpeed = 20f;
 
 
     private float forceDeltaTimeInflation = 40;
@@ -49,6 +47,7 @@ public class PlayerController : MonoBehaviour
     }
 
     [HideInInspector] private InputBuffer inputBuffer;
+    [HideInInspector] private RunnerScene runnerScene;
     [HideInInspector] public Rigidbody2D RB;
     [HideInInspector] public CapsuleCollider2D cC;
     [HideInInspector] public bool Jumping = false;
@@ -59,8 +58,12 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     public GroundDetection GD;
     public HUD hud;
+    public MobileButtonManager mobilehud;
     public FlashLight flashlight;
     public Volume attackVol;  // The "damage zone" used when attacking
+    private AudioManager am;
+    private ParticleManager pm;
+    private TelemetryManager tm;
 
     // Private Variables
     [HideInInspector] public int pointValue;
@@ -70,7 +73,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] private bool doublejump = false;
     [HideInInspector] private float DashTimer = 0f;
     [HideInInspector] private float DashCDTimer = 0f;
-    [HideInInspector] private bool dashing=false;
+    [HideInInspector] private bool dashing = false;
     [HideInInspector] private float AttackTimer = 0f;   // Counts up while attacking
     [HideInInspector] private float AttackTimerEnd = 0.5f;   // How long should the attack volume/animation 
 
@@ -84,7 +87,8 @@ public class PlayerController : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         if (horizontal > -0.05 && horizontal <= 0.05)
         {
-            RB.linearVelocityX = Mathf.Lerp(RB.linearVelocityX, 0, 0.9f);
+            
+            RB.linearVelocityX = MoveSpeed;
         }
         else
         {
@@ -108,10 +112,10 @@ public class PlayerController : MonoBehaviour
             doublejump = true;
             JumpTimer = JumpHoldTime;
 
-            AudioManager.instance.PlaySound("jump");
-            ParticleManager.instance.JumpEffectCall(transform.position);
-            TelemetryManager.instance.ActionPerformed("Jump");
-            TelemetryManager.instance.IntIncrease("Jumps");
+            am.PlaySound("jump");
+            pm.JumpEffectCall(transform.position);
+            tm.ActionPerformed("Jump");
+            tm.IntIncrease("Jumps");
         }
         else if (Jumping == true)
         {
@@ -163,8 +167,8 @@ public class PlayerController : MonoBehaviour
             doublejump = false;
             //Debug.Log("Doublejump");
 
-            TelemetryManager.instance.ActionPerformed("Double Jump");
-            TelemetryManager.instance.IntIncrease("Jumps");
+            tm.ActionPerformed("Double Jump");
+            tm.IntIncrease("Jumps");
         }
     }
 
@@ -190,15 +194,16 @@ public class PlayerController : MonoBehaviour
     {
         if (Jumping == false && Crouching == false && inputBuffer.Consume("Crouch"))
         {
+
             //PM.PlayerModelStats = 1;
             //PM.ChangePlayerModelStats();
             Crouching = true;
-            ParticleManager.instance.RunningEffectDestory();
+            pm.RunningEffectDestory();
             cC.size = new Vector2(1, 1);
 
-            AudioManager.instance.PlaySound("crouch");
-            TelemetryManager.instance.ActionPerformed("Crouch");
-            TelemetryManager.instance.IntIncrease("Crouches");
+            am.PlaySound("crouch");
+            tm.ActionPerformed("Crouch");
+            tm.IntIncrease("Crouches");
         }
         else if (Jumping == true && inputBuffer.Consume("Crouch"))
         {
@@ -207,12 +212,13 @@ public class PlayerController : MonoBehaviour
         }
         if (Crouching)
         {
+            
             crouchingTimer += Time.deltaTime;
             if (crouchingTimer > CrouchingTime&&!HT.IsTriggering)
             {
                 crouchingTimer = 0;
                 Crouching = false;
-                ParticleManager.instance.RunningEffectCall(transform.position);
+                pm.RunningEffectCall(transform.position);
                 cC.size = new Vector2(1, 2);
 
                 //PM.PlayerModelStats = 0;
@@ -223,64 +229,34 @@ public class PlayerController : MonoBehaviour
 
     public void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && DashCDTimer <= 0)
-        {
-            DashCDTimer = DashCD;
-            dashing = true;
-            DashTimer = DashTime;
-
-            TelemetryManager.instance.ActionPerformed("Dash");
-            TelemetryManager.instance.IntIncrease("Dashes");
-        }
-        if (dashing)
-        {
-            DashTimer-= Time.deltaTime;
-            RB.AddForce(Vector2.right*DashSpeed, ForceMode2D.Impulse);
-            if (DashTimer <= 0)
-            {
-                dashing = false;
-            }
-        }
-        else if(DashCDTimer > 0)
-        {
-            DashCDTimer -= Time.deltaTime;
-            //Debug.Log(DashCDTimer);
-        }
-    }
-
-    public void PrimaryControl()
-    {
-        Jump();
-    }
-
-    public void SecondaryControl()
-    {
-        Crouch();
-    }
-
-    public void ThirdControl()
-    {
-        Dash();
+        if (inputBuffer.Consume("Dash"))
+            runnerScene.DashInLevel();
     }
 
     public void SpeedLimit()
     {
-        RB.linearVelocityY = Mathf.Clamp(RB.linearVelocityY,-MaxYSpeed,MaxYSpeed);
+        RB.linearVelocityY = Mathf.Clamp(RB.linearVelocityY,-MaxYSpeed,MaxYSpeed); //don't go too fast up and down
     }
     void Start()
     {
         inputBuffer = GetComponent<InputBuffer>();
+        runnerScene = FindAnyObjectByType<RunnerScene>();
         RB = GetComponent<Rigidbody2D>();
         cC = GetComponent<CapsuleCollider2D>();
 
-        hud.AssignLeftButton(inputBuffer, "Jump", true);
-        hud.AssignRightButton(inputBuffer, "Crouch", false);
+        am = AudioManager.instance;
+        pm = ParticleManager.instance;
+        tm = TelemetryManager.instance;
+
+        if (mobilehud == null) mobilehud = hud.mobileButtonManager;
+        mobilehud.AssignButton(inputBuffer, "Jump", true);
+        mobilehud.AssignButton(inputBuffer, "Crouch", false);
+        mobilehud.AssignButton(inputBuffer, "Dash", false);
 
         //if (flashlight == null)
         //    flashlight = transform.Find("FlashLight").GetComponent<FlashLight>();
 
-        TelemetryManager.instance.RoundBegin();
-        PlayerEvents.OnPlayerDeath += PlayerDeath;
+        tm.RoundBegin();
     }
     void Update()
     {
@@ -293,10 +269,16 @@ public class PlayerController : MonoBehaviour
         // Return to main menu
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            SceneManager.LoadScene("MainMenu_PC");
+            // main menu scene
+            SceneManager.LoadScene(0);
         }
 
-        ParticleManager.instance.SetRunningEffectPosition(transform.position);
+        pm.SetRunningEffectPosition(transform.position);
+
+        if (RB.linearVelocity.x < 0)
+        {
+            RB.linearVelocity = new Vector2(0, RB.linearVelocity.y);
+        }
 
     }
 
@@ -309,18 +291,23 @@ public class PlayerController : MonoBehaviour
         // Added a check to avoid updating when the player is dying
         if(!Dying)
         {
-            PrimaryControl();
-            SecondaryControl();
-            ThirdControl();
+            Jump();
+            Crouch();
+            Dash();
+            
             SpeedLimit();
+
+            // Debug.Log("Dash cooldown is " + DashCDTimer);
         }
         //flipping flashlight by flip the sprite mask
         //if (inputBuffer.Consume("FlipFlashlight"))
         //    flashlight?.flip();
     }
 
+    public InputBuffer GetInputBuffer() { return inputBuffer; }
+
     private bool dead = false;
-    private void PlayerDeath()
+    public void PlayerDeath()
     {
         if (dead) return;
         dead = true;
@@ -330,7 +317,7 @@ public class PlayerController : MonoBehaviour
         Crouching = false;
         Attacking = false;
 
-        TelemetryManager.instance.RoundEnd(true);
+        tm.RoundEnd(true);
 
         RunnerScene[] scenes = FindObjectsByType<RunnerScene>(FindObjectsSortMode.None);
 
@@ -355,7 +342,8 @@ public class PlayerController : MonoBehaviour
         // Optional
         ScoreManager.instance?.SaveScore(); // Save high score to PlayerPrefs
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        _ = Game.Utilities.SceneLoader.ReloadSceneAsync();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -365,10 +353,5 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(collision.collider.gameObject);
         }
-    }
-
-    void OnDestroy()
-    {
-        PlayerEvents.OnPlayerDeath -= PlayerDeath;
     }
 }

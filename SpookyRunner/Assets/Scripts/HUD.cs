@@ -2,12 +2,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public static class HUDEvents
-{
-    public delegate void HUDDefaultEvent();
-    public static HUDDefaultEvent OnCollectCoin;
-}
-
 // This class is responsible for hp and flashlight management
 public class HUD : MonoBehaviour
 {
@@ -27,8 +21,10 @@ public class HUD : MonoBehaviour
     public Image StaminaBarImage;
 
     [Header("Health")]
-    public TextMeshProUGUI healthText;
+    public Transform UI_Hearts;
     public Health PlayerHP;
+    public Sprite FullHeart;
+    public Sprite EmptyHeart;
 
     [Header("Coins")]
     public TextMeshProUGUI coinsText;
@@ -41,12 +37,10 @@ public class HUD : MonoBehaviour
         StartX = Player != null ? Player.transform.position.x : 0.0f;
         GoalX = Goal != null ? Goal.transform.position.x : 1.0f;
 
-        HUDEvents.OnCollectCoin += AddCoin;
-
         if (DeviceDetector.IsDesktop)
         {
             //desktop hud
-            AddRemoveHudElements("Desktop", "Mobile");
+            AddRemoveHudElements("Desktop", "MobileLayout");
 
         }
         else if (DeviceDetector.IsMobile)
@@ -54,6 +48,10 @@ public class HUD : MonoBehaviour
             //mobile hud
             AddRemoveHudElements("MobileLayout", "Desktop");
         }
+
+        if (PlayerHP == null)
+            PlayerHP = FindAnyObjectByType<PlayerController>()?.GetComponent<Health>();
+
         UpdateHealthAmount();
     }
     
@@ -76,7 +74,7 @@ public class HUD : MonoBehaviour
         UpdateStamina();
     }
 
-    void AddCoin()
+    public void AddCoin()
     {
         coins++;
     }
@@ -111,7 +109,7 @@ public class HUD : MonoBehaviour
         {
             // TODO: Remove the LoadScene below once we have PlayerDeath implemented
             TelemetryManager.instance.DeathReason = "Stamina Loss";
-            PlayerEvents.OnPlayerDeath?.Invoke();
+            PlayerHP.GetComponent<PlayerController>().PlayerDeath();
         }
     
     }
@@ -119,7 +117,19 @@ public class HUD : MonoBehaviour
 
     public void UpdateHealthAmount()
     {
-        healthText.text = PlayerHP.CurrentHP.ToString();
+        int hp = PlayerHP.CurrentHP;
+
+        UI_Hearts.Find("UI_HeartAmount").GetComponent<TextMeshProUGUI>().text = hp.ToString();
+
+        int i = 0;
+        Transform heartsList = UI_Hearts.Find("List");
+        foreach (Transform child in heartsList)
+        {
+            if (i++ < hp)
+                child.GetComponent<Image>().sprite = FullHeart;
+            else
+                child.GetComponent<Image>().sprite = EmptyHeart;
+        }
     }
 
     public void UpdateCoinsAmount()
@@ -135,49 +145,4 @@ public class HUD : MonoBehaviour
     //     }
     // }
 
-    public void AssignLeftButton(InputBuffer buffer, string action, bool hold)
-    {
-        if (mobileButtonManager == null)
-        {
-            Debug.LogWarning("No mobile button manager");
-            return;
-        }
-
-        mobileButtonManager.LButton.GetComponent<MobileButton>().holdable = hold;
-        mobileButtonManager.LButton.GetComponent<MobileButton>().onClick = null;
-        mobileButtonManager.LButton.GetComponent<MobileButton>().onRelease = null;
-
-        if (hold)
-        {
-            mobileButtonManager.LButton.GetComponent<MobileButton>().onClick += () => buffer.StartHold(action);
-            mobileButtonManager.LButton.GetComponent<MobileButton>().onRelease += () => buffer.EndHold(action);
-        }
-
-        mobileButtonManager.LButton.GetComponent<MobileButton>().onClick += () => buffer.AddToBuffer(action);
-    }
-    public void AssignRightButton(InputBuffer buffer, string action, bool hold)
-    {
-        if (mobileButtonManager == null)
-        {
-            Debug.LogWarning("No mobile button manager");
-            return;
-        }
-
-        mobileButtonManager.RButton.GetComponent<MobileButton>().holdable = hold;
-        mobileButtonManager.RButton.GetComponent<MobileButton>().onClick = null;
-        mobileButtonManager.RButton.GetComponent<MobileButton>().onRelease = null;
-
-        if (hold)
-        {
-            mobileButtonManager.RButton.GetComponent<MobileButton>().onClick += () => buffer.StartHold(action);
-            mobileButtonManager.RButton.GetComponent<MobileButton>().onRelease += () => buffer.EndHold(action);
-        }
-
-        mobileButtonManager.RButton.GetComponent<MobileButton>().onClick += () => buffer.AddToBuffer(action);
-    }
-
-    void OnDestroy()
-    {
-        HUDEvents.OnCollectCoin -= AddCoin;
-    }
 }

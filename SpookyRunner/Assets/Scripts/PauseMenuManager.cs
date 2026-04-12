@@ -20,11 +20,11 @@ public class PauseMenuManager : MonoBehaviour
 
     void SetUpButtons()
     {
-        Transform panel = pauseMenuUI.transform.Find("Panel_PauseMenu");
+        Transform panel = pauseMenuUI.transform.Find("PauseBG").Find("Panel_PauseMenu");
 
-        panel.Find("Button_Resume").GetComponent<Button>().onClick.AddListener(Resume);
+        panel.Find("Button_Setting").GetComponent<Button>().onClick.AddListener(MainMenu);
         panel.Find("Button_MainMenu").GetComponent<Button>().onClick.AddListener(MainMenu);
-        panel.Find("Button_Quit").GetComponent<Button>().onClick.AddListener(QuitGame);
+        panel.Find("Button_Resume").GetComponent<Button>().onClick.AddListener(Resume);
     }
 
     // Update is called once per frame

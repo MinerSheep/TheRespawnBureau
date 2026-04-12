@@ -87,7 +87,7 @@ public class FlashLight : MonoBehaviour
             spriteMask.transform.Rotate(0f, 180f, 0f, Space.Self);
             direction = direction == 0 ? 1 : 0;
 
-            PlayerEvents.OnFlipFlashlight.Invoke(direction);
+            // PlayerEvents.OnFlipFlashlight.Invoke(direction);
         }
     }
 

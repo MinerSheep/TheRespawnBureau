@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class FallingHazard : MonoBehaviour
 {
@@ -6,6 +7,7 @@ public class FallingHazard : MonoBehaviour
     [SerializeField] private bool isFalling;
     [SerializeField] private bool damagedPlayer;
     private Rigidbody2D rb;
+    public GameObject CrumblingRocks;
 
     PlayerController playerScript;
 
@@ -19,7 +21,6 @@ public class FallingHazard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up);
         
         if(hit.collider.gameObject.CompareTag("Player"))
@@ -40,11 +41,13 @@ public class FallingHazard : MonoBehaviour
         else if (collision.gameObject.CompareTag("Ground"))
         {
             destroyHazard();
+            
         }
     }
 
     private void destroyHazard()
     {
+        Instantiate(CrumblingRocks, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

@@ -5,8 +5,8 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/MainScenes/MainMenu_PC.unity
+  - enabled: 0
+    path: Assets/Scenes/MainScenes/MainMenu_PCOLD.unity
     guid: a042844d395e83a49be654ef0b97bdca
   - enabled: 0
     path: Assets/Scenes/OldLevels/AutoRunnerTester.unity
@@ -17,15 +17,19 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/OldLevels/Platformer.unity
     guid: 5658915d422024f409211e2ba19cdf52
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainScenes/AutoRunner.unity
     guid: 946327127d82856438286e95c1c4cbe1
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/OldPlatformer/PlatformerNewController.unity
     guid: 9e4a81bb6d7cd104f96cc2a7ff308caa
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainScenes/AutoRunnerInfinite.unity
     guid: a85e9afd8243e654c9bc2603474b3130
+  - enabled: 1
+    path: Assets/Scenes/MainScenes/MainMenu_PC.unity
+    guid: 14ffb5608f3c5a84d8b617bcdfb4ed6a
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 81510f311d99a6c47bc10c8a79b11777, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

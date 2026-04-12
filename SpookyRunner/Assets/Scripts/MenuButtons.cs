@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.InputSystem.Composites;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
+using UnityEngine.AddressableAssets;
 
 public class MenuButtons : MonoBehaviour
 {
@@ -11,6 +13,8 @@ public class MenuButtons : MonoBehaviour
     public GameObject OnlinePanel;
     public GameObject OptionsPanelSliderContent;
     public GameObject CreditsPanel;
+    public GameObject QuitPanel;
+    public GameObject MenuPanel;
 
 
     private GameObject ActivePanel = null;
@@ -80,6 +84,19 @@ public class MenuButtons : MonoBehaviour
         ActivePanel = CreditsPanel;
     }
 
+    public void ShowQuits()
+    {
+        QuitPanel.SetActive(true);
+        ActivePanel = QuitPanel;
+    }
+
+    public void HideQuits()
+    {
+        QuitPanel.SetActive(false);
+        ActivePanel?.SetActive(false);
+        ActivePanel = null;
+    }
+
     public void HideCredits()
     {
         CreditsPanel.SetActive(false);
@@ -87,10 +104,24 @@ public class MenuButtons : MonoBehaviour
         ActivePanel = null;
     }
 
-    public void AutorunnerPlay(string AutoRunnerTester)
+    public void ShowMenu()
     {
+        QuitPanel.SetActive(true);
+        ActivePanel = MenuPanel;
+    }
+
+    public void HideMenu()
+    {
+        MenuPanel.SetActive(false);
+        ActivePanel?.SetActive(false);
+        ActivePanel = null;
+    }
+    public void AutorunnerPlay()
+    {
+        string AutoRunnerInfinite = "AutoRunnerInfinite";
         AudioManager.instance.PlaySound("transition");
-        SceneManager.LoadScene(AutoRunnerTester);
+        StartCoroutine(LoadSceneAsync(AutoRunnerInfinite));
+        //SceneManager.LoadScene(AutoRunnerTester);
     }
 
     public void PlatformerPlay(string Platformer)
@@ -98,9 +129,23 @@ public class MenuButtons : MonoBehaviour
         AudioManager.instance.PlaySound("transition");
         SceneManager.LoadScene(Platformer);
     }
+    private IEnumerator LoadSceneAsync(string AutoRunnerTester)
+    {
+        var handle = Addressables.DownloadDependenciesAsync("scenes");
+        while (!handle.IsDone)
+        {
+            float percentCompleted = handle.PercentComplete;
+            Debug.Log(percentCompleted);
+
+            yield return null;
+        }
+        // Load scene from server
+        Addressables.LoadSceneAsync(AutoRunnerTester);
+    }
 
     public void QuitGame()
     {
+        Debug.Log("quitting");
         Application.Quit();
     }
 }

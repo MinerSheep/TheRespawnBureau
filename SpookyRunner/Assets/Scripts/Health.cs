@@ -10,11 +10,19 @@ public class Health : MonoBehaviour
     public float DamageFlashDuration = 0.5f;
     public HUD PlayerHud;
     private PlayerController pC;
+
+    public DamageVignette DV;
     // Start is called once before the first execution of Update after the MonoBehaviour is createdk
     void Start()
     {
         pC = GetComponent<PlayerController>();
         IsPlayer = pC != null;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
+            TakeDamage(1);
     }
     public void TakeDamage(int DamageAmount)
     {
@@ -39,6 +47,7 @@ public class Health : MonoBehaviour
             CurrentHP = Mathf.Clamp(CurrentHP - DamageAmount, MinHP, MaxHP);
             HPUpdate();
         }
+        DV.PlayDamageVignette();
     }
 
     public void Heal(int HealAmount)
@@ -57,7 +66,7 @@ public class Health : MonoBehaviour
         // Check if the player has run out of health and kill them
         if(CurrentHP <= 0)
         {
-            PlayerEvents.OnPlayerDeath?.Invoke();
+            GetComponent<PlayerController>().PlayerDeath();
         }
     }
 
