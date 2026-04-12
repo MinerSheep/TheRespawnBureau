@@ -33,7 +33,12 @@ public class BasicBulletBehaviour : MonoBehaviour
             if (rb != null)
             {
                 Vector2 knockDir = (other.transform.position - transform.position).normalized;
-                rb.AddForce(knockDir * knockbackForce, ForceMode2D.Impulse);
+
+                MinionAIHandler AiHandler = other.GetComponent<MinionAIHandler>();
+                if (AiHandler != null)
+                {
+                    AiHandler.AddExternalForce(knockDir * knockbackForce);
+                }
             }
         }
 

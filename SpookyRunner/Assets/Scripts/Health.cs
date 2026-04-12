@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 //This script is the general HP system for every item with a HP in the game
 public class Health : MonoBehaviour
 {
@@ -6,6 +7,7 @@ public class Health : MonoBehaviour
     public int MinHP = 0;
     public int CurrentHP = 3;
     public bool IsPlayer = true;
+    public float DamageFlashDuration = 0.5f;
     public HUD PlayerHud;
     private PlayerController pC;
     // Start is called once before the first execution of Update after the MonoBehaviour is createdk
@@ -26,6 +28,8 @@ public class Health : MonoBehaviour
                 HPUpdate();
                 PlayerHud.UpdateHealthAmount();
                 Debug.Log(DamageAmount);
+
+                StartCoroutine(DamageFlashEffect());
 
                 AudioManager.instance.PlaySound("playerdamage");
             }
@@ -54,6 +58,32 @@ public class Health : MonoBehaviour
         if(CurrentHP <= 0)
         {
             PlayerEvents.OnPlayerDeath?.Invoke();
+        }
+    }
+
+
+    IEnumerator DamageFlashEffect()
+    {
+        float timer = 0.0f;
+
+        SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
+
+        while (timer < DamageFlashDuration)
+        {
+            timer += Time.deltaTime;
+            
+            if (timer < DamageFlashDuration / 2)
+            {
+                foreach (var renderer in renderers)
+                    renderer.color = Color.Lerp(Color.white, Color.red, timer / DamageFlashDuration);
+            }
+            else
+            {
+                foreach (var renderer in renderers)
+                    renderer.color = Color.Lerp(Color.red, Color.white, timer / DamageFlashDuration);
+            }
+
+            yield return null;
         }
     }
 }

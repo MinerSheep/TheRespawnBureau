@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class ProjectileEmitter : MonoBehaviour
 {
-    [SerializeField] public float Angle = 0.0f;
-    [SerializeField] GameObject Projectile;
-    [SerializeField] float FireRate = 0.25f;    // time between shots
-    [SerializeField] int Quantity = 1;          // number of projectiles
-    [SerializeField] float Spread = 0.0f;       // the angle of spread between projectiles (used is Quanity is <1)
-    [SerializeField] float Speed = 1.0f;        // speed of the projectile
-    [SerializeField] float Radius = 0.5f;        // distance from emittion point
+    public float Angle = 0.0f;
+    public GameObject Projectile;
+    public float FireRate = 0.25f;    // time between shots
+    public int Quantity = 1;          // number of projectiles
+    public float Spread = 0.0f;       // the angle of spread between projectiles (used is Quanity is <1)
+    public float Speed = 1.0f;        // speed of the projectile
+    public float Radius = 0.5f;        // distance from emittion point
 
     float fireTimer = 0.0f;
 

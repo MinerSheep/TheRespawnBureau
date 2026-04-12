@@ -352,6 +352,7 @@ MonoBehaviour:
   Jumping: 0
   Crouching: 0
   Attacking: 0
+  Dying: 0
   GD: {fileID: 4977086744153824393}
   hud: {fileID: 0}
   flashlight: {fileID: 4619140904230655540}

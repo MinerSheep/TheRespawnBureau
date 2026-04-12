@@ -79,6 +79,20 @@ public class CollectibleLogic : MonoBehaviour
                 playerController.hud.ChangeStamina(value);
             }
 
+            SpawnFlyingParticlesOnExit spawnflyPoint = GetComponent<SpawnFlyingParticlesOnExit>();
+
+            if (spawnflyPoint != null)
+            {
+                spawnflyPoint.Spawn();
+            }
+
+            ParticleSpawner spawnParticles = GetComponent<ParticleSpawner>();
+
+            if (spawnParticles != null)
+            {
+                spawnParticles.Spawn();
+            }
+
             // Destroys this object
             Destroy(this.gameObject);
         }

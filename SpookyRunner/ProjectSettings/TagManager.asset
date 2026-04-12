@@ -12,6 +12,7 @@ TagManager:
   - DesktopAndMobile
   - Debris
   - Pause
+  - ParticleTarget
   layers:
   - Default
   - TransparentFX

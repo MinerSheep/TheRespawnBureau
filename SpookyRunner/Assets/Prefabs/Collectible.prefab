@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7170915469085469890}
   - component: {fileID: 5544522411694849038}
   - component: {fileID: 5417303993558874603}
+  - component: {fileID: 33750983459127463}
   m_Layer: 0
   m_Name: Collectible
   m_TagString: Untagged
@@ -158,3 +159,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   amplitude: 0.18
   frequency: 2
+--- !u!114 &33750983459127463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4463351953115137094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d575f0399af699448a5ec816f5d4c17c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParticlePrefab: {fileID: 552723859147309886, guid: 53e2b6a009f302d4880279e4d08076ee, type: 3}
+  quantity: 4
+  speed: 0.1
+  range: 120

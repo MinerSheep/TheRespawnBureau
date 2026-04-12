@@ -84,6 +84,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 2
+  LifeTime: 3
   knockbackForce: 0.1
   isEnemy: 0
 --- !u!212 &6711660955875330515

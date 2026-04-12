@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5544522411694849038}
   - component: {fileID: 1271570159040205475}
   - component: {fileID: 4932898485139525860}
+  - component: {fileID: 9116200532173321126}
   m_Layer: 0
   m_Name: CollectibleStamina
   m_TagString: Untagged
@@ -4945,3 +4946,20 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &9116200532173321126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4463351953115137094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5ec65babc0e1e042b25211dce5c59e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartSpeed: 3
+  quantity: 6
+  lifetime: 2
+  GoTo: Player
+  flyingParticlePrefab: {fileID: 8908811502017403968, guid: bb07e5126134a6144b4cbdcd17a9f073, type: 3}
