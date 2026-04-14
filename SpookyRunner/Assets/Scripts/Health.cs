@@ -28,6 +28,8 @@ public class Health : MonoBehaviour
     {
         if (IsPlayer)
         {
+            if (pC.invul == true)
+                return;
             if(pC.iFrames>0)
                 Debug.Log("Soak " + DamageAmount + " due to iFrames");
             else

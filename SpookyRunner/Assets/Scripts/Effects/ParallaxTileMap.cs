@@ -37,7 +37,7 @@ public class ParallaxTileMap : MonoBehaviour
         {
             // Move so its LEFT edge sits just past the right side
             transform.position = new Vector3(
-                rightEdgeWorld.x + mapWidth * 0.5f,
+                rightEdgeWorld.x,
                 transform.position.y,
                 transform.position.z
             );

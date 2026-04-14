@@ -5,16 +5,15 @@ public class SpawnFlyingParticlesOnExit : MonoBehaviour
     public float StartSpeed = 0.2f;
     public float quantity = 6;
     public float lifetime = 8.0f;
-    public string GoTo;
     public GameObject flyingParticlePrefab;
 
     public void Spawn()
     {
 
-        GameObject Target = GameObject.Find(GoTo);
+        GameObject Target = GameObject.FindGameObjectWithTag("Player");
         if (Target == null)
         {
-            Debug.Log("Error: SpawnFlyingParticlesOnExit faild to find '" + GoTo + "' in the scene");
+            Debug.Log("Error: SpawnFlyingParticlesOnExit failed to find Player in the scene");
             return;
         }
         float angleStep = 360.0f / quantity;
@@ -30,7 +29,9 @@ public class SpawnFlyingParticlesOnExit : MonoBehaviour
             fly.startAngle = angle;
             fly.startSpeed = StartSpeed;
             fly.lifetime = lifetime;
-            Vector3 world = Camera.main.ScreenToWorldPoint(Camera.main.WorldToScreenPoint(Target.transform.position));
+            //Vector3 world = Camera.main.ScreenToWorldPoint(Camera.main.WorldToScreenPoint(Target.transform.position));
+            if (Target == null)
+                Debug.Log("why!?");
             fly.finalPosition = Target;
         }
     }

@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour
 
     public float MaxYSpeed = 20f;
 
+    public float BubbleLifeTime = 5.0f;
+    public int BubbleCost = 75;
 
     private float forceDeltaTimeInflation = 40;
     private float inflatedDeltaTime
@@ -64,9 +66,11 @@ public class PlayerController : MonoBehaviour
     private AudioManager am;
     private ParticleManager pm;
     private TelemetryManager tm;
+    [SerializeField] private GameObject BubbleObj;
 
     // Private Variables
     [HideInInspector] public int pointValue;
+    [HideInInspector] public bool invul = false;
     [HideInInspector] private float crouchingTimer;
     [HideInInspector] private bool firstJump = false;
     [HideInInspector] private float JumpTimer = 0f;
@@ -76,7 +80,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] private bool dashing = false;
     [HideInInspector] private float AttackTimer = 0f;   // Counts up while attacking
     [HideInInspector] private float AttackTimerEnd = 0.5f;   // How long should the attack volume/animation 
-
+    [HideInInspector] private int coinsCollected = 0;
     public void Invincible()
     {
         iFrames = iFrameMax;
@@ -326,7 +330,7 @@ public class PlayerController : MonoBehaviour
             scene.StartMovingSpeed = scene.EndMovingSpeed = 0;
         }
 
-        StartCoroutine(RestartLevel());
+        StartCoroutine(LevelGameOver());
     }
 
     IEnumerator RestartLevel()
@@ -346,6 +350,35 @@ public class PlayerController : MonoBehaviour
         _ = Game.Utilities.SceneLoader.ReloadSceneAsync();
     }
 
+    IEnumerator LevelGameOver()
+    {
+        float time = 0;
+
+        while (time < 1.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        ScoreManager.instance?.SaveScore();
+
+        GameObject obj = GameObject.Find("GameOver");
+
+        if (obj != null)
+        {
+            foreach (Transform child in obj.transform)
+            {
+                child.gameObject.SetActive(true);
+            }
+
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Debug.LogError("GameOver object not found");
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // Break debris if the sword is swinging
@@ -353,5 +386,28 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(collision.collider.gameObject);
         }
+    }
+
+    public void CollectCoin(int amount)
+    {
+        pointValue += amount;
+        coinsCollected++;
+        if (coinsCollected % BubbleCost == 0)
+            StartCoroutine(Bubble());
+    }
+
+    IEnumerator Bubble()
+    {
+        invul = true;
+        float time = 0;
+        BubbleObj.SetActive(true);
+
+        while (time < BubbleLifeTime)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        invul = false;
+        BubbleObj.SetActive(false);
     }
 }

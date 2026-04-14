@@ -29,6 +29,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainScenes/MainMenu_PC.unity
     guid: 14ffb5608f3c5a84d8b617bcdfb4ed6a
+  - enabled: 1
+    path: Assets/Scenes/AutoBattler/BattleGround.unity
+    guid: 1bce9f15d5cda694db95927e639bc31b
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 81510f311d99a6c47bc10c8a79b11777, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

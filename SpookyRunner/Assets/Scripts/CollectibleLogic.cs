@@ -62,7 +62,7 @@ public class CollectibleLogic : MonoBehaviour
 
                 if (playerController != null)
                 {
-                    playerController.pointValue += value;
+                    playerController.CollectCoin(value);
                 }
             }
 

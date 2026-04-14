@@ -56,6 +56,7 @@ public class MinionStats : MonoBehaviour
     public void TakeDamage(float damage)
     {
         Health -= damage;
+        AudioManager.instance.PlaySound("Hit");
         StartCoroutine(DamageFlashEffect());
         if (Health < 0)
         {

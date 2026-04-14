@@ -13,6 +13,7 @@ TagManager:
   - Debris
   - Pause
   - ParticleTarget
+  - Desktop
   layers:
   - Default
   - TransparentFX
@@ -47,6 +48,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: FarBack
+    uniqueID: 1907745935
+    locked: 0
   - name: Background
     uniqueID: 3726608407
     locked: 0

@@ -92,6 +92,7 @@ public class StatUpgrade : MonoBehaviour
 
     void ApplyUpgrade(StatType type)
     {
+        AudioManager.instance.PlaySound("Level up");
         switch (type)
         {
             case StatType.FireRate:
@@ -132,7 +133,7 @@ public class StatUpgrade : MonoBehaviour
 
         if (text != null)
         {
-            text.text = $"{type} - Cost: {GetCost(type)}";
+            text.text = $"{type} ~ Cost: {GetCost(type)}";
         }
     }
 

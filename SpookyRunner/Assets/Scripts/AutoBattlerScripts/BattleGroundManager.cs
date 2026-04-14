@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class BattleGroundManager : MonoBehaviour
 {
@@ -145,7 +146,7 @@ public class BattleGroundManager : MonoBehaviour
     IEnumerator EndBattle(bool win)
     {
         GameObject target = FindChildByName(win ? "Win" : "Lose");
-
+        AudioManager.instance.PlaySound("Win");
         if (target != null)
         {
             target.SetActive(true);
@@ -153,11 +154,18 @@ public class BattleGroundManager : MonoBehaviour
             target.SetActive(false);
         }
         if (win)
+        {
             StateChange(GameStates.Build);
+        }
         else
         {
             StateChange(GameStates.Entry);
             Rounds = 0;
         }
+    }
+
+    public void OpenScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
     }
 }
