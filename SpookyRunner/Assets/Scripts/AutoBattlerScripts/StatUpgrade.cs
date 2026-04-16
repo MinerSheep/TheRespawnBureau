@@ -65,13 +65,13 @@ public class StatUpgrade : MonoBehaviour
         switch (type)
         {
             case StatType.FireRate:
-                return 1 + Mathf.FloorToInt(Mathf.Pow(level, 1.2f));
+                return 1 + level * 10;
 
             case StatType.BulletAmount:
-                return 2 + level * 2;
+                return 1 + level * 20;
 
             case StatType.BulletSpeed:
-                return 1 + Mathf.FloorToInt(level * level * 0.5f);
+                return 1 + Mathf.FloorToInt(level * level * 1.5f);
 
             case StatType.Agression:
                 return 1 + level;
@@ -83,7 +83,7 @@ public class StatUpgrade : MonoBehaviour
                 return 2 + Mathf.FloorToInt(Mathf.Pow(level, 1.3f));
 
             case StatType.Caution:
-                return 1 + level * 3;
+                return 1 + Mathf.FloorToInt(Mathf.Pow(level, 1.2f));
 
             default:
                 return 1;
