@@ -8,6 +8,8 @@ using System.Linq;
 
 class AutoLock : UnityEditor.AssetModificationProcessor
 {
+    private static readonly HashSet<string> WarnedFiles = new();
+
     private const string SavedFilesKey = "";
 
     public static List<string> Load()
@@ -137,7 +139,21 @@ class AutoLock : UnityEditor.AssetModificationProcessor
                  owner.Contains(myName, System.StringComparison.OrdinalIgnoreCase)))
                 UnityEngine.Debug.Log($"[AutoLock] {assetPath} is already locked by you -> {response} Code: {exitcode}");
             else
+            {
+                if (!WarnedFiles.Contains(assetPath))
+                {
+                    WarnedFiles.Add(assetPath);
+
+                    UnityEditor.EditorUtility.DisplayDialog(
+                        "FILE LOCKED",
+                        $"{assetPath}\n\n" +
+                        $"This file is locked by:\n{owner}\n\n" +
+                        "Saving changes may overwrite another developer's work.",
+                        "OK");
+                }
+
                 UnityEngine.Debug.LogError($"{assetPath} is already locked by someone else! You may overwrite their work! -> {response}, Owner: {owner}, Code: {exitcode}");
+            }
         }
         else
             UnityEngine.Debug.Log($"[AutoLock] Locked {assetPath} -> {response} Code: {exitcode}");
