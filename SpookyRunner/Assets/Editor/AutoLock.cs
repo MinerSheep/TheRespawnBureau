@@ -145,7 +145,7 @@ class AutoLock : UnityEditor.AssetModificationProcessor
                     WarnedFiles.Add(assetPath);
 
                     UnityEditor.EditorUtility.DisplayDialog(
-                        "FILE LOCKED",
+                        "FILE LOCKED ON GITHUB DESKTOP",
                         $"{assetPath}\n\n" +
                         $"This file is locked by:\n{owner}\n\n" +
                         "Saving changes may overwrite another developer's work.",
