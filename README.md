@@ -1,3 +1,5 @@
+If you need repo access, message @minersheep on discord (they banned my teams account)
+
 # TheRespawnBureau
 Weeping Angel Momentum based running game, block weeping angel with light
 
